@@ -1,0 +1,60 @@
+const salesAquisition = [
+  {
+    id: 1,
+    salesPrice: 1200,
+    salesPieces: 120,
+    aquisitionPrice: 1000,
+    aquisitionPieces: 100,
+    date: "21-07-2020",
+  },
+  {
+    id: 2,
+    salesPrice: 3100,
+    salesPieces: 310,
+    aquisitionPrice: 3000,
+    aquisitionPieces: 300,
+    date: "21-08-2020",
+  },
+  {
+    id: 3,
+    salesPrice: 1800,
+    salesPieces: 180,
+    aquisitionPrice: 1500,
+    aquisitionPieces: 150,
+    date: "21-09-2020",
+  },
+  {
+    id: 4,
+    salesPrice: 1200,
+    salesPieces: 120,
+    aquisitionPrice: 1000,
+    aquisitionPieces: 100,
+    date: "21-10-2020",
+  },
+  {
+    id: 5,
+    salesPrice: 800,
+    salesPieces: 80,
+    aquisitionPrice: 700,
+    aquisitionPieces: 70,
+    date: "21-11-2020",
+  },
+  {
+    id: 6,
+    salesPrice: 900,
+    salesPieces: 90,
+    aquisitionPrice: 300,
+    aquisitionPieces: 30,
+    date: "21-12-2020",
+  },
+  {
+    id: 7,
+    salesPrice: 600,
+    salesPieces: 60,
+    aquisitionPrice: 300,
+    aquisitionPieces: 30,
+    date: "21-01-2021",
+  },
+];
+
+export default salesAquisition;

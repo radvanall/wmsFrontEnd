@@ -1,0 +1,29 @@
+.invoice__button {
+  background-color: #005b96;
+  border-radius: 5px;
+  border: 1px solid #02243a;
+  width: 80px;
+  padding: 5px;
+  color: white;
+  margin: 10px;
+  align-self: center;
+}
+.create__invoice {
+  display: flex;
+  flex-direction: column;
+}
+.invoice__button:hover {
+  background-color: white;
+  color: #02243a;
+}
+.save__button {
+  align-self: center;
+}
+.invoice__form__table__wrapper {
+  display: flex;
+}
+@media (max-width: 750px) {
+  .invoice__form__table__wrapper {
+    flex-direction: column;
+  }
+}

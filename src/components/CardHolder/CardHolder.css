@@ -1,0 +1,21 @@
+.card__holder {
+  background-color: hsl(7, 30%, 97%);
+  width: 100%;
+  display: flex;
+  /* justify-content: space-between; */
+  flex-wrap: wrap;
+  position: relative;
+  border-top: 1px solid hsl(230, 50%, 70%);
+  margin-top: 20px;
+  padding: 20px;
+  gap: 10px;
+}
+.card__holder__name {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: white;
+  top: -10px;
+  left: 10px;
+  padding: 0 5px 0 5px;
+}

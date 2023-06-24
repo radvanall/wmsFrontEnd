@@ -1,0 +1,117 @@
+.basic__table table {
+  /* border: 0.5px solid rgba(128, 128, 128, 0.267); */
+  font-size: calc(12px + (20 - 12) * ((100vw - 320px) / (1889 - 320)));
+  width: 100%;
+  /* margin-top: 10px; */
+  border-radius: 10px;
+  border-collapse: collapse;
+}
+.basic__table th {
+  text-align: center;
+}
+.basic__table th,
+.basic__table td {
+  width: 10%;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.267);
+  border-collapse: collapse;
+  padding-left: calc(4px + (10 - 4) * ((100vw - 320px) / (1889 - 320)));
+  padding-top: calc(2px + (5 - 2) * ((100vw - 320px) / (1889 - 320)));
+  padding-bottom: calc(2px + (5 - 2) * ((100vw - 320px) / (1889 - 320)));
+
+  /* padding-left: 10px; */
+  /* border-radius: 10px; */
+}
+
+.basic__table thead {
+  height: 60px;
+}
+.basic__table tr {
+  height: 50px;
+  /* border-radius: 10px; */
+}
+.basic__table tr:hover {
+  background-color: rgba(128, 128, 128, 0.068);
+}
+.basic__table thead tr {
+  background-color: rgba(201, 201, 201, 0.47);
+}
+.basic__table .id {
+  width: 5%;
+  text-align: center;
+}
+.id.cell.container {
+  width: 100%;
+}
+.table__wrapper {
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  width: 90%;
+  margin: 10px auto;
+  overflow: hidden;
+  border: 0.2px solid rgba(128, 128, 128, 0.267);
+  border-radius: 10px;
+}
+.table__details {
+  color: black;
+  padding: 5px;
+  border-radius: 10px;
+}
+.table__details:hover {
+  background-color: #005b96;
+  color: white;
+}
+.sort__img {
+  height: 100%;
+  width: 100%;
+  background-color: inherit;
+}
+.sort__img:hover {
+  color: #005b96;
+}
+.container.img {
+  padding: 5px 5px 100% 5px;
+
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  /* height: 100px; */
+  border-radius: 100%;
+}
+.container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.cell {
+  text-align: center;
+}
+.activ {
+  background-color: #b4f8c8;
+}
+.inactiv {
+  background-color: #ffaebc;
+}
+.status.container {
+  text-align: center;
+
+  padding: calc(2px + (5 - 2) * ((100vw - 320px) / (1889 - 320)));
+  border-radius: 20%;
+}
+
+.sort__button {
+  margin-left: 5px;
+  background-color: inherit;
+}
+@media (max-width: 550px) {
+  table {
+    font-size: 12px;
+    overflow-x: auto;
+  }
+  .table__wrapper {
+    overflow-x: auto;
+  }
+}

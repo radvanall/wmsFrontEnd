@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Vânzări",
+    "img": "/img/sales.jpg",
+    "link": "/sales"
+  },
+  {
+    "id": 2,
+    "title": "Comenzi",
+    "img": "img/orders.jpg",
+    "link": "/orders"
+  },
+  {
+    "id": 3,
+    "title": "Operatori",
+    "img": "img/operator.jpg",
+    "link": "/opeators"
+  },
+  {
+    "id": 4,
+    "title": "Produse",
+    "img": "img/products.jpg",
+    "link": "/products"
+  }
+]

@@ -1,0 +1,22 @@
+.input__number {
+  width: 4rem;
+  font-size: 14px;
+  padding-left: 3px;
+  margin-top: 5px;
+  height: 21px;
+  border-radius: 5px;
+}
+.input__number_container {
+  /* flex: 0 1 11%; */
+  margin: 5px;
+}
+@media (max-width: 1210px) {
+  .input__number_container {
+    flex: 1 1 20%;
+  }
+}
+@media (max-width: 750px) {
+  .input__number_container {
+    flex: 1 1 45%;
+  }
+}

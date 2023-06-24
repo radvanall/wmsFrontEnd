@@ -1,0 +1,55 @@
+.select__provider {
+  width: 100%;
+  min-width: 220px;
+  border: 1px solid #005b96;
+  /* border-right: none; */
+  font-size: 18px;
+}
+.select__provider__wrapper {
+  display: flex;
+  margin-bottom: 5px;
+}
+.select__provider__wrapper button {
+  background-color: aliceblue;
+  border: 1px solid #005b96;
+  border-left: none;
+  padding: 0 5px 0 5px;
+}
+.select__provider__wrapper button:hover {
+  background-color: rgba(48, 113, 170, 0.938);
+}
+.input__wrapper {
+  margin-top: 5pxa;
+}
+.input__wrapper_2 {
+  display: flex;
+}
+.input__wrapper_2 p {
+  padding-top: 3px;
+}
+.input__wrapper_2 input {
+  width: 90%;
+  text-align: right;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #005b96;
+}
+.input_form_header {
+  margin-bottom: 10px;
+}
+.input__wrapper_2 input::-webkit-outer-spin-button,
+.input__wrapper_2 input::-webkit-inner-spin-button {
+  margin-left: 5px;
+}
+.invoice_form_wrapper {
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 10px;
+  margin-right: 10px;
+}
+.invoice__modified__message {
+  color: red;
+}
+.invoice_form_wrapper .error__message {
+  color: red;
+}

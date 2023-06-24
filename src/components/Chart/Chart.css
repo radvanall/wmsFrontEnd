@@ -1,0 +1,21 @@
+.chart {
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  border-radius: 10px;
+  width: 45%;
+  justify-content: space-between;
+  margin-top: 30px;
+  /* padding: 10px; */
+  margin-left: 20px;
+  overflow: hidden;
+  align-items: center;
+}
+.line__chart {
+  height: 100%;
+}
+@media (max-width: 650px) {
+  .chart {
+    width: 95%;
+    margin-left: 0px;
+  }
+}
