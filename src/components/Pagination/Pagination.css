@@ -17,3 +17,7 @@
   background-color: #005b96;
   color: white;
 }
+.pagination .active {
+  background-color: #005b96;
+  color: white;
+}
