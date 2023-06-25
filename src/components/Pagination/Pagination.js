@@ -9,6 +9,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
     if (page < 1 || page > pageNumbers[pageNumbers.length - 1]) return;
     paginate(page);
   };
+  console.log(currentPage);
   return (
     <nav>
       <ul className="pagination">
@@ -20,16 +21,19 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
             &lt;
           </button>
         </li>
-        {pageNumbers.map((number) => (
-          <li key={number} className="page__number">
-            <button
-              onClick={() => paginate(number)}
-              className="pagination__link"
-            >
-              {number}
-            </button>
-          </li>
-        ))}
+        {pageNumbers.map((number) => {
+          if (number >= currentPage - 2 && number <= currentPage + 2)
+            return (
+              <li key={number} className="page__number">
+                <button
+                  onClick={() => paginate(number)}
+                  className="pagination__link"
+                >
+                  {number}
+                </button>
+              </li>
+            );
+        })}
         <li className="page__number">
           <button
             className="pagination__link"
