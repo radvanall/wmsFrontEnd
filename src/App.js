@@ -9,11 +9,12 @@ import SingleOperator from "./pages/Single/SingleOperator";
 import Navbar from "./components/navbar/Navbar";
 import Operators from "./pages/operators/Operators";
 import Stocks from "./pages/stocks/Stocks";
+import Providers from "./pages/providers/Providers";
 import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import OperatorsInvoice from "./pages/OperatorsInvoice/OperatorsInvoice";
 import { useSelector } from "react-redux";
-//test comment
+//test commgit sent
 import Invoice from "./pages/Invoice/Invoice";
 function App() {
   const opened = useSelector((state) => state.menuState.opened);
@@ -54,6 +55,14 @@ function App() {
                   <Route path="products">
                     <Route index element={<Products />} />
                     <Route path=":productId" element={<SingleProduct />} />
+                    {/* <Route
+                path="new"
+                element={<New inputs={productInputs} title="Add New Product" />}
+              /> */}
+                  </Route>
+                  <Route path="providers">
+                    <Route index element={<Providers />} />
+                    {/* <Route path=":productId" element={<SingleProduct />} /> */}
                     {/* <Route
                 path="new"
                 element={<New inputs={productInputs} title="Add New Product" />}

@@ -10,17 +10,20 @@ const useFetch = (url) => {
     fetch(url)
       .then((res) => {
         if (!res.ok) {
+          console.log("errorar la connectare");
           throw Error("Eroare la conectare..");
         }
         return res.json();
       })
       .then((res) => {
         setLoading(false);
+        console.log("data:", res);
         setData(res);
         setError(null);
       })
       .catch((err) => {
         setLoading(false);
+        console.log(err);
         setError(err.message);
       });
   }, [url]);
