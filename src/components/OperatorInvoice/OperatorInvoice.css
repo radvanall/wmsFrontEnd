@@ -42,7 +42,7 @@
   width: 100%;
 }
 .operator__invoice table .invoice__header tr th {
-  width: 18%;
+  width: 10%;
 }
 .invoice__table__body {
   display: block;
@@ -97,19 +97,19 @@
   background-color: #fe6240;
   color: white;
 }
+/* .operator__invoice table .invoice__header tr th {
+  width: 10%;
+} */
+.operator__invoice table .invoice__table__body tr {
+  display: block;
+  width: 100%;
+}
+.operator__invoice table .invoice__table__body td {
+  width: 10%;
+}
 @media (max-width: 650px) {
   .operator__invoice__wrapper {
     width: 95%;
     margin-left: 0px;
-  }
-  .operator__invoice table .invoice__header tr th {
-    width: 18%;
-  }
-  .operator__invoice table .invoice__table__body tr {
-    display: block;
-    width: 100%;
-  }
-  .operator__invoice table .invoice__table__body td {
-    width: 18%;
   }
 }
