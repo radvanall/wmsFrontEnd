@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const useGetData = (url) => {
@@ -24,6 +24,7 @@ const useGetData = (url) => {
     } finally {
       setLoading(false);
     }
+
     // axios
     //   .get(url + `${id}`)
     //   .then((response) => {
