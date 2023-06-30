@@ -1,0 +1,14 @@
+.form__title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+.provider__form__wrapper {
+  display: flex;
+  gap: 5px;
+}
+.provider__form {
+  display: flex;
+  flex-direction: column;
+}

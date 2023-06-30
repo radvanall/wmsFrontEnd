@@ -4,7 +4,7 @@ import useFetch from "../../hooks/useFetch";
 import Table from "../../components/Table/Table";
 import ProvidersMenu from "../../components/ProvidersMenu/ProvidersMenu";
 const Providers = () => {
-  const { data, loading, error } = useFetch(
+  const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/provider/readAll"
   );
   const [providers, setProviders] = useState(null);
@@ -27,7 +27,13 @@ const Providers = () => {
     <div className="Providers">
       {providers && (
         <div>
-          {data && <ProvidersMenu data={data} setProviders={setProviders} />}
+          {data && (
+            <ProvidersMenu
+              data={data}
+              setProviders={setProviders}
+              fetchData={fetchData}
+            />
+          )}
           {providers.length !== 0 ? (
             <Table data={providers} page="providers" />
           ) : (

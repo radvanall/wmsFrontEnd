@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import SearchBarView from "../SearchBarView/SearchBarView";
 import { useToggle } from "../../hooks/useToggle";
-import { BiSearchAlt } from "react-icons/bi";
+import { BiSearchAlt, BiPlusMedical } from "react-icons/bi";
+import CreateProvider from "../CreateProvider/CreateProvider";
 
-const ProvidersMenu = ({ data, setProviders }) => {
+const ProvidersMenu = ({ data, setProviders, fetchData }) => {
   const { status: isOpenSearch, toggleStatus: toggleSearch } = useToggle(false);
+  const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const [searchValue, setSearchValue] = useState("");
   const handleChange = (event) => {
     const newWord = event.target.value;
@@ -40,6 +42,14 @@ const ProvidersMenu = ({ data, setProviders }) => {
   return (
     <div>
       <div className="menu__buttons">
+        <BiPlusMedical
+          className={
+            isOpenCreate
+              ? "search_menu_button menu__opened"
+              : "search_menu_button menu__closed"
+          }
+          onClick={toggleCreate}
+        />
         <BiSearchAlt
           className={
             isOpenSearch
@@ -49,6 +59,11 @@ const ProvidersMenu = ({ data, setProviders }) => {
           onClick={toggleSearch}
         />
       </div>
+      <CreateProvider
+        active={isOpenCreate}
+        setActive={toggleCreate}
+        fetchData={fetchData}
+      />
       <SearchBarView
         isOpenSearch={isOpenSearch}
         searchValue={searchValue}
