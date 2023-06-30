@@ -24,6 +24,7 @@ const usePostData = () => {
         setError(error.message);
         setLoading(false);
       });
+
     //   console.log(data);
   };
   return { message, loading, error, resetMessage, postData };

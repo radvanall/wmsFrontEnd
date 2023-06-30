@@ -10,6 +10,7 @@ import Navbar from "./components/navbar/Navbar";
 import Operators from "./pages/operators/Operators";
 import Stocks from "./pages/stocks/Stocks";
 import Providers from "./pages/providers/Providers";
+import SingleProvider from "./pages/SingleProvider/SingleProvider";
 import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import OperatorsInvoice from "./pages/OperatorsInvoice/OperatorsInvoice";
@@ -62,7 +63,7 @@ function App() {
                   </Route>
                   <Route path="providers">
                     <Route index element={<Providers />} />
-                    {/* <Route path=":productId" element={<SingleProduct />} /> */}
+                    <Route path=":providerId" element={<SingleProvider />} />
                     {/* <Route
                 path="new"
                 element={<New inputs={productInputs} title="Add New Product" />}
