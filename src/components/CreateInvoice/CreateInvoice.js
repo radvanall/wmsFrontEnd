@@ -89,7 +89,7 @@ const CreateInvoice = ({ active, setActive }) => {
 
   useEffect(() => {
     if (positionsData !== null && positionsData !== undefined)
-      setPositions([...positionsData.data.positions]);
+      setPositions([...positionsData.positions]);
   }, [positionsData]);
   const handleFormChange = (event) => {
     setFormFields((prev) => ({

@@ -40,7 +40,7 @@ const SingleProductMenu = ({ id }) => {
         <EditProduct
           active={isOpenModify}
           setActive={toggleModify}
-          product={data.data}
+          product={data}
         />
       )}
 

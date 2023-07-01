@@ -17,7 +17,7 @@ const useGetData = (url) => {
         // }
       );
       console.log("data is: ", fetch);
-      setData(fetch);
+      setData(fetch.data);
       //const product = response.data;
     } catch (err) {
       setError(err.message);
