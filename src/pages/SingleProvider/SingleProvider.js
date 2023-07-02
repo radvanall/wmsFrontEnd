@@ -18,7 +18,7 @@ const SingleProvider = () => {
       SingleProvider
       {data && (
         <div style={{ maxWidth: 300 }}>
-          <ProviderCard provider={data} />
+          <ProviderCard provider={data} getData={getData} />
         </div>
       )}
     </div>
