@@ -1,8 +1,5 @@
 import React, { useState, useRef } from "react";
-import Modal from "../Modal/Modal";
-import { CgCloseR } from "react-icons/cg";
-import { MdOutlineOpenInBrowser } from "react-icons/md";
-import "./CreateProvider.css";
+import ProviderModal from "../ProviderModal/ProviderModal";
 import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import usePostData from "../../hooks/usePostData";
 
@@ -65,52 +62,21 @@ const CreateProvider = ({ active, setActive, fetchData }) => {
     resetMessage();
   };
   return (
-    <Modal active={active}>
-      <CgCloseR onClick={handleCloseForm} />
-      <h2 className="form__title">Creați un nou furnizor:</h2>
-      <div className="provider__form__wrapper">
-        <form className="provider__form" onSubmit={handleSubmit} ref={formRef}>
-          <label htmlFor="providerNameId">Numele furnizorului:</label>
-          <input type="text" name="providerName" id="providerNameId" />
-          {nameError && (
-            <label style={{ color: "red" }}>Numele e obligatoriu!</label>
-          )}
-          <label htmlFor="providerAddressId">Adresa furnizorului:</label>
-          <input type="text" name="address" id="providerAddressId" />
-          <label htmlFor="providerEmailId">Email-ul furnizorului:</label>
-          <input type="text" name="email" id="providerEmailId" />
-          <label htmlFor="providerTelId">Telefonul furnizorului:</label>
-          <input type="text" name="tel" id="providerTelId" />
-          <label className="img_label">
-            Alegeți imaginea:
-            <button onClick={pickFile} className="img_browse_button">
-              <MdOutlineOpenInBrowser className="img_browse" />
-            </button>
-            <input
-              type="text"
-              name="imgName"
-              id="add_product_name"
-              className="img_name_input"
-              value={formFields.imgName}
-              onChange={handleFormChange}
-            />
-            <input
-              className="hidden"
-              name="image"
-              type="file"
-              ref={filePicker}
-              accept="image/*,.png,.jpg,.jpeg,.web"
-              onChange={onSelectedFile}
-            ></input>
-          </label>
-          <button type="submit" className="submit_product_buton">
-            Submit
-          </button>
-        </form>
-        {message && <label style={{ color: "red" }}>{message}</label>}
-        <img src={image} alt="img" className="product_add_img" />
-      </div>
-    </Modal>
+    <ProviderModal
+      active={active}
+      title="Creați un nou furnizor:"
+      image={image}
+      onSelectedFile={onSelectedFile}
+      pickFile={pickFile}
+      formFields={formFields}
+      nameError={nameError}
+      message={message}
+      filePicker={filePicker}
+      handleCloseForm={handleCloseForm}
+      handleFormChange={handleFormChange}
+      handleSubmit={handleSubmit}
+      formRef={formRef}
+    />
   );
 };
 
