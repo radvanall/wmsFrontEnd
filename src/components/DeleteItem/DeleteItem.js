@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMessage, toggle } from "../../toolkitRedux/deleteMessageSlice";
 // import { fetchProducts } from "../../../toolkitRedux/productsSlice";
 import { useNavigate } from "react-router-dom";
-import deleteProduct from "./functions/deleteProduct";
-import "./DeleteProduct.css";
-const DeleteProduct = ({ active, setActive, productId }) => {
+import deleteItem from "./functions/deleteItem";
+import "./DeleteItem.css";
+const DeleteItem = ({ active, setActive, endpoint, id, navigateTo, title }) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const handleDelete = () => {
-    deleteProduct(productId, dispatch, setMessage);
-    navigate("/products");
+    deleteItem(id, endpoint, dispatch, setMessage);
+    navigate(navigateTo);
     dispatch(toggle());
   };
 
@@ -21,7 +21,7 @@ const DeleteProduct = ({ active, setActive, productId }) => {
     <Modal active={active}>
       <CgCloseR onClick={setActive} />
       <div className="delete_product_container">
-        <h2>Sunteți siguri că doriți să ștergeți produsul ales?</h2>
+        <h2>{title}</h2>
         <div className="delete_buttons_container">
           <button onClick={handleDelete}>Șterge</button>
           <button onClick={setActive}>Anulează</button>
@@ -31,4 +31,4 @@ const DeleteProduct = ({ active, setActive, productId }) => {
   );
 };
 
-export default DeleteProduct;
+export default DeleteItem;

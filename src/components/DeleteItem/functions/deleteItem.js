@@ -1,11 +1,11 @@
 import axios from "axios";
-const deleteProduct = (id, dispatch, setMessage) => {
+const deleteItem = (id, endpoint, dispatch, setMessage) => {
   const message = "";
   axios
-    .put(`http://localhost:8080/api/position/delete/${id}`)
+    .put(`http://localhost:8080/api/${endpoint}/delete/${id}`)
     .then((response) => {
       console.log("response=", response);
-      //dispatch(fetchProducts());
+      //dispatch(fetchItdeleteItems());
       dispatch(setMessage(response.data));
       console.log(response.data);
     })
@@ -14,4 +14,4 @@ const deleteProduct = (id, dispatch, setMessage) => {
       dispatch(setMessage(error.message));
     });
 };
-export default deleteProduct;
+export default deleteItem;
