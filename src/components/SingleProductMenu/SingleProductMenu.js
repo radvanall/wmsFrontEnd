@@ -3,7 +3,7 @@ import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import EditProduct from "../EditProduct/EditProduct";
-import DeleteProduct from "../DeleteProduct/DeleteProduct";
+import DeleteItem from "../DeleteItem/DeleteItem";
 import useGetData from "../../hooks/useGetData";
 import "./SingleProductMenu.css";
 const SingleProductMenu = ({ id }) => {
@@ -44,10 +44,13 @@ const SingleProductMenu = ({ id }) => {
         />
       )}
 
-      <DeleteProduct
+      <DeleteItem
         active={isOpenDelete}
         setActive={toggleDelete}
-        productId={id}
+        endpoint="position"
+        id={id}
+        title="Sunteți siguri că doriți să ștergeți produsul ales?"
+        navigateTo="/products"
       />
     </div>
   );
