@@ -3,6 +3,7 @@ import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import EditProvider from "../EditProvider/EditProvider";
+import DeleteItem from "../DeleteItem/DeleteItem";
 import Card from "../Card/Card";
 import "./ProviderCard.css";
 
@@ -66,6 +67,14 @@ const ProviderCard = ({ provider, getData }) => {
         active={isOpenModify}
         setActive={toggleModify}
         fetchData={fetchData}
+      />
+      <DeleteItem
+        active={isOpenDelete}
+        setActive={toggleDelete}
+        endpoint="provider"
+        id={provider.id}
+        title="Sunteți siguri că doriți să ștergeți furnizorul ales?"
+        navigateTo="/providers"
       />
     </Card>
   );
