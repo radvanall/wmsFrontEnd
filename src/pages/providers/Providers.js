@@ -3,6 +3,7 @@ import "./Providers.css";
 import useFetch from "../../hooks/useFetch";
 import Table from "../../components/Table/Table";
 import ProvidersMenu from "../../components/ProvidersMenu/ProvidersMenu";
+import DeleteMessage from "../../components/DeleteMessage/DeleteMessage";
 const Providers = () => {
   const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/provider/readAll"
@@ -41,6 +42,7 @@ const Providers = () => {
           )}
         </div>
       )}
+      <DeleteMessage />
     </div>
   );
 };
