@@ -95,7 +95,7 @@
 .inactiv {
   background-color: #ffaebc;
 }
-.status.container {
+.container {
   text-align: center;
 
   padding: calc(2px + (5 - 2) * ((100vw - 320px) / (1889 - 320)));
