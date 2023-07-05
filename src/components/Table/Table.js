@@ -8,7 +8,7 @@ import { FaSortNumericDown, FaSortNumericUp } from "react-icons/fa";
 import useTableSettings from "./useTableSettings";
 
 // export default function Table({ info }) {
-export default function Table({ data, page }) {
+export default function Table({ data, page, coloredCell }) {
   // const info = useSelector((state) => state.productsSlice.displaiedData);
   // const data2 = useSelector((state) => state.productsSlice.data);
   // const [info, setInfo] = useState(data);
@@ -62,12 +62,18 @@ export default function Table({ data, page }) {
                 {Object.keys(item).map((key, index) => (
                   <td key={index} className={key}>
                     <div
+                      // className={`${key} ${
+                      //   key === "status" ? item[key] : "cell"
+                      // } container`}
                       className={`${key} ${
-                        key === "status" ? item[key] : "cell"
+                        key === coloredCell ? item[key].state : "cell"
                       } container`}
                     >
                       {key === "img" ? (
                         <img src={item[key]} alt="" />
+                      ) : // item[key]
+                      key === coloredCell ? (
+                        item[key].text
                       ) : (
                         item[key]
                       )}

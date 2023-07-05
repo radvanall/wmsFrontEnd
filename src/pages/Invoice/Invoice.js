@@ -11,17 +11,32 @@ const Invoice = () => {
   useEffect(() => {
     console.log(data);
     if (data) {
+      const options = { day: "numeric", month: "long", year: "numeric" };
       const newArray = data.map((invoice) => {
+        const dateOfCreation = new Date(invoice.dateOfCreation)
+          .toLocaleDateString("en-US", options)
+          .toUpperCase();
+        const dateOfValidation = invoice.dateOfValidation
+          ? new Date(invoice.dateOfValidation)
+              .toLocaleDateString("en-US", options)
+              .toUpperCase()
+          : "none";
         return {
           id: invoice.id,
           Furnizor: invoice.provider,
           ["Creată de"]: invoice.createdBy,
-          ["Data creării"]: invoice.dateOfCreation.slice(0, 10),
+          // ["Data creării"]: invoice.dateOfCreation.slice(0, 10),
+          ["Data creării"]: dateOfCreation,
           ["Validată de"]: invoice.validatedBy,
-          ["Data validării"]: invoice.dateOfValidation?.slice(0, 10) ?? "none",
+          // ["Data validării"]: invoice.dateOfValidation?.slice(0, 10) ?? "none",
+          ["Data validării"]: dateOfValidation,
           ["Prețul total de cumpărare"]: invoice.totalBuyingPrice,
           ["Prețul total de vînzare"]: invoice.totalSellingPrice,
-          Validat: invoice.validated ? "validat" : "nevalidat",
+          // Validat: invoice.validated ? "validat" : "nevalidat",
+          Validat: {
+            text: invoice.validated ? "validat" : "nevalidat",
+            state: invoice.validated ? "activ" : "inactiv",
+          },
         };
       });
       setInvoices(newArray);
@@ -33,7 +48,7 @@ const Invoice = () => {
 
       {invoices &&
         (invoices.length !== 0 ? (
-          <Table data={invoices} page="invoices" />
+          <Table data={invoices} page="invoices" coloredCell="Validat" />
         ) : (
           <h2>Nu exista rezultate</h2>
         ))}
