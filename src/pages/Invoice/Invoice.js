@@ -14,8 +14,12 @@ const Invoice = () => {
       const options = { day: "numeric", month: "long", year: "numeric" };
       const newArray = data.map((invoice) => {
         const dateOfCreation = new Date(invoice.dateOfCreation)
-          .toLocaleDateString("en-US", options)
+          .toLocaleDateString("ro-RO", options)
           .toUpperCase();
+        const monthName = "март";
+        const date = new Date(`${monthName} 1, 2022`);
+        const monthIndex = date.getMonth();
+        console.log(monthIndex);
         const dateOfValidation = invoice.dateOfValidation
           ? new Date(invoice.dateOfValidation)
               .toLocaleDateString("en-US", options)

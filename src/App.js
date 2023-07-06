@@ -11,6 +11,7 @@ import Operators from "./pages/operators/Operators";
 import Stocks from "./pages/stocks/Stocks";
 import Providers from "./pages/providers/Providers";
 import SingleProvider from "./pages/SingleProvider/SingleProvider";
+import SingleInvoice from "./pages/SingleInvoice/SingleInvoice";
 import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import OperatorsInvoice from "./pages/OperatorsInvoice/OperatorsInvoice";
@@ -49,9 +50,9 @@ function App() {
                 }
               /> */}
                   </Route>
-                  <Route path="invoice">
+                  <Route path="invoices">
                     <Route index element={<Invoice />} />
-                    <Route path="invoiceId" element={<Login />} />
+                    <Route path=":invoiceId" element={<SingleInvoice />} />
                   </Route>
                   <Route path="products">
                     <Route index element={<Products />} />

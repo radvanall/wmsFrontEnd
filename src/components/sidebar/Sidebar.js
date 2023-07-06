@@ -75,7 +75,7 @@ const Sidebar = () => {
         </li>
         <li>
           <FaFileInvoice className="fa" />
-          <Link to="/invoice" className="list">
+          <Link to="/invoices" className="list">
             Facturi
           </Link>
         </li>
