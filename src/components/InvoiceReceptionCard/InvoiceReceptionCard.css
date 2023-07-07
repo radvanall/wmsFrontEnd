@@ -1,0 +1,29 @@
+.invoice__reception__wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+}
+.invoice__reception__block {
+  flex-basis: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.invoice__reception__block img {
+  width: 100%;
+}
+.invoice__reception__block p {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.invoice__reception__block .provider {
+  justify-content: center;
+  font-weight: 700;
+  margin: 5px;
+}
+.invoice__reception__block p span:first-child {
+  font-weight: 700;
+}
