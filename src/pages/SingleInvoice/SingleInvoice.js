@@ -27,7 +27,7 @@ const SingleInvoice = () => {
   return (
     <div>
       SingleInvoice
-      <InvoiceReceptionCard invoice={invoice} />{" "}
+      {invoice && <InvoiceReceptionCard invoice={invoice} />}
     </div>
   );
 };
