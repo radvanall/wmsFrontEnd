@@ -41,8 +41,8 @@ const InvoiceTable = ({
                       {item}
                     </th>
                   ))}
-                <th>Editează</th>
-                <th>Șterge</th>
+                {handleEdit && <th>Editează</th>}
+                {handleDelete && <th>Șterge</th>}
               </tr>
             </thead>
             <tbody className="invoice__table__body">
@@ -71,26 +71,30 @@ const InvoiceTable = ({
                       </td>
                     ))}
 
-                  <td>
-                    <button
-                      className="invoice__table__button"
-                      onClick={() => {
-                        handleEdit(row.id);
-                      }}
-                    >
-                      <TiEdit className="search_menu_button menu__opened" />
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="invoice__table__button"
-                      onClick={() => {
-                        handleDelete(row.id);
-                      }}
-                    >
-                      <RiDeleteBin6Line className="search_menu_button menu__opened" />
-                    </button>
-                  </td>
+                  {handleEdit && (
+                    <td>
+                      <button
+                        className="invoice__table__button"
+                        onClick={() => {
+                          handleEdit(row.id);
+                        }}
+                      >
+                        <TiEdit className="search_menu_button menu__opened" />
+                      </button>
+                    </td>
+                  )}
+                  {handleEdit && (
+                    <td>
+                      <button
+                        className="invoice__table__button"
+                        onClick={() => {
+                          handleDelete(row.id);
+                        }}
+                      >
+                        <RiDeleteBin6Line className="search_menu_button menu__opened" />
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
