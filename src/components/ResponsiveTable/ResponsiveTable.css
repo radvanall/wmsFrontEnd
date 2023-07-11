@@ -1,0 +1,95 @@
+.responsive__table img {
+  max-width: 100px;
+}
+.responsive__table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+  overflow: auto;
+}
+.responsive__table thead {
+  display: block;
+  width: 100%;
+  padding-bottom: 10px;
+}
+.responsive__table tbody tr {
+  display: flex;
+  width: 100%;
+}
+.responsive__table thead tr {
+  display: flex;
+  width: calc(100% - 4px);
+}
+.actions__cell {
+  display: flex;
+  align-items: left;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 5px 0 5px 0;
+}
+.responsive__table tbody {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+.responsive__table tbody::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  border-radius: 4px;
+}
+.responsive__table tbody::-webkit-scrollbar-track {
+  margin-block: 5px;
+  margin-inline: 3px;
+  background-color: #f5f5f5;
+}
+.responsive__table tbody::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-background-color);
+  border-radius: 4px;
+}
+
+.responsive__table tr:nth-of-type(2n) {
+  background-color: rgba(128, 128, 128, 0.267);
+}
+.responsive__table td,
+th {
+  text-align: left;
+  overflow: hidden;
+  padding-top: 3px;
+}
+.responsive__table tr:hover {
+  background-color: var(--row-hover);
+  font-weight: 600;
+}
+.responsive__table tr {
+  padding-right: 5px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.responsive__table tr td {
+  word-break: break-all;
+  padding-left: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.responsive__table th {
+  white-space: wrap;
+  padding-left: 4px;
+}
+.responsive__table thead {
+  background-color: var(--secondary-background-color);
+}
+.responsive__table caption {
+  display: block;
+  background-color: var(--tertialy--backgorund-color);
+  color: var(--caption-color);
+  font-size: 18px;
+  font-weight: 600;
+}
+.responsive__table .buttons__cell {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
