@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import InvoiceReceptionCard from "../../components/InvoiceReceptionCard/InvoiceReceptionCard";
+import ResponsiveTable from "../../components/ResponsiveTable/ResponsiveTable";
 import InvoiceTable from "../../components/InvoiceTable/InvoiceTable";
+import "./SingleInvoice.css";
+import Card from "../../components/Card/Card";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
   const [invoice, setInvoice] = useState();
@@ -24,7 +27,7 @@ const SingleInvoice = () => {
       setInvoice(newObject);
       const newArray = newStocks.map((stock) => ({
         id: stock.id,
-        productImg: stock.position.image,
+        image: stock.position.image,
         Produs: stock.position.name,
         ["Preț de cumpărare"]: stock.buyingPrice,
         ["Preț de vînzare"]: stock.sellingPrice,
@@ -37,10 +40,21 @@ const SingleInvoice = () => {
 
   console.log("invoiceId:", invoiceId);
   return (
-    <div>
+    <div className="single__invoice">
       SingleInvoice
       {invoice && <InvoiceReceptionCard invoice={invoice} />}
-      {/* {stocks && <InvoiceTable data={stocks} header="Stocuri:" />} */}
+      <br />
+      {stocks && (
+        <Card>
+          <ResponsiveTable
+            data={stocks}
+            title="Stocuri:"
+            handleEdit={(id) => {
+              console.log(id);
+            }}
+          />
+        </Card>
+      )}
     </div>
   );
 };
