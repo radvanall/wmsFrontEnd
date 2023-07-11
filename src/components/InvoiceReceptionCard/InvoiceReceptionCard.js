@@ -1,7 +1,9 @@
 import { isBefore } from "date-fns";
+import { AiOutlineCheck } from "react-icons/ai";
 import React from "react";
 import Card from "../Card/Card";
 import "./InvoiceReceptionCard.css";
+
 const InvoiceReceptionCard = ({ invoice }) => {
   console.log("invoice:", invoice);
   const options = { day: "numeric", month: "long", year: "numeric" };
@@ -15,6 +17,18 @@ const InvoiceReceptionCard = ({ invoice }) => {
     : "none";
   return (
     <Card>
+      <div className="status__container">
+        {invoice.validated ? (
+          <span className="status">validat</span>
+        ) : (
+          <div className="status__unvalidated">
+            <span className="status">nevalidat</span>
+            <button className="invoice__table__button">
+              <AiOutlineCheck className="search_menu_button validate__button" />
+            </button>
+          </div>
+        )}
+      </div>
       <div className="invoice__reception__wrapper">
         <div className="invoice__reception__block">
           <img src={invoice.image} alt="" />
