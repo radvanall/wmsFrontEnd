@@ -41,6 +41,7 @@ const InvoiceTable = ({
                       {item}
                     </th>
                   ))}
+
                 {handleEdit && <th>Editează</th>}
                 {handleDelete && <th>Șterge</th>}
               </tr>
@@ -83,7 +84,7 @@ const InvoiceTable = ({
                       </button>
                     </td>
                   )}
-                  {handleEdit && (
+                  {handleDelete && (
                     <td>
                       <button
                         className="invoice__table__button"
