@@ -37,21 +37,32 @@ const SingleInvoice = () => {
       setStocks(newArray);
     }
   }, [data]);
-
+  const deleteStock = (id = {});
   console.log("invoiceId:", invoiceId);
   return (
     <div className="single__invoice">
       SingleInvoice
-      {invoice && <InvoiceReceptionCard invoice={invoice} />}
+      {invoice && <InvoiceReceptionCard invoice={invoice} getData={getData} />}
       <br />
       {stocks && (
         <Card>
           <ResponsiveTable
             data={stocks}
             title="Stocuri:"
-            handleEdit={(id) => {
-              console.log(id);
-            }}
+            handleEdit={
+              invoice.validated
+                ? null
+                : (id) => {
+                    console.log(id);
+                  }
+            }
+            handleDelete={
+              invoice.validated
+                ? null
+                : (id) => {
+                    console.log(id);
+                  }
+            }
           />
         </Card>
       )}
