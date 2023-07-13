@@ -1,11 +1,23 @@
 import { isBefore } from "date-fns";
 import { AiOutlineCheck } from "react-icons/ai";
-import React from "react";
+import React, { useState } from "react";
+import usePostData from "../../hooks/usePostData";
 import Card from "../Card/Card";
+import Modal from "../Modal/Modal";
 import "./InvoiceReceptionCard.css";
 
-const InvoiceReceptionCard = ({ invoice }) => {
+const InvoiceReceptionCard = ({ invoice, getData }) => {
   console.log("invoice:", invoice);
+  const { message, loading, error, resetMessage, postData } = usePostData();
+  const handleValidate = async () => {
+    console.log("inv___", invoice.id);
+    await postData(
+      { id: invoice.id },
+      `http://localhost:8080/api/invoiceReception/validate`
+    );
+    getData(invoice.id);
+  };
+  const [active, setActive] = useState(false);
   const options = { day: "numeric", month: "long", year: "numeric" };
   const dateOfCreation = new Date(invoice.dateOfCreation)
     .toLocaleDateString("ro-RO", options)
@@ -19,11 +31,14 @@ const InvoiceReceptionCard = ({ invoice }) => {
     <Card>
       <div className="status__container">
         {invoice.validated ? (
-          <span className="status">validat</span>
+          <span className="status_v">validat</span>
         ) : (
           <div className="status__unvalidated">
-            <span className="status">nevalidat</span>
-            <button className="invoice__table__button">
+            <span className="status_n">nevalidat</span>
+            <button
+              className="invoice__table__button"
+              onClick={() => setActive(true)}
+            >
               <AiOutlineCheck className="search_menu_button validate__button" />
             </button>
           </div>
@@ -71,6 +86,14 @@ const InvoiceReceptionCard = ({ invoice }) => {
           </p>
         </div>
       </div>
+      <Modal active={active}>
+        <p>Sunteți siguri că doriți să validați factura?</p>
+        <p>
+          După validare nu va fi posibil de editat sau șters această factură.
+        </p>
+        <button onClick={handleValidate}>Validează</button>
+        <button onClick={() => setActive(false)}>Anulează</button>
+      </Modal>
     </Card>
   );
 };
