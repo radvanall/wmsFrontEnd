@@ -6,6 +6,7 @@ import ResponsiveTable from "../../components/ResponsiveTable/ResponsiveTable";
 import InvoiceTable from "../../components/InvoiceTable/InvoiceTable";
 import "./SingleInvoice.css";
 import Card from "../../components/Card/Card";
+import usePostData from "../../hooks/usePostData";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
   const [invoice, setInvoice] = useState();
@@ -13,6 +14,13 @@ const SingleInvoice = () => {
   const { data, loading, error, getData } = useGetData(
     "http://localhost:8080/api/invoiceReception/read/"
   );
+  const {
+    message,
+    loading: load,
+    error: errorMessage,
+    resetMessage,
+    postData,
+  } = usePostData();
 
   useEffect(() => {
     async function fetchData() {
@@ -37,7 +45,11 @@ const SingleInvoice = () => {
       setStocks(newArray);
     }
   }, [data]);
-  const deleteStock = (id = {});
+  const deleteStock = async (id) => {
+    console.log(id);
+    await postData({ id: id }, `http://localhost:8080/api/stock/delete`);
+    getData(invoiceId);
+  };
   console.log("invoiceId:", invoiceId);
   return (
     <div className="single__invoice">
@@ -56,13 +68,7 @@ const SingleInvoice = () => {
                     console.log(id);
                   }
             }
-            handleDelete={
-              invoice.validated
-                ? null
-                : (id) => {
-                    console.log(id);
-                  }
-            }
+            handleDelete={invoice.validated ? null : deleteStock}
           />
         </Card>
       )}
