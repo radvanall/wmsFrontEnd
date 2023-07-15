@@ -1,3 +1,7 @@
 .single__invoice {
   padding: 5px;
 }
+.stock__button__wrapper {
+  display: flex;
+  justify-content: flex-end;
+}

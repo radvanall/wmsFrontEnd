@@ -7,8 +7,11 @@ import InvoiceTable from "../../components/InvoiceTable/InvoiceTable";
 import "./SingleInvoice.css";
 import Card from "../../components/Card/Card";
 import usePostData from "../../hooks/usePostData";
+import { BiPlusMedical } from "react-icons/bi";
+import { useToggle } from "../../hooks/useToggle";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
+  const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const [invoice, setInvoice] = useState();
   const [stocks, setStocks] = useState();
   const { data, loading, error, getData } = useGetData(
@@ -58,6 +61,19 @@ const SingleInvoice = () => {
       <br />
       {stocks && (
         <Card>
+          {invoice.validated ? null : (
+            <div className="stock__button__wrapper">
+              <BiPlusMedical
+                className={
+                  isOpenCreate
+                    ? "search_menu_button menu__opened"
+                    : "search_menu_button menu__closed"
+                }
+                // onClick={toggleCreate}
+              />
+            </div>
+          )}
+
           <ResponsiveTable
             data={stocks}
             title="Stocuri:"
