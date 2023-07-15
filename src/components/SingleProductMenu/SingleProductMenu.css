@@ -24,4 +24,5 @@
 }
 .search_menu_button:hover {
   background-color: rgb(143, 176, 199);
+  cursor: pointer;
 }
