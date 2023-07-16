@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import InvoiceReceptionCard from "../../components/InvoiceReceptionCard/InvoiceReceptionCard";
+
 import ResponsiveTable from "../../components/ResponsiveTable/ResponsiveTable";
-import InvoiceTable from "../../components/InvoiceTable/InvoiceTable";
+import EditStock from "../../components/EditStock/EditStock";
 import "./SingleInvoice.css";
 import Card from "../../components/Card/Card";
 import usePostData from "../../hooks/usePostData";
 import { BiPlusMedical } from "react-icons/bi";
 import { useToggle } from "../../hooks/useToggle";
+
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
+  const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
   const [invoice, setInvoice] = useState();
   const [stocks, setStocks] = useState();
   const { data, loading, error, getData } = useGetData(
@@ -82,12 +85,14 @@ const SingleInvoice = () => {
                 ? null
                 : (id) => {
                     console.log(id);
+                    toggleEdit();
                   }
             }
             handleDelete={invoice.validated ? null : deleteStock}
           />
         </Card>
       )}
+      <EditStock active={isOpenEdit} handleCloseModal={toggleEdit} />
     </div>
   );
 };
