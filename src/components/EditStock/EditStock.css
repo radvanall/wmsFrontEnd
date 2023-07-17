@@ -1,0 +1,33 @@
+.edit__stock__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  border-bottom: 1px solid var(--blue-color);
+  text-align: center;
+  align-items: center;
+  gap: 5px;
+}
+.edit__stock__header span {
+  font-weight: 700;
+}
+.edit__stock__header img {
+  width: 100px;
+  height: 100px;
+}
+.quantity__input {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.quantity__input span {
+  padding-bottom: 10px;
+}
+.edit__stock__buttons {
+  padding-top: 5px;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+}
+.stock__error__message {
+  color: red;
+}
