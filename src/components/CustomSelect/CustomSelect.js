@@ -4,7 +4,6 @@ import { useState } from "react";
 import "./CustomSelect.css";
 const CustomSelect = ({
   positions,
-  setFormFields,
   handleSelect,
   image,
   selected,
@@ -31,6 +30,7 @@ const CustomSelect = ({
   //   console.log("position lenght=", positions.length);
   //   if (positions.length > 0) alert("datele introduse vor fi pierdute");
   // };
+
   return (
     <div>
       <div className="custom_select_selected">
@@ -39,7 +39,10 @@ const CustomSelect = ({
         <input type="text" className="select_input" readOnly value={selected} />
         <button
           className="select_button"
-          onClick={() => setOpened((prev) => !prev)}
+          onClick={(e) => {
+            e.preventDefault();
+            setOpened((prev) => !prev);
+          }}
         >
           <IoIosArrowDown className={opened ? "opened" : "closed"} />
         </button>

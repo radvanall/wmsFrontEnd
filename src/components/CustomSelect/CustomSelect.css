@@ -50,6 +50,7 @@
   border: 1px solid #005b96;
   max-height: 310px;
   overflow-y: auto;
+  z-index: 3;
 }
 .hidden {
   display: none;
