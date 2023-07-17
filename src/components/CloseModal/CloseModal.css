@@ -1,0 +1,13 @@
+.close__modal__button {
+  display: flex;
+  justify-content: flex-end;
+}
+.close__svg {
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--blue-color);
+}
+.close__svg:hover {
+  background-color: var(--blue-color);
+  color: white;
+}
