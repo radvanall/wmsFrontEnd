@@ -65,7 +65,8 @@ const AddStock = ({
     });
   };
   const closeModal = () => {
-    // resetMessage();
+    setOpened(false);
+    resetMessage();
     setProductImage("/img/57x57.png");
     setUnity("-");
     setSelected("");
@@ -84,6 +85,17 @@ const AddStock = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(formFields);
+    if (
+      !formFields.productId ||
+      formFields.stockQuantity <= 0 ||
+      formFields.buyingPrice <= 0 ||
+      formFields.sellingPrice <= 0
+    ) {
+      setErrorMessage("Completați toate cîmpurile");
+      resetMessage();
+      return;
+    }
+    setErrorMessage(null);
     const newStock = {
       invoiceId,
       productId: formFields.productId,
@@ -91,6 +103,7 @@ const AddStock = ({
       buyingPrice: formFields.buyingPrice,
       sellingPrice: formFields.sellingPrice,
     };
+    console.log(newStock);
     await postData(
       newStock,
       `http://localhost:8080/api/invoiceReception/addStock`
@@ -145,7 +158,7 @@ const AddStock = ({
           <span>{unity}</span>
         </div>
         <div className="edit__stock__buttons">
-          <BasicButton type="submit" text="Modifică" />
+          <BasicButton type="submit" text="Salvează" />
           <BasicButton type="button" text="Anulează" handleClick={closeModal} />
         </div>
         {errorMessage && (
