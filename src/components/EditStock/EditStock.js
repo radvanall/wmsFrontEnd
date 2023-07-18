@@ -46,6 +46,7 @@ const EditStock = ({ active, handleCloseModal, stock, refetch }) => {
     dataEntities.append("id", formData.id);
     if (data.quantity <= 0 || data.buyingPrice <= 0 || data.sellingPrice <= 0) {
       setErrorMessage("Completați toate cîmpurile");
+      resetMessage();
       return;
     }
     setErrorMessage(null);
