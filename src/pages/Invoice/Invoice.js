@@ -22,7 +22,7 @@ const Invoice = () => {
         console.log(monthIndex);
         const dateOfValidation = invoice.dateOfValidation
           ? new Date(invoice.dateOfValidation)
-              .toLocaleDateString("en-US", options)
+              .toLocaleDateString("ro-RO", options)
               .toUpperCase()
           : "none";
         return {
