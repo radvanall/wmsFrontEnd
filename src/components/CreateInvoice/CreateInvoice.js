@@ -5,7 +5,7 @@ import { useToggle } from "../../hooks/useToggle";
 import CreateInvoiceForm from "../CreateInvoiceForm/CreateInvoiceForm";
 import "./CreateInvoice.css";
 import usePostData from "../../hooks/usePostData";
-const CreateInvoice = ({ active, setActive }) => {
+const CreateInvoice = ({ active, setActive, fetchData }) => {
   const { data, error: fail } = useFetch(
     "http://localhost:8080/api/provider/readProvidersNamesAndId"
   );
@@ -190,7 +190,7 @@ const CreateInvoice = ({ active, setActive }) => {
   const cancelCloseForm = () => {
     setCloseMessage(false);
   };
-  const saveData = () => {
+  const saveData = async () => {
     if (invoice.length === 0) {
       setFillFormMessage(true);
       return;
@@ -202,7 +202,11 @@ const CreateInvoice = ({ active, setActive }) => {
     formData.append("data", JSON.stringify(finalInvoice));
     formData.append("providerId", provider);
     formData.append("adminId", 1);
-    postData(formData, "http://localhost:8080/api/invoiceReception/create");
+    await postData(
+      formData,
+      "http://localhost:8080/api/invoiceReception/create"
+    );
+    fetchData();
     setIsSavedMessage(true);
   };
   const handleSaveData = () => {

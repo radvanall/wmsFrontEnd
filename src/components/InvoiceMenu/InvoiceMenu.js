@@ -4,7 +4,7 @@ import { useToggle } from "../../hooks/useToggle";
 import "../productsMenu/ProductsMenu.css";
 import CreateInvoice from "../CreateInvoice/CreateInvoice";
 
-const InvoiceMenu = () => {
+const InvoiceMenu = ({ fetchData }) => {
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
 
   return (
@@ -19,7 +19,11 @@ const InvoiceMenu = () => {
           onClick={toggleCreate}
         />
       </div>
-      <CreateInvoice active={isOpenCreate} setActive={toggleCreate} />
+      <CreateInvoice
+        active={isOpenCreate}
+        setActive={toggleCreate}
+        fetchData={fetchData}
+      />
     </div>
   );
 };

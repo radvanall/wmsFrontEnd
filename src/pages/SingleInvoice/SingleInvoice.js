@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import InvoiceReceptionCard from "../../components/InvoiceReceptionCard/InvoiceReceptionCard";
-
+import AlertMessage from "../../components/AlertMessage/AlertMessage";
 import ResponsiveTable from "../../components/ResponsiveTable/ResponsiveTable";
 import EditStock from "../../components/EditStock/EditStock";
 import "./SingleInvoice.css";
 import Card from "../../components/Card/Card";
 import usePostData from "../../hooks/usePostData";
 import { BiPlusMedical } from "react-icons/bi";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import AddStock from "../../components/AddStock/AddStock";
-
+import BasicButton from "../../components/BasicButton/BasicButton";
+import DeleteItem from "../../components/DeleteItem/DeleteItem";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
+  const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
+  const { status: isOpenDeleteInvoice, toggleStatus: toggleDeleteInvoice } =
+    useToggle(false);
   const [invoice, setInvoice] = useState();
   const [stocks, setStocks] = useState();
   const [selectedStock, setSelectedStock] = useState();
@@ -54,20 +59,41 @@ const SingleInvoice = () => {
       setStocks(newArray);
     }
   }, [data]);
-  const deleteStock = async (id) => {
-    console.log(id);
-    await postData({ id: id }, `http://localhost:8080/api/stock/delete`);
+  const deleteStock = async () => {
+    console.log(selectedStock.id);
+    await postData(
+      { id: selectedStock.id },
+      `http://localhost:8080/api/stock/delete`
+    );
     getData(invoiceId);
+    toggleDelete();
   };
   const openEdit = (id) => {
     const stock = stocks.find((item) => item.id === id);
     setSelectedStock(stock);
     toggleEdit();
   };
+  const openDelete = (id) => {
+    const stock = stocks.find((item) => item.id === id);
+    setSelectedStock(stock);
+    console.log("stock", stock);
+    toggleDelete();
+  };
+
   console.log("invoiceId:", invoiceId);
   return (
     <div className="single__invoice">
-      SingleInvoice
+      {invoice?.validated ? null : (
+        <div className="delete__invoce__wrapper">
+          <button
+            className="invoice__table__button"
+            onClick={toggleDeleteInvoice}
+          >
+            <RiDeleteBin6Line className="search_menu_button menu__opened" />
+          </button>
+        </div>
+      )}
+
       {invoice && <InvoiceReceptionCard invoice={invoice} getData={getData} />}
       <br />
       {stocks && (
@@ -89,7 +115,7 @@ const SingleInvoice = () => {
             data={stocks}
             title="Stocuri:"
             handleEdit={invoice.validated ? null : openEdit}
-            handleDelete={invoice.validated ? null : deleteStock}
+            handleDelete={invoice.validated ? null : openDelete}
           />
         </Card>
       )}
@@ -112,6 +138,21 @@ const SingleInvoice = () => {
           refetch={refetch}
         />
       )}
+      <AlertMessage
+        active={isOpenDelete}
+        message="Sunteți siguri că doriți să ștergeți stocul dat?"
+      >
+        <BasicButton type="button" text="Șterge" handleClick={deleteStock} />
+        <BasicButton type="button" text="Anulează" handleClick={toggleDelete} />
+      </AlertMessage>
+      <DeleteItem
+        active={isOpenDeleteInvoice}
+        setActive={toggleDeleteInvoice}
+        endpoint="invoiceReception"
+        id={invoiceId}
+        title="Sunteți siguri că doriți să ștergeți factura dată?"
+        navigateTo="/invoices"
+      />
     </div>
   );
 };
