@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import InvoiceMenu from "../../components/InvoiceMenu/InvoiceMenu";
 import useFetch from "../../hooks/useFetch";
 import Table from "../../components/Table/Table";
-
+import DeleteMessage from "../../components/DeleteMessage/DeleteMessage";
 const Invoice = () => {
   const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/invoiceReception/readInvoiceReceptionTable"
@@ -48,7 +48,7 @@ const Invoice = () => {
   }, [data]);
   return (
     <div>
-      <InvoiceMenu />
+      <InvoiceMenu fetchData={fetchData} />
 
       {invoices &&
         (invoices.length !== 0 ? (
@@ -56,6 +56,7 @@ const Invoice = () => {
         ) : (
           <h2>Nu exista rezultate</h2>
         ))}
+      <DeleteMessage />
     </div>
   );
 };
