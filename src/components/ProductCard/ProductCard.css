@@ -14,6 +14,7 @@
   /* width: 30%; */
   margin: 5px 0 5px 0;
   width: 210px;
+  height: 210px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -31,6 +32,9 @@
   width: 100%;
   justify-content: space-between;
   padding: 5px 0 0 0;
+}
+.card__field__container h2 {
+  text-align: right;
 }
 .card__link {
   padding: 5px 10px 5px 10px;
