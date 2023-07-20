@@ -4,15 +4,25 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
+    console.log("page number", i);
   }
   const handlePaginate = (page) => {
     if (page < 1 || page > pageNumbers[pageNumbers.length - 1]) return;
     paginate(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
   console.log(currentPage);
   return (
     <nav>
       <ul className="pagination">
+        <li className="page__number">
+          <button
+            onClick={() => handlePaginate(1)}
+            className="pagination__link"
+          >
+            Prima pagină
+          </button>
+        </li>
         <li className="page__number">
           <button
             onClick={() => handlePaginate(currentPage - 1)}
@@ -22,11 +32,14 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
           </button>
         </li>
         {pageNumbers.map((number) => {
-          if (number >= currentPage - 2 && number <= currentPage + 2)
+          if (number >= currentPage - 3 && number <= currentPage + 3)
             return (
               <li key={number} className="page__number">
                 <button
-                  onClick={() => paginate(number)}
+                  onClick={() => {
+                    paginate(number);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
                   className={
                     number === currentPage
                       ? "pagination__link active"
@@ -44,6 +57,14 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
             onClick={() => handlePaginate(currentPage + 1)}
           >
             &gt;
+          </button>
+        </li>
+        <li className="page__number">
+          <button
+            onClick={() => handlePaginate(Math.ceil(totalPosts / postsPerPage))}
+            className="pagination__link"
+          >
+            Ultima pagină
           </button>
         </li>
       </ul>
