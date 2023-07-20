@@ -1,0 +1,12 @@
+.basic__button {
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid var(--blue-color);
+  color: var(--blue-color);
+  background-color: white;
+}
+.basic__button:hover {
+  border: 1px solid white;
+  color: white;
+  background-color: var(--blue-color);
+}
