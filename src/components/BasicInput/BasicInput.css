@@ -5,8 +5,12 @@
   width: 100%;
   border: 1px solid var(--blue-color);
   border-radius: 5px;
-  margin-top: 5px;
+
   padding-left: 5px;
+}
+.basic__input__label {
+  display: inline-block;
+  padding-bottom: 5px;
 }
 
 .basic__input[type="number"]::-webkit-inner-spin-button,

@@ -1,6 +1,7 @@
 .basic__button {
   border-radius: 5px;
   padding: 5px;
+  height: fit-content;
   border: 1px solid var(--blue-color);
   color: var(--blue-color);
   background-color: white;
