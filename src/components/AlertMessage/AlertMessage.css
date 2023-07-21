@@ -39,3 +39,8 @@
   gap: 5px;
   justify-content: flex-end;
 }
+.alert__message__container h2 {
+  text-align: justify;
+  text-indent: 5px;
+  line-height: 24px;
+}
