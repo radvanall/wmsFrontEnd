@@ -3,14 +3,22 @@ import "./Stocks.css";
 import getFormatedDate from "../../functions/getFormatedDate";
 import CardHolder from "../../components/CardHolder/CardHolder";
 import Pagination from "../../components/Pagination/Pagination";
+import SortButton from "../../components/SortButton/SortButton";
 
 // import allStocks from "../../allStocks";
 import useGetPage from "../../hooks/useGetPage";
 const Stocks = () => {
   const [dates, setDates] = useState([]);
-  const { data, loading, error, size, getPage, setSize } = useGetPage(
-    "http://localhost:8080/api/stock/readAll"
-  );
+  const {
+    data,
+    loading,
+    error,
+    size,
+    sortDirection,
+    getPage,
+    setSize,
+    toggleSortDirection,
+  } = useGetPage("http://localhost:8080/api/stock/readAll");
 
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {

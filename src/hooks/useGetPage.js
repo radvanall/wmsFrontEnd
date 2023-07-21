@@ -6,11 +6,17 @@ const useGetPage = (url) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [size, setSize] = useState(20);
-
+  const [sortDirection, setSortDirection] = useState("DESC");
+  const toggleSortDirection = () => {
+    if (sortDirection === "DESC") setSortDirection("ASC");
+    else setSortDirection("DESC");
+  };
   const getPage = async (page) => {
     setLoading(true);
     try {
-      const response = await axios.get(url + `/?page=${page}&size=${size}`);
+      const response = await axios.get(
+        url + `/?page=${page}&size=${size}&sortDirection=${sortDirection}`
+      );
       setData(response.data);
       console.log("data:", response.data);
     } catch (err) {
@@ -21,8 +27,17 @@ const useGetPage = (url) => {
   };
   useEffect(() => {
     getPage(0);
-  }, [size]);
-  return { data, loading, error, size, getPage, setSize };
+  }, [size, sortDirection]);
+  return {
+    data,
+    loading,
+    error,
+    size,
+    sortDirection,
+    getPage,
+    setSize,
+    toggleSortDirection,
+  };
 };
 
 export default useGetPage;
