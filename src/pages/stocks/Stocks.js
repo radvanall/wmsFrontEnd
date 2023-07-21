@@ -36,12 +36,27 @@ const Stocks = () => {
   const handlePageChange = (page) => {
     getPage(page - 1);
   };
+  const refetchPage = () => {
+    getPage(data.number);
+  };
   return (
     <div className="stocks__wrapper">
       {data && (
         <>
+          <div className="stock__menu">
+            <SortButton
+              sortDirection={sortDirection}
+              toggleSortDirection={toggleSortDirection}
+            />
+          </div>
+
           {dates?.map((item) => (
-            <CardHolder stockName={item} stocks={data.content} key={item} />
+            <CardHolder
+              stockName={item}
+              stocks={data.content}
+              key={item}
+              refetchPage={refetchPage}
+            />
           ))}
           <Pagination
             paginate={handlePageChange}
