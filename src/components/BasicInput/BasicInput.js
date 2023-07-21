@@ -7,12 +7,15 @@ const BasicInput = ({
   handleChange,
   label,
   inputName,
+  handleKeyDown,
 }) => {
   return (
     <div className="basic__input__wrapper">
-      <label htmlFor="basic__input_id" className="basic__input__label">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor="basic__input_id" className="basic__input__label">
+          {label}
+        </label>
+      )}
       <input
         className="basic__input"
         type={type}
@@ -21,6 +24,7 @@ const BasicInput = ({
         onChange={handleChange}
         id="basic__input_id"
         name={inputName}
+        onKeyDown={handleKeyDown}
       />
     </div>
   );
