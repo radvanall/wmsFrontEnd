@@ -4,11 +4,13 @@ import getFormatedDate from "../../functions/getFormatedDate";
 import CardHolder from "../../components/CardHolder/CardHolder";
 import Pagination from "../../components/Pagination/Pagination";
 import SortButton from "../../components/SortButton/SortButton";
-
-// import allStocks from "../../allStocks";
+import StocksFilterModal from "../../components/StocksFileterModal/StocksFilterModal";
+import { useToggle } from "../../hooks/useToggle";
+import BasicButton from "../../components/BasicButton/BasicButton";
 import useGetPage from "../../hooks/useGetPage";
 const Stocks = () => {
   const [dates, setDates] = useState([]);
+  const { status: isOpenFilter, toggleStatus: toggleFilter } = useToggle(false);
   const {
     data,
     loading,
@@ -57,7 +59,7 @@ const Stocks = () => {
               toggleSortDirection={toggleSortDirection}
             />
           </div>
-
+          <BasicButton text="Filter" handleClick={toggleFilter} />
           {dates?.map((item) => (
             <CardHolder
               stockName={item}
@@ -72,6 +74,7 @@ const Stocks = () => {
             totalPosts={data.totalElements}
             currentPage={data.number + 1}
           />
+          <StocksFilterModal active={isOpenFilter} handleModal={toggleFilter} />
         </>
       )}
     </div>
