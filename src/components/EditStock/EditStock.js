@@ -77,6 +77,7 @@ const EditStock = ({ active, handleCloseModal, stock, refetch }) => {
           value={formData.buyingPrice}
           inputName="buyingPrice"
           type="number"
+          fullBorder={true}
         />
         <BasicInput
           label="Preț de vînzare:"
@@ -84,6 +85,7 @@ const EditStock = ({ active, handleCloseModal, stock, refetch }) => {
           value={formData.sellingPrice}
           inputName="sellingPrice"
           type="number"
+          fullBorder={true}
         />
         <div className="quantity__input">
           <BasicInput
@@ -92,6 +94,7 @@ const EditStock = ({ active, handleCloseModal, stock, refetch }) => {
             value={formData.quantity}
             inputName="quantity"
             type="number"
+            fullBorder={true}
           />
           <span>{stock.Unitate}</span>
         </div>
