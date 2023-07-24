@@ -139,6 +139,7 @@ const AddStock = ({
           value={formFields.buyingPrice}
           inputName="buyingPrice"
           type="number"
+          fullBorder={true}
         />
         <BasicInput
           label="Preț de vînzare:"
@@ -146,6 +147,7 @@ const AddStock = ({
           value={formFields.sellingPrice}
           inputName="sellingPrice"
           type="number"
+          fullBorder={true}
         />
         <div className="quantity__input">
           <BasicInput
@@ -154,6 +156,7 @@ const AddStock = ({
             value={formFields.stockQuantity}
             inputName="stockQuantity"
             type="number"
+            fullBorder={true}
           />
           <span>{unity}</span>
         </div>

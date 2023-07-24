@@ -8,6 +8,7 @@ const BasicInput = ({
   label,
   inputName,
   handleKeyDown,
+  fullBorder,
 }) => {
   return (
     <div className="basic__input__wrapper">
@@ -17,7 +18,11 @@ const BasicInput = ({
         </label>
       )}
       <input
-        className="basic__input"
+        className={
+          fullBorder
+            ? "basic__input full__border"
+            : "basic__input bottom__border"
+        }
         type={type}
         placeholder={placeholder}
         value={type === "number" ? (value != 0 ? value : "") : value}

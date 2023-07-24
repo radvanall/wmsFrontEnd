@@ -3,10 +3,18 @@
 }
 .basic__input__wrapper .basic__input {
   width: 100%;
-  border: 1px solid var(--blue-color);
-  border-radius: 5px;
 
   padding-left: 5px;
+}
+.full__border {
+  border: 1px solid var(--blue-color);
+  border-radius: 5px;
+}
+.bottom__border {
+  border-bottom: 1px solid var(--blue-color);
+}
+.bottom__border:focus {
+  box-shadow: 0px 1px 0 var(--blue-color);
 }
 .basic__input__label {
   display: inline-block;
