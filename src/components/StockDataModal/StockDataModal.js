@@ -126,6 +126,7 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
               handleChange={handlePriceChange}
               name="price__input"
               handleKeyDown={handleKeyDown}
+              //   fullBorder={true}
             />
             <BasicButton text="Salvează" handleClick={handleChangePrice} />
           </div>
