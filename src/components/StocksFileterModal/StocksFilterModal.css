@@ -23,3 +23,31 @@
   background-color: #7a2512;
   width: 5px;
 }
+.range__state__wrapper {
+  display: flex;
+  gap: 10px;
+}
+.state__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 160px;
+}
+.range__max__wrapper {
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 15px;
+}
+.range__max__wrapper label,
+.range__min__wrapper label {
+  margin-bottom: 10px;
+}
+.range__min__wrapper {
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 15px;
+}
