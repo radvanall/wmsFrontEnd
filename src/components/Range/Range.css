@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  width: 65%;
+  /* width: 65%; */
   flex-shrink: 1;
 }
 .range__wrapper input {
@@ -48,7 +48,7 @@
 }
 .range__container label {
   white-space: nowrap;
-  width: 30%;
+  /* width: 30%; */
   /* min-width: fit-content; */
   text-align: right;
 }
