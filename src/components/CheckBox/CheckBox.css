@@ -9,3 +9,6 @@
   border: 1px solid var(--blue-color);
   border-radius: 5px;
 }
+.checkbox__container label {
+  cursor: pointer;
+}
