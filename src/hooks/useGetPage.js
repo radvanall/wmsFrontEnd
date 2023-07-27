@@ -1,4 +1,5 @@
 import axios from "axios";
+import queryString from "query-string";
 import { useState, useEffect } from "react";
 
 const useGetPage = (url) => {
@@ -11,11 +12,14 @@ const useGetPage = (url) => {
     if (sortDirection === "DESC") setSortDirection("ASC");
     else setSortDirection("DESC");
   };
-  const getPage = async (page) => {
+  const getPage = async (page, filterCriteria) => {
+    console.log("page filter Criterisa:", filterCriteria);
     setLoading(true);
+
     try {
-      const response = await axios.get(
-        url + `/?page=${page}&size=${size}&sortDirection=${sortDirection}`
+      const response = await axios.post(
+        url + `/?page=${page}&size=${size}&sortDirection=${sortDirection}`,
+        filterCriteria
       );
       setData(response.data);
       console.log("data:", response.data);
