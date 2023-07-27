@@ -6,13 +6,33 @@ import BasicInput from "../BasicInput/BasicInput";
 import Range from "../Range/Range";
 import useFetch from "../../hooks/useFetch";
 import "./StocksFilterModal.css";
-const StocksFilterModal = ({ active, handleModal }) => {
-  const [value, setValue] = useState(0);
+const StocksFilterModal = ({ active, handleModal, filterStocks }) => {
+  const [rangeValues, setRangeValues] = useState({
+    maxBuyingPrice: 0,
+    minBuyingPrice: 0,
+    maxSellingPrice: 0,
+    minSellingPrice: 0,
+    maxQuantity: 0,
+    minQuantity: 0,
+  });
   const [displaiedValues, setDisplayedValues] = useState({
     provider: [],
     category: [],
     subcategory: [],
     product: [],
+  });
+  const [inputValues, setInputValues] = useState({
+    product: "",
+    provider: "",
+    category: "",
+    subcategory: "",
+  });
+  const [status, setStatus] = useState({
+    allStates: true,
+    forSale: false,
+    inSale: false,
+    validated: false,
+    unvalidated: false,
   });
   const [checkboxStates, setCheckboxStates] = useState({
     provider: [],
@@ -26,8 +46,19 @@ const StocksFilterModal = ({ active, handleModal }) => {
     subcategory: true,
     product: true,
   });
+  const categoryNameIds = [
+    "category-all",
+    "product-all",
+    "subcategory-all",
+    "provider-all",
+  ];
   const handleRangeChange = (e) => {
-    setValue(e.target.value);
+    const id = e.target.id;
+    const value = e.target.value;
+    setRangeValues({
+      ...rangeValues,
+      [id]: value,
+    });
   };
   const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/stock/filterSettings"
@@ -291,6 +322,17 @@ const StocksFilterModal = ({ active, handleModal }) => {
         return shouldInclude;
       })
     );
+    console.log(filteredProducts.map((item) => item.id));
+    const currentProducts = filteredProducts.map((item) => item.id);
+    const newCheckboxProductStates = checkboxStates.product.map((product) =>
+      currentProducts.some((item) => parseInt(item) === parseInt(product.id))
+        ? product
+        : { id: product.id, checked: false }
+    );
+    setCheckboxStates((prevStates) => ({
+      ...prevStates,
+      product: newCheckboxProductStates,
+    }));
     setDisplayedValues({
       provider:
         currentCategoryName == "provider-all"
@@ -396,8 +438,46 @@ const StocksFilterModal = ({ active, handleModal }) => {
         [currendStatus]: checked,
       });
   };
+  const getCriteriasIds = (criteria) => {
+    return checkboxStates[criteria]
+      .filter((item) => item.checked)
+      .map((item) => item.id);
+  };
   const handleFilter = () => {
+    const providers = getCriteriasIds("provider");
+    const categories = getCriteriasIds("category");
+    const subcategories = getCriteriasIds("subcategory");
+    const products = getCriteriasIds("product");
+    const checkedStatus = Object.keys(status).filter((item) => status[item]);
+    console.log("chekedStatus:", checkedStatus);
+    const filterCriterias = {
+      providers: getCriteriasIds("provider"),
+      categories: getCriteriasIds("category"),
+      subcategories: getCriteriasIds("subcategory"),
+      products: getCriteriasIds("product"),
+      status: checkedStatus,
+      maxBuyingPrice: rangeValues.maxBuyingPrice,
+      minBuyingPrice: rangeValues.minBuyingPrice,
+      maxSellingPrice: rangeValues.maxSellingPrice,
+      minSellingPrice: rangeValues.minSellingPrice,
+      maxQuantity: rangeValues.maxQuantity,
+      minQuantity: rangeValues.minQuantity,
+    };
+    console.log("filteredCriterisa:", filterCriterias);
+    console.log(
+      "filteredProviders:",
+      providers,
+      "products",
+      products,
+      "subcategories",
+      subcategories,
+      "categories",
+      categories
+    );
+    filterStocks(filterCriterias);
     console.log(checkboxStates);
+    console.log(status);
+    console.log(rangeValues);
   };
   return (
     <Modal active={active}>
