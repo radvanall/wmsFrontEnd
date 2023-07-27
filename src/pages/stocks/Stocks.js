@@ -49,6 +49,9 @@ const Stocks = () => {
   const refetchPage = () => {
     getPage(data.number);
   };
+  const filterStocks = (filterCriteria) => {
+    getPage(0, filterCriteria);
+  };
   return (
     <div className="stocks__wrapper">
       {data && (
@@ -74,7 +77,11 @@ const Stocks = () => {
             totalPosts={data.totalElements}
             currentPage={data.number + 1}
           />
-          <StocksFilterModal active={isOpenFilter} handleModal={toggleFilter} />
+          <StocksFilterModal
+            active={isOpenFilter}
+            handleModal={toggleFilter}
+            filterStocks={filterStocks}
+          />
         </>
       )}
     </div>
