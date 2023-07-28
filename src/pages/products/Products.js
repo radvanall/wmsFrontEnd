@@ -18,7 +18,7 @@ const Products = () => {
   // );
   const dispatch = useDispatch();
 
-  const data = useSelector((state) => state.productsSlice);
+  const data = useSelector((state) => state.productsSlice.data);
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
