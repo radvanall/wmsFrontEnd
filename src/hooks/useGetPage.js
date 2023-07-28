@@ -14,12 +14,13 @@ const useGetPage = (url) => {
   };
   const getPage = async (page, filterCriteria) => {
     console.log("page filter Criterisa:", filterCriteria);
+    console.log("type of Criterisa:", typeof filterCriteria);
     setLoading(true);
 
     try {
       const response = await axios.post(
         url + `/?page=${page}&size=${size}&sortDirection=${sortDirection}`,
-        filterCriteria
+        filterCriteria ? filterCriteria : undefined
       );
       setData(response.data);
       console.log("data:", response.data);
