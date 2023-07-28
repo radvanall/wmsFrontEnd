@@ -1,0 +1,21 @@
+.tag__holder {
+  background-color: hsl(7, 30%, 97%);
+  width: 100%;
+  display: flex;
+  /* justify-content: space-between; */
+  flex-wrap: wrap;
+  position: relative;
+  border-top: 1px solid hsl(230, 50%, 70%);
+  margin-top: 10px;
+  padding: 20px;
+  gap: 10px;
+}
+.tag__holder__name {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: white;
+  top: -10px;
+  right: 10px;
+  padding: 0 5px 0 5px;
+}
