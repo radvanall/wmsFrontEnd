@@ -8,8 +8,14 @@ import StocksFilterModal from "../../components/StocksFileterModal/StocksFilterM
 import { useToggle } from "../../hooks/useToggle";
 import BasicButton from "../../components/BasicButton/BasicButton";
 import useGetPage from "../../hooks/useGetPage";
+import TagHolder from "../../components/TagHolder/TagHolder";
+import { useDispatch, useSelector } from "react-redux";
 const Stocks = () => {
   const [dates, setDates] = useState([]);
+  // const [filterCriterias, setFilterCriterias] = useState(null);
+  const filterCriterias = useSelector(
+    (state) => state.stockFilterSlice.filterCriterias
+  );
   const { status: isOpenFilter, toggleStatus: toggleFilter } = useToggle(false);
   const {
     data,
@@ -44,25 +50,27 @@ const Stocks = () => {
   // });
   // console.log(unique);
   const handlePageChange = (page) => {
-    getPage(page - 1);
+    getPage(page - 1, filterCriterias);
   };
   const refetchPage = () => {
-    getPage(data.number);
+    getPage(data.number, filterCriterias);
   };
   const filterStocks = (filterCriteria) => {
     getPage(0, filterCriteria);
   };
+
   return (
     <div className="stocks__wrapper">
       {data && (
         <>
           <div className="stock__menu">
+            <BasicButton text="Filter" handleClick={toggleFilter} />
             <SortButton
               sortDirection={sortDirection}
               toggleSortDirection={toggleSortDirection}
             />
           </div>
-          <BasicButton text="Filter" handleClick={toggleFilter} />
+          <TagHolder data={data} />
           {dates?.map((item) => (
             <CardHolder
               stockName={item}
@@ -79,8 +87,11 @@ const Stocks = () => {
           />
           <StocksFilterModal
             active={isOpenFilter}
+            // filterCriteria={filterCriterias}
+            resetData={getPage}
             handleModal={toggleFilter}
             filterStocks={filterStocks}
+            // setFilterCriterias={setFilterCriterias}
           />
         </>
       )}
