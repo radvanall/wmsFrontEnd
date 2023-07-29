@@ -4,6 +4,23 @@ const getCriteriasIds = (criteria, checkboxStates) => {
     .filter((item) => item.checked)
     .map((item) => item.id);
 };
+const getDataKey = (attribute) => {
+  const dataKey =
+    attribute === "product"
+      ? "filterProductDTOS"
+      : attribute === "provider"
+      ? "filterProviderDTOList"
+      : attribute === "category"
+      ? "filterCategoryDTOS"
+      : "filterSubcategoryDTOS";
+  return dataKey;
+};
+const categoryNameIds = [
+  "category-all",
+  "product-all",
+  "subcategory-all",
+  "provider-all",
+];
 const stockFilterSlice = createSlice({
   name: "stockFilterSlice",
   initialState: {
@@ -183,10 +200,6 @@ const stockFilterSlice = createSlice({
       };
     },
     setFilterCriterias(state) {
-      // const providers = getCriteriasIds("provider",state.checkboxStates);
-      // const categories = getCriteriasIds("category",state.checkboxStates);
-      // const subcategories = getCriteriasIds("subcategory",state.checkboxStates);
-      // const products = getCriteriasIds("product",state.checkboxStates);
       const checkedStatus = Object.keys(state.status).filter(
         (item) => state.status[item]
       );
@@ -206,6 +219,171 @@ const stockFilterSlice = createSlice({
     },
     resetFilterCriterias(state) {
       state.filterCriterias = null;
+    },
+    handleCheckboxChange(state, action) {
+      const { attribute, checked, id, currentCategoryName, data } =
+        action.payload;
+      //   const data = action.payload.data;
+      //   const attribute = action.payload.e.target.getAttribute(
+      //     "data-custom-attribute"
+      //   );
+      //   const checked = action.payload.e.target.checked;
+      //   const id = action.payload.e.target.value;
+      //   const currentCategoryName = action.payload.e.target.id;
+      const isCategoryName = categoryNameIds.some(
+        (item) => item === currentCategoryName
+      );
+      if (id === "all") {
+        stockFilterSlice.caseReducers.setIsAllChecked(state, {
+          type: "setIsAllChecked",
+          payload: { attribute, checked },
+        });
+        stockFilterSlice.caseReducers.setCheckboxStatesToFalse(state, {
+          type: "setCheckboxStatesToFalse",
+          payload: { attribute },
+        });
+        const dataKey = getDataKey(attribute);
+        stockFilterSlice.caseReducers.setInputValues(state, {
+          type: "setInputValues",
+          payload: { attribute, value: "" },
+        });
+        stockFilterSlice.caseReducers.setDisplayedValues(state, {
+          type: "setDisplayedValues",
+          payload: {
+            attribute,
+            value: data[dataKey],
+          },
+        });
+        if (attribute === "product") {
+          stockFilterSlice.caseReducers.resetCheckboxStates(state, {
+            type: "resetCheckboxStates",
+            payload: data,
+          });
+          stockFilterSlice.caseReducers.resetIsAllChecked(state, {
+            type: "resetIsAllChecked",
+          });
+          return;
+        }
+      }
+      !isCategoryName &&
+        stockFilterSlice.caseReducers.setCheckboxStates(state, {
+          type: "setCheckboxStates",
+          payload: {
+            attribute,
+            id,
+            checked,
+          },
+        });
+      !isCategoryName &&
+        stockFilterSlice.caseReducers.changeIsAllChecked(state, {
+          type: "changeIsAllChecked",
+          payload: { attribute },
+        });
+      if (attribute === "product") return;
+      const checkedOptions = {
+        provider: state.checkboxStates.provider
+          .filter((item) => item.checked)
+          .map((item) => item.id),
+        category: state.checkboxStates.category
+          .filter((item) => item.checked)
+          .map((item) => item.id),
+        subcategory: state.checkboxStates.subcategory
+          .filter((item) => item.checked)
+          .map((item) => item.id),
+      };
+      checked
+        ? checkedOptions[attribute].push(parseInt(id))
+        : (checkedOptions[attribute] = checkedOptions[attribute].filter(
+            (item) => parseInt(item) !== parseInt(id)
+          ));
+      const chousenCriterias = {
+        provider: data.filterProviderDTOList
+          .filter((provider) =>
+            checkedOptions.provider.some(
+              (item) => parseInt(item) === parseInt(provider.id)
+            )
+          )
+          ?.flatMap((item) => item.productsIds),
+
+        category: data.filterCategoryDTOS
+          .filter((category) =>
+            checkedOptions.category.some(
+              (item) => parseInt(item) === parseInt(category.id)
+            )
+          )
+          ?.flatMap((item) => item.productsIds),
+
+        subcategory: data.filterSubcategoryDTOS
+          .filter((subcategory) =>
+            checkedOptions.subcategory.some(
+              (item) => parseInt(item) === parseInt(subcategory.id)
+            )
+          )
+          ?.flatMap((item) => item.productsIds),
+      };
+      const filteredProducts = [];
+      filteredProducts.push(
+        ...data.filterProductDTOS.filter((item) => {
+          let shouldInclude = true;
+
+          if (
+            checkedOptions.category.length &&
+            currentCategoryName != "category-all"
+          ) {
+            shouldInclude =
+              shouldInclude && chousenCriterias.category.includes(item.id);
+          }
+
+          if (
+            checkedOptions.subcategory.length &&
+            currentCategoryName != "subcategory-all"
+          ) {
+            shouldInclude =
+              shouldInclude && chousenCriterias.subcategory.includes(item.id);
+          }
+
+          if (
+            checkedOptions.provider.length &&
+            currentCategoryName != "provider-all"
+          ) {
+            shouldInclude =
+              shouldInclude && chousenCriterias.provider.includes(item.id);
+          }
+
+          return shouldInclude;
+        })
+      );
+      const currentProducts = filteredProducts.map((item) => item.id);
+      const newCheckboxProductStates = state.checkboxStates.product.map(
+        (product) =>
+          currentProducts.some(
+            (item) => parseInt(item) === parseInt(product.id)
+          )
+            ? product
+            : { id: product.id, checked: false }
+      );
+      stockFilterSlice.caseReducers.setProductCheckboxStates(state, {
+        type: "setProductCheckboxStates",
+        payload: newCheckboxProductStates,
+      });
+      stockFilterSlice.caseReducers.resetDisplayedValues(state, {
+        type: "resetDisplayedValues",
+        payload: {
+          provider:
+            currentCategoryName == "provider-all"
+              ? data.filterProviderDTOList
+              : state.displayedValues.provider,
+          category:
+            currentCategoryName == "category-all"
+              ? data.filterCategoryDTOS
+              : state.displayedValues.category,
+          subcategory:
+            currentCategoryName == "subcategory-all"
+              ? data.filterSubcategoryDTOS
+              : state.displayedValues.subcategory,
+          product: filteredProducts,
+        },
+      });
     },
   },
 });
@@ -228,4 +406,5 @@ export const {
   changeIsAllChecked,
   setFilterCriterias,
   resetFilterCriterias,
+  handleCheckboxChange,
 } = stockFilterSlice.actions;
