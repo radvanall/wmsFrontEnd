@@ -8,14 +8,17 @@ import StocksFilterModal from "../../components/StocksFileterModal/StocksFilterM
 import { useToggle } from "../../hooks/useToggle";
 import BasicButton from "../../components/BasicButton/BasicButton";
 import useGetPage from "../../hooks/useGetPage";
+import useFetch from "../../hooks/useFetch";
 import TagHolder from "../../components/TagHolder/TagHolder";
 import { useDispatch, useSelector } from "react-redux";
+import { setFilterCriterias } from "../../toolkitRedux/stockFilterSlice";
 const Stocks = () => {
   const [dates, setDates] = useState([]);
   // const [filterCriterias, setFilterCriterias] = useState(null);
   const filterCriterias = useSelector(
     (state) => state.stockFilterSlice.filterCriterias
   );
+
   const { status: isOpenFilter, toggleStatus: toggleFilter } = useToggle(false);
   const {
     data,
@@ -27,8 +30,12 @@ const Stocks = () => {
     setSize,
     toggleSortDirection,
   } = useGetPage("http://localhost:8080/api/stock/readAll");
-
-  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    data: filterSettings,
+    loading: loadingFilterSettings,
+    error: errorFilterSettings,
+    fetchData,
+  } = useFetch("http://localhost:8080/api/stock/filterSettings");
   useEffect(() => {
     if (!data) return;
     const newDates = [];
@@ -70,7 +77,13 @@ const Stocks = () => {
               toggleSortDirection={toggleSortDirection}
             />
           </div>
-          <TagHolder data={data} />
+          {filterCriterias && (
+            <TagHolder
+              data={filterSettings}
+              filterCriterias={filterCriterias}
+              filterStocks={filterStocks}
+            />
+          )}
           {dates?.map((item) => (
             <CardHolder
               stockName={item}
@@ -88,9 +101,11 @@ const Stocks = () => {
           <StocksFilterModal
             active={isOpenFilter}
             // filterCriteria={filterCriterias}
+            data={filterSettings}
             resetData={getPage}
             handleModal={toggleFilter}
             filterStocks={filterStocks}
+
             // setFilterCriterias={setFilterCriterias}
           />
         </>

@@ -24,12 +24,14 @@ import {
   changeIsAllChecked,
   setFilterCriterias,
   resetFilterCriterias,
+  handleCheckboxChange,
 } from "../../toolkitRedux/stockFilterSlice";
-import useFetch from "../../hooks/useFetch";
+
 import "./StocksFilterModal.css";
 const StocksFilterModal = ({
   active,
   handleModal,
+  data,
   // filterCriteria,
   resetData,
   filterStocks,
@@ -109,9 +111,7 @@ const StocksFilterModal = ({
     //   [id]: value,
     // });
   };
-  const { data, loading, error, fetchData } = useFetch(
-    "http://localhost:8080/api/stock/filterSettings"
-  );
+
   useEffect(() => {
     if (data) {
       // setCheckboxStates({
@@ -225,186 +225,197 @@ const StocksFilterModal = ({
     //   })),
     // }));
   };
+  // const handleChange = (e) => {
+  //   console.log(e.target.value);
+  //   console.log(e.target.id);
+  //   console.log(e.target.getAttribute("data-custom-attribute"));
+  //   const attribute = e.target.getAttribute("data-custom-attribute");
+  //   const checked = e.target.checked;
+  //   const id = e.target.value;
+  //   const currentCategoryName = e.target.id;
+  //   const isCategoryName = categoryNameIds.some(
+  //     (item) => item === currentCategoryName
+  //   );
+  //   console.log("Is category name:", isCategoryName);
+  //   console.log("id:", id);
+  //   console.log("cheked:", e.target.checked);
+  //   if (e.target.value == "all") {
+  //     console.log("attribute=", attribute, "cheked=", checked);
+
+  //     dispatch(setIsAllChecked({ attribute, checked }));
+  //     // setIsAllChecked({
+  //     //   ...isAllChecked,
+  //     //   [attribute]: checked,
+  //     // });
+  //     changeCheckboxState(attribute);
+  //     if (attribute === "product") {
+  //       resetAllCheckboxes();
+  //       dispatch(resetIsAllChecked());
+  //       // setIsAllChecked({
+  //       //   provider: true,
+  //       //   category: true,
+  //       //   subcategory: true,
+  //       //   product: true,
+  //       // });
+  //       resetSerachCriteria(attribute);
+  //       return;
+  //     }
+  //     resetSerachCriteria(attribute);
+  //   }
+
+  //   !isCategoryName && dispatch(setCheckboxStates({ attribute, id, checked }));
+  //   // setCheckboxStates((prevStates) => ({
+  //   //   ...prevStates,
+  //   //   [attribute]: prevStates[attribute].map((checkbox) =>
+  //   //     parseInt(checkbox.id) === parseInt(id)
+  //   //       ? { ...checkbox, checked }
+  //   //       : checkbox
+  //   //   ),
+  //   // }));
+  //   !isCategoryName && dispatch(changeIsAllChecked({ attribute }));
+  //   // setIsAllChecked({
+  //   //   ...isAllChecked,
+  //   //   [attribute]: false,
+  //   //   product: false,
+  //   // });
+  //   console.log(isAllChecked);
+  //   if (attribute === "product") {
+  //     return;
+  //   }
+
+  //   const checkedOptions = {
+  //     provider: checkboxStates.provider
+  //       .filter((item) => item.checked)
+  //       .map((item) => item.id),
+  //     category: checkboxStates.category
+  //       .filter((item) => item.checked)
+  //       .map((item) => item.id),
+  //     subcategory: checkboxStates.subcategory
+  //       .filter((item) => item.checked)
+  //       .map((item) => item.id),
+  //   };
+  //   checked
+  //     ? checkedOptions[attribute].push(parseInt(id))
+  //     : (checkedOptions[attribute] = checkedOptions[attribute].filter(
+  //         (item) => parseInt(item) !== parseInt(id)
+  //       ));
+  //   console.log("chekcboxOptions:", checkedOptions);
+  //   const chousenCriterias = {
+  //     provider: data.filterProviderDTOList
+  //       .filter((provider) =>
+  //         checkedOptions.provider.some(
+  //           (item) => parseInt(item) === parseInt(provider.id)
+  //         )
+  //       )
+  //       ?.flatMap((item) => item.productsIds),
+
+  //     category: data.filterCategoryDTOS
+  //       .filter((category) =>
+  //         checkedOptions.category.some(
+  //           (item) => parseInt(item) === parseInt(category.id)
+  //         )
+  //       )
+  //       ?.flatMap((item) => item.productsIds),
+
+  //     subcategory: data.filterSubcategoryDTOS
+  //       .filter((subcategory) =>
+  //         checkedOptions.subcategory.some(
+  //           (item) => parseInt(item) === parseInt(subcategory.id)
+  //         )
+  //       )
+  //       ?.flatMap((item) => item.productsIds),
+  //   };
+  //   console.log("chousenCriterias:", chousenCriterias);
+  //   const filteredProducts = [];
+
+  //   filteredProducts.push(
+  //     ...data.filterProductDTOS.filter((item) => {
+  //       let shouldInclude = true;
+
+  //       if (
+  //         checkedOptions.category.length &&
+  //         currentCategoryName != "category-all"
+  //       ) {
+  //         shouldInclude =
+  //           shouldInclude && chousenCriterias.category.includes(item.id);
+  //       }
+
+  //       if (
+  //         checkedOptions.subcategory.length &&
+  //         currentCategoryName != "subcategory-all"
+  //       ) {
+  //         shouldInclude =
+  //           shouldInclude && chousenCriterias.subcategory.includes(item.id);
+  //       }
+
+  //       if (
+  //         checkedOptions.provider.length &&
+  //         currentCategoryName != "provider-all"
+  //       ) {
+  //         shouldInclude =
+  //           shouldInclude && chousenCriterias.provider.includes(item.id);
+  //       }
+
+  //       return shouldInclude;
+  //     })
+  //   );
+  //   console.log(filteredProducts.map((item) => item.id));
+  //   const currentProducts = filteredProducts.map((item) => item.id);
+  //   const newCheckboxProductStates = checkboxStates.product.map((product) =>
+  //     currentProducts.some((item) => parseInt(item) === parseInt(product.id))
+  //       ? product
+  //       : { id: product.id, checked: false }
+  //   );
+  //   dispatch(setProductCheckboxStates(newCheckboxProductStates));
+  //   // setCheckboxStates((prevStates) => ({
+  //   //   ...prevStates,
+  //   //   product: newCheckboxProductStates,
+  //   // }));
+  //   dispatch(
+  //     resetDisplayedValues({
+  //       provider:
+  //         currentCategoryName == "provider-all"
+  //           ? data.filterProviderDTOList
+  //           : displayedValues.provider,
+  //       category:
+  //         currentCategoryName == "category-all"
+  //           ? data.filterCategoryDTOS
+  //           : displayedValues.category,
+  //       subcategory:
+  //         currentCategoryName == "subcategory-all"
+  //           ? data.filterSubcategoryDTOS
+  //           : displayedValues.subcategory,
+  //       product: filteredProducts,
+  //     })
+  //   );
+  //   // setDisplayedValues({
+  //   //   provider:
+  //   //     currentCategoryName == "provider-all"
+  //   //       ? data.filterProviderDTOList
+  //   //       : displaiedValues.provider,
+  //   //   category:
+  //   //     currentCategoryName == "category-all"
+  //   //       ? data.filterCategoryDTOS
+  //   //       : displaiedValues.category,
+  //   //   subcategory:
+  //   //     currentCategoryName == "subcategory-all"
+  //   //       ? data.filterSubcategoryDTOS
+  //   //       : displaiedValues.subcategory,
+  //   //   product: filteredProducts,
+  //   // });
+
+  //   console.log("filteredproduct2::", filteredProducts);
+  // };
   const handleChange = (e) => {
-    console.log(e.target.value);
-    console.log(e.target.id);
-    console.log(e.target.getAttribute("data-custom-attribute"));
-    const attribute = e.target.getAttribute("data-custom-attribute");
-    const checked = e.target.checked;
-    const id = e.target.value;
-    const currentCategoryName = e.target.id;
-    const isCategoryName = categoryNameIds.some(
-      (item) => item === currentCategoryName
-    );
-    console.log("Is category name:", isCategoryName);
-    console.log("id:", id);
-    console.log("cheked:", e.target.checked);
-    if (e.target.value == "all") {
-      console.log("attribute=", attribute, "cheked=", checked);
-
-      dispatch(setIsAllChecked({ attribute, checked }));
-      // setIsAllChecked({
-      //   ...isAllChecked,
-      //   [attribute]: checked,
-      // });
-      changeCheckboxState(attribute);
-      if (attribute === "product") {
-        resetAllCheckboxes();
-        dispatch(resetIsAllChecked());
-        // setIsAllChecked({
-        //   provider: true,
-        //   category: true,
-        //   subcategory: true,
-        //   product: true,
-        // });
-        resetSerachCriteria(attribute);
-        return;
-      }
-      resetSerachCriteria(attribute);
-    }
-
-    !isCategoryName && dispatch(setCheckboxStates({ attribute, id, checked }));
-    // setCheckboxStates((prevStates) => ({
-    //   ...prevStates,
-    //   [attribute]: prevStates[attribute].map((checkbox) =>
-    //     parseInt(checkbox.id) === parseInt(id)
-    //       ? { ...checkbox, checked }
-    //       : checkbox
-    //   ),
-    // }));
-    !isCategoryName && dispatch(changeIsAllChecked({ attribute }));
-    // setIsAllChecked({
-    //   ...isAllChecked,
-    //   [attribute]: false,
-    //   product: false,
-    // });
-    console.log(isAllChecked);
-    if (attribute === "product") {
-      return;
-    }
-
-    const checkedOptions = {
-      provider: checkboxStates.provider
-        .filter((item) => item.checked)
-        .map((item) => item.id),
-      category: checkboxStates.category
-        .filter((item) => item.checked)
-        .map((item) => item.id),
-      subcategory: checkboxStates.subcategory
-        .filter((item) => item.checked)
-        .map((item) => item.id),
-    };
-    checked
-      ? checkedOptions[attribute].push(parseInt(id))
-      : (checkedOptions[attribute] = checkedOptions[attribute].filter(
-          (item) => parseInt(item) !== parseInt(id)
-        ));
-    console.log("chekcboxOptions:", checkedOptions);
-    const chousenCriterias = {
-      provider: data.filterProviderDTOList
-        .filter((provider) =>
-          checkedOptions.provider.some(
-            (item) => parseInt(item) === parseInt(provider.id)
-          )
-        )
-        ?.flatMap((item) => item.productsIds),
-
-      category: data.filterCategoryDTOS
-        .filter((category) =>
-          checkedOptions.category.some(
-            (item) => parseInt(item) === parseInt(category.id)
-          )
-        )
-        ?.flatMap((item) => item.productsIds),
-
-      subcategory: data.filterSubcategoryDTOS
-        .filter((subcategory) =>
-          checkedOptions.subcategory.some(
-            (item) => parseInt(item) === parseInt(subcategory.id)
-          )
-        )
-        ?.flatMap((item) => item.productsIds),
-    };
-    console.log("chousenCriterias:", chousenCriterias);
-    const filteredProducts = [];
-
-    filteredProducts.push(
-      ...data.filterProductDTOS.filter((item) => {
-        let shouldInclude = true;
-
-        if (
-          checkedOptions.category.length &&
-          currentCategoryName != "category-all"
-        ) {
-          shouldInclude =
-            shouldInclude && chousenCriterias.category.includes(item.id);
-        }
-
-        if (
-          checkedOptions.subcategory.length &&
-          currentCategoryName != "subcategory-all"
-        ) {
-          shouldInclude =
-            shouldInclude && chousenCriterias.subcategory.includes(item.id);
-        }
-
-        if (
-          checkedOptions.provider.length &&
-          currentCategoryName != "provider-all"
-        ) {
-          shouldInclude =
-            shouldInclude && chousenCriterias.provider.includes(item.id);
-        }
-
-        return shouldInclude;
-      })
-    );
-    console.log(filteredProducts.map((item) => item.id));
-    const currentProducts = filteredProducts.map((item) => item.id);
-    const newCheckboxProductStates = checkboxStates.product.map((product) =>
-      currentProducts.some((item) => parseInt(item) === parseInt(product.id))
-        ? product
-        : { id: product.id, checked: false }
-    );
-    dispatch(setProductCheckboxStates(newCheckboxProductStates));
-    // setCheckboxStates((prevStates) => ({
-    //   ...prevStates,
-    //   product: newCheckboxProductStates,
-    // }));
     dispatch(
-      resetDisplayedValues({
-        provider:
-          currentCategoryName == "provider-all"
-            ? data.filterProviderDTOList
-            : displayedValues.provider,
-        category:
-          currentCategoryName == "category-all"
-            ? data.filterCategoryDTOS
-            : displayedValues.category,
-        subcategory:
-          currentCategoryName == "subcategory-all"
-            ? data.filterSubcategoryDTOS
-            : displayedValues.subcategory,
-        product: filteredProducts,
+      handleCheckboxChange({
+        attribute: e.target.getAttribute("data-custom-attribute"),
+        checked: e.target.checked,
+        id: e.target.value,
+        currentCategoryName: e.target.id,
+        data,
       })
     );
-    // setDisplayedValues({
-    //   provider:
-    //     currentCategoryName == "provider-all"
-    //       ? data.filterProviderDTOList
-    //       : displaiedValues.provider,
-    //   category:
-    //     currentCategoryName == "category-all"
-    //       ? data.filterCategoryDTOS
-    //       : displaiedValues.category,
-    //   subcategory:
-    //     currentCategoryName == "subcategory-all"
-    //       ? data.filterSubcategoryDTOS
-    //       : displaiedValues.subcategory,
-    //   product: filteredProducts,
-    // });
-
-    console.log("filteredproduct2::", filteredProducts);
   };
   const handleInputChange = (e, categoryName) => {
     dispatch(setIsAllChecked({ attribute: categoryName, checked: false }));
@@ -467,10 +478,6 @@ const StocksFilterModal = ({
       .map((item) => item.id);
   };
   const handleFilter = () => {
-    // const providers = getCriteriasIds("provider");
-    // const categories = getCriteriasIds("category");
-    // const subcategories = getCriteriasIds("subcategory");
-    // const products = getCriteriasIds("product");
     const checkedStatus = Object.keys(status).filter((item) => status[item]);
     console.log("chekedStatus:", checkedStatus);
     const currentfilterCriterias = {
@@ -486,20 +493,7 @@ const StocksFilterModal = ({
       maxQuantity: rangeValues.maxQuantity,
       minQuantity: rangeValues.minQuantity,
     };
-    // setFilterCriterias(filterCriterias);
-    // console.log("filteredCriterisa:", filterCriterias);
-    // console.log(
-    //   "filteredProviders:",
-    //   providers,
-    //   "products",
-    //   products,
-    //   "subcategories",
-    //   subcategories,
-    //   "categories",
-    //   categories
-    // );
     dispatch(setFilterCriterias());
-
     filterStocks(currentfilterCriterias);
     console.log(checkboxStates);
     console.log(status);
