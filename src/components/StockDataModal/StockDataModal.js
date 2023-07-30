@@ -80,6 +80,14 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
           <span>{getFormatedDate(stock.dateOfValidation, "ro-RO")}</span>
         </p>
         <p className="stock__data__p">
+          <span className="field__name">Categorie:</span>
+          <span>{stock.categoryName}</span>
+        </p>
+        <p className="stock__data__p">
+          <span className="field__name">Subcategorie:</span>
+          <span>{stock.subcategoryName}</span>
+        </p>
+        <p className="stock__data__p">
           <span className="field__name">Cantitatea totală:</span>
           <span>
             {stock.quantity} {stock.unity}
