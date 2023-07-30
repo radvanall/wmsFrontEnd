@@ -94,6 +94,7 @@ const Stocks = () => {
 
   return (
     <div className="stocks__wrapper">
+      {loading && <LoadingComponent />}
       {data && (
         <>
           <div className="stock__menu">
@@ -125,6 +126,7 @@ const Stocks = () => {
               toggleSortDirection={toggleSortDirection}
             />
           </div>
+          <br />
           {filterCriterias && (
             <TagHolder
               data={filterSettings}
@@ -132,6 +134,7 @@ const Stocks = () => {
               filterStocks={filterStocks}
             />
           )}
+
           {dates?.map((item) => (
             <CardHolder
               stockName={item}
@@ -148,13 +151,10 @@ const Stocks = () => {
           />
           <StocksFilterModal
             active={isOpenFilter}
-            // filterCriteria={filterCriterias}
             data={filterSettings}
             resetData={getPage}
             handleModal={toggleFilter}
             filterStocks={filterStocks}
-
-            // setFilterCriterias={setFilterCriterias}
           />
         </>
       )}
