@@ -2,7 +2,7 @@ import axios from "axios";
 import queryString from "query-string";
 import { useState, useEffect } from "react";
 
-const useGetPage = (url) => {
+const useGetPage = (url, filters) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -31,7 +31,7 @@ const useGetPage = (url) => {
     }
   };
   useEffect(() => {
-    getPage(0);
+    getPage(0, filters);
   }, [size, sortDirection]);
   return {
     data,
