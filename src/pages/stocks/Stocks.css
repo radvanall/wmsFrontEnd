@@ -1,8 +1,11 @@
 .stocks__wrapper {
   padding-bottom: 5px;
+  /* position: relative; */
 }
 .stock__menu {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding: 5px;
+  gap: 5px;
 }
