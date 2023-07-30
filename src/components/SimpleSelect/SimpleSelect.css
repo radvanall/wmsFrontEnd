@@ -1,0 +1,9 @@
+.simple__select {
+  border: 2px solid var(--blue-color);
+  border-radius: 5px;
+  font-size: 16px;
+}
+.simple__select:focus {
+  outline: none;
+  box-shadow: 0 0 10px hsl(251, 42%, 52%);
+}

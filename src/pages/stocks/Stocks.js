@@ -6,15 +6,37 @@ import Pagination from "../../components/Pagination/Pagination";
 import SortButton from "../../components/SortButton/SortButton";
 import StocksFilterModal from "../../components/StocksFileterModal/StocksFilterModal";
 import { useToggle } from "../../hooks/useToggle";
-import BasicButton from "../../components/BasicButton/BasicButton";
 import useGetPage from "../../hooks/useGetPage";
 import useFetch from "../../hooks/useFetch";
+import { FiFilter } from "react-icons/fi";
 import TagHolder from "../../components/TagHolder/TagHolder";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilterCriterias } from "../../toolkitRedux/stockFilterSlice";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
+import SimpleSelect from "../../components/SimpleSelect/SimpleSelect";
+const pageSizeOptions = [
+  {
+    value: 10,
+    label: "10",
+  },
+  {
+    value: 20,
+    label: "20",
+  },
+  {
+    value: 30,
+    label: "30",
+  },
+  {
+    value: 40,
+    label: "40",
+  },
+  {
+    value: 50,
+    label: "50",
+  },
+];
 const Stocks = () => {
   const [dates, setDates] = useState([]);
-  // const [filterCriterias, setFilterCriterias] = useState(null);
   const filterCriterias = useSelector(
     (state) => state.stockFilterSlice.filterCriterias
   );
@@ -29,13 +51,18 @@ const Stocks = () => {
     getPage,
     setSize,
     toggleSortDirection,
-  } = useGetPage("http://localhost:8080/api/stock/readAll");
+  } = useGetPage("http://localhost:8080/api/stock/readAll", filterCriterias);
   const {
     data: filterSettings,
     loading: loadingFilterSettings,
     error: errorFilterSettings,
     fetchData,
   } = useFetch("http://localhost:8080/api/stock/filterSettings");
+  useEffect(() => {
+    if (localStorage.getItem("pageSize"))
+      setSize(parseInt(JSON.parse(localStorage.getItem("pageSize"))));
+    else localStorage.setItem("pageSize", 20);
+  }, []);
   useEffect(() => {
     if (!data) return;
     const newDates = [];
@@ -50,12 +77,6 @@ const Stocks = () => {
     console.log(newDates);
   }, [data]);
 
-  // allStocks.forEach((value) => {
-  //   if (!unique.includes(value.name)) {
-  //     unique.push(value.name);
-  //   }
-  // });
-  // console.log(unique);
   const handlePageChange = (page) => {
     getPage(page - 1, filterCriterias);
   };
@@ -65,13 +86,40 @@ const Stocks = () => {
   const filterStocks = (filterCriteria) => {
     getPage(0, filterCriteria);
   };
+  const handlePageSizeChange = (e) => {
+    console.log(e.target.value);
+    setSize(e.target.value);
+    localStorage.setItem("pageSize", e.target.value);
+  };
 
   return (
     <div className="stocks__wrapper">
       {data && (
         <>
           <div className="stock__menu">
-            <BasicButton text="Filter" handleClick={toggleFilter} />
+            <FiFilter
+              className={
+                isOpenFilter
+                  ? "search_menu_button menu__opened"
+                  : "search_menu_button menu__closed"
+              }
+              onClick={toggleFilter}
+            />
+          </div>
+
+          <div className="stock__menu">
+            <span style={{ paddingRight: "20px" }}>
+              Total stocuri:{data.totalElements}
+            </span>
+            <span>Stocuri pe pagină:</span>
+            <SimpleSelect
+              name="nrOfPages"
+              id="nrOfPages"
+              defaultValue={size}
+              options={pageSizeOptions}
+              height="32px"
+              handleChange={handlePageSizeChange}
+            />
             <SortButton
               sortDirection={sortDirection}
               toggleSortDirection={toggleSortDirection}
