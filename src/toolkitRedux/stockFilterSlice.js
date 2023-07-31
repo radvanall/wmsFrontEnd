@@ -65,10 +65,14 @@ const stockFilterSlice = createSlice({
       product: true,
     },
     filterCriterias: null,
+    navigate: true,
   },
+
   reducers: {
+    setNavigate(state, action) {
+      state.navigate = action.payload;
+    },
     setRangeValues(state, action) {
-      console.log("action", action);
       state.rangeValues = {
         ...state.rangeValues,
         [action.payload.id]: action.payload.value,
@@ -128,7 +132,6 @@ const stockFilterSlice = createSlice({
         };
     },
     resetCheckboxStates(state, action) {
-      console.log("data=", action.payload);
       const data = action.payload;
       state.checkboxStates = {
         provider: data.filterProviderDTOList?.map((provider) => ({
@@ -161,6 +164,7 @@ const stockFilterSlice = createSlice({
       };
     },
     setCheckboxStates(state, action) {
+      console.log("enter checkbox slice:", action.payload.id);
       state.checkboxStates = {
         ...state.checkboxStates,
         [action.payload.attribute]: state.checkboxStates[
@@ -217,19 +221,41 @@ const stockFilterSlice = createSlice({
         minQuantity: state.rangeValues.minQuantity,
       };
     },
+    filterStocksByProductId(state, action) {
+      stockFilterSlice.caseReducers.changeIsAllChecked(state, {
+        type: "changeIsAllChecked",
+        payload: {
+          attribute: "product",
+        },
+      });
+      stockFilterSlice.caseReducers.setCheckboxStates(state, {
+        type: "setCheckboxStates",
+        payload: {
+          attribute: "product",
+          id: action.payload,
+          checked: true,
+        },
+      });
+      state.filterCriterias = {
+        providers: [],
+        categories: [],
+        subcategories: [],
+        products: [action.payload],
+        status: ["allStates"],
+        maxBuyingPrice: state.rangeValues.maxBuyingPrice,
+        minBuyingPrice: state.rangeValues.minBuyingPrice,
+        maxSellingPrice: state.rangeValues.maxSellingPrice,
+        minSellingPrice: state.rangeValues.minSellingPrice,
+        maxQuantity: state.rangeValues.maxQuantity,
+        minQuantity: state.rangeValues.minQuantity,
+      };
+    },
     resetFilterCriterias(state) {
       state.filterCriterias = null;
     },
     handleCheckboxChange(state, action) {
       const { attribute, checked, id, currentCategoryName, data } =
         action.payload;
-      //   const data = action.payload.data;
-      //   const attribute = action.payload.e.target.getAttribute(
-      //     "data-custom-attribute"
-      //   );
-      //   const checked = action.payload.e.target.checked;
-      //   const id = action.payload.e.target.value;
-      //   const currentCategoryName = action.payload.e.target.id;
       const isCategoryName = categoryNameIds.some(
         (item) => item === currentCategoryName
       );
@@ -385,6 +411,36 @@ const stockFilterSlice = createSlice({
         },
       });
     },
+    resetAllCriterias(state, action) {
+      const data = action.payload;
+      stockFilterSlice.caseReducers.resetInputValues(state);
+      stockFilterSlice.caseReducers.resetCheckboxStates(state, {
+        type: "resetAllCheckboxes",
+        payload: data,
+      });
+      stockFilterSlice.caseReducers.resetDisplayedValues(state, {
+        type: "resetDisplayedValues",
+        payload: {
+          provider: data.filterProviderDTOList,
+          category: data.filterCategoryDTOS,
+          subcategory: data.filterSubcategoryDTOS,
+          product: data.filterProductDTOS,
+        },
+      });
+      stockFilterSlice.caseReducers.resetRangeValues(state, {
+        type: "resetRangeValues",
+        payload: {
+          maxBuyingPrice: data.maxBuyingPrice,
+          minBuyingPrice: 0,
+          maxSellingPrice: data.maxSellingPrice,
+          minSellingPrice: 0,
+          maxQuantity: data.maxQuantity,
+          minQuantity: 0,
+        },
+      });
+      stockFilterSlice.caseReducers.resetIsAllChecked(state);
+      stockFilterSlice.caseReducers.resetStatus(state);
+    },
   },
 });
 export default stockFilterSlice.reducer;
@@ -407,4 +463,7 @@ export const {
   setFilterCriterias,
   resetFilterCriterias,
   handleCheckboxChange,
+  resetAllCriterias,
+  filterStocksByProductId,
+  setNavigate,
 } = stockFilterSlice.actions;

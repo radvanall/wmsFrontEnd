@@ -21,6 +21,7 @@ import {
   setFilterCriterias,
   resetFilterCriterias,
   handleCheckboxChange,
+  resetAllCriterias,
 } from "../../toolkitRedux/stockFilterSlice";
 
 import "./StocksFilterModal.css";
@@ -65,7 +66,9 @@ const StocksFilterModal = ({
 
   useEffect(() => {
     if (data) {
-      dispatch(resetCheckboxStates(data));
+      if (!filterCriterias) {
+        dispatch(resetCheckboxStates(data));
+      }
       dispatch(
         resetDisplayedValues({
           provider: data.filterProviderDTOList,
@@ -86,9 +89,7 @@ const StocksFilterModal = ({
       );
     }
   }, [data]);
-  const resetAllCheckboxes = () => {
-    dispatch(resetCheckboxStates(data));
-  };
+
   const getDataKey = (attribute) => {
     const dataKey =
       attribute === "product"
@@ -100,13 +101,7 @@ const StocksFilterModal = ({
         : "filterSubcategoryDTOS";
     return dataKey;
   };
-  const resetSerachCriteria = (attribute) => {
-    const dataKey = getDataKey(attribute);
-    console.log(attribute);
-    console.log("data[key]:", data[dataKey]);
-    dispatch(setInputValues({ attribute, value: "" }));
-    dispatch(setDisplayedValues({ attribute, value: data[dataKey] }));
-  };
+
   const handleChange = (e) => {
     dispatch(
       handleCheckboxChange({
@@ -148,7 +143,7 @@ const StocksFilterModal = ({
   };
   const handleFilter = () => {
     const checkedStatus = Object.keys(status).filter((item) => status[item]);
-    console.log("chekedStatus:", checkedStatus);
+
     const currentfilterCriterias = {
       providers: getCriteriasIds("provider"),
       categories: getCriteriasIds("category"),
@@ -165,39 +160,15 @@ const StocksFilterModal = ({
     dispatch(setFilterCriterias());
     filterStocks(currentfilterCriterias);
   };
-  const resetAllCriterias = () => {
-    dispatch(resetInputValues());
-    resetAllCheckboxes();
-    dispatch(
-      resetDisplayedValues({
-        provider: data.filterProviderDTOList,
-        category: data.filterCategoryDTOS,
-        subcategory: data.filterSubcategoryDTOS,
-        product: data.filterProductDTOS,
-      })
-    );
-    dispatch(
-      resetRangeValues({
-        maxBuyingPrice: data.maxBuyingPrice,
-        minBuyingPrice: 0,
-        maxSellingPrice: data.maxSellingPrice,
-        minSellingPrice: 0,
-        maxQuantity: data.maxQuantity,
-        minQuantity: 0,
-      })
-    );
-    dispatch(resetIsAllChecked);
-    dispatch(resetStatus());
-  };
+
   const handleCloseModal = () => {
-    if (!filterCriterias) resetAllCriterias();
+    if (!filterCriterias) dispatch(resetAllCriterias(data));
     handleModal();
   };
   const handleReset = () => {
-    resetAllCriterias();
+    dispatch(resetAllCriterias(data));
     resetData(0);
     dispatch(resetFilterCriterias());
-    dispatch(resetIsAllChecked());
   };
   return (
     <Modal active={active}>
