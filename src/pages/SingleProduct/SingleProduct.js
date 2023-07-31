@@ -11,7 +11,10 @@ import ProductWidged from "../../components/ProductWidged/ProductWidged";
 import BalanceTable from "../../components/BalanceTable/BalanceTable";
 import SaleChart from "../../components/SaleChart/SaleChart";
 import RangeDatePiker from "../../components/RangeDatePicker/RangeDatePicker";
+import StockTable from "../../components/StockTable/StockTable";
+
 import SingleProductMenu from "../../components/SingleProductMenu/SingleProductMenu";
+
 const SingleProduct = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
@@ -26,6 +29,7 @@ const SingleProduct = () => {
       (item) => item.id === Number(productId)
     )
   );
+
   console.log(product);
 
   return (
@@ -36,11 +40,7 @@ const SingleProduct = () => {
         <div className="Single">
           <SingleProductMenu id={productId} />
           <ProductWidged product={product} />
-          <ItemTable
-            data={stocks}
-            header={"stocuri:"}
-            itemLink={"operatorsinvoice"}
-          />
+          <StockTable productId={productId} />
           <SaleChart />
           <BalanceTable />
         </div>
