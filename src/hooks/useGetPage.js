@@ -13,8 +13,8 @@ const useGetPage = (url, filters) => {
     else setSortDirection("DESC");
   };
   const getPage = async (page, filterCriteria) => {
-    console.log("page filter Criterisa:", filterCriteria);
-    console.log("type of Criterisa:", typeof filterCriteria);
+    // console.log("page filter Criterisa:", filterCriteria);
+    // console.log("type of Criterisa:", typeof filterCriteria);
     setLoading(true);
 
     try {
@@ -23,7 +23,7 @@ const useGetPage = (url, filters) => {
         filterCriteria ? filterCriteria : undefined
       );
       setData(response.data);
-      console.log("data:", response.data);
+      // console.log("data:", response.data);
     } catch (err) {
       setError(err.message);
     } finally {

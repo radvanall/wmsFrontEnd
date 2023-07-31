@@ -5,7 +5,7 @@ const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const fetchData = () => {
+  const fetchData = async () => {
     setLoading(true);
     fetch(url)
       .then((res) => {
@@ -17,13 +17,13 @@ const useFetch = (url) => {
       })
       .then((res) => {
         setLoading(false);
-        console.log("data:", res);
+        // console.log("data:", res);
         setData(res);
         setError(null);
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
+        // console.log(err);
         setError(err.message);
       });
   };

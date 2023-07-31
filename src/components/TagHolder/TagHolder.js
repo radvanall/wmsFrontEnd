@@ -21,22 +21,31 @@ const TagHolder = ({ data, filterCriterias, filterStocks }) => {
   const status = useSelector((state) => state.stockFilterSlice.status);
 
   const providers = displayedValues.provider?.filter((item) =>
-    filterCriterias.providers.some((id) => parseInt(item.id) === id)
+    filterCriterias.providers.some((id) => parseInt(item.id) === parseInt(id))
   );
   const categories = displayedValues.category?.filter((item) =>
-    filterCriterias.categories.some((id) => parseInt(item.id) === id)
+    filterCriterias.categories.some((id) => parseInt(item.id) === parseInt(id))
   );
   const subcategories = displayedValues.subcategory?.filter((item) =>
-    filterCriterias.subcategories.some((id) => parseInt(item.id) === id)
+    filterCriterias.subcategories.some(
+      (id) => parseInt(item.id) === parseInt(id)
+    )
   );
   const products = displayedValues.product?.filter((item) =>
-    filterCriterias.products.some((id) => parseInt(item.id) === id)
+    filterCriterias.products.some((id) => parseInt(item.id) === parseInt(id))
   );
-  console.log("tagProducts:", products);
+
   const states = Object.keys(status).filter(
     (key) => status[key] === true && key !== "allStates"
   );
-
+  console.log("tagholder product:", products);
+  console.log(" displayedValues.product:", displayedValues.product);
+  console.log(" filterCriterias.products", filterCriterias.products);
+  console.log(
+    displayedValues.product?.filter((item) =>
+      filterCriterias.products.some((id) => parseInt(item.id) === parseInt(id))
+    )
+  );
   const getCriteriasIds = (criteria) => {
     return checkboxStates[criteria]
       .filter((item) => item.checked)
@@ -44,7 +53,6 @@ const TagHolder = ({ data, filterCriterias, filterStocks }) => {
   };
   const handleFilter = (attribute, id) => {
     const checkedStatus = Object.keys(status).filter((item) => status[item]);
-    console.log("chekedStatus:", checkedStatus);
     const currentfilterCriterias = {
       providers: getCriteriasIds("provider"),
       categories: getCriteriasIds("category"),
@@ -70,12 +78,8 @@ const TagHolder = ({ data, filterCriterias, filterStocks }) => {
     };
     dispatch(setFilterCriterias());
     filterStocks(filteredCurrentfilterCriterias);
-    console.log(checkboxStates);
-    console.log(status);
-    console.log(rangeValues);
   };
   const handleChange = (e, attribute) => {
-    console.log("tag-data", data);
     dispatch(
       handleCheckboxChange({
         attribute: e.target.getAttribute("data-custom-attribute"),
@@ -91,8 +95,7 @@ const TagHolder = ({ data, filterCriterias, filterStocks }) => {
     dispatch(
       changeStatus({ value: e.target.value, checked: e.target.checked })
     );
-    console.log("attribute=", attribute);
-    console.log("value=", e.target.value);
+
     handleFilter(attribute, e.target.value);
   };
   return (
