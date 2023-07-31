@@ -4,14 +4,13 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
-    console.log("page number", i);
   }
   const handlePaginate = (page) => {
     if (page < 1 || page > pageNumbers[pageNumbers.length - 1]) return;
     paginate(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  console.log(currentPage);
+
   return (
     <nav>
       <ul className="pagination">

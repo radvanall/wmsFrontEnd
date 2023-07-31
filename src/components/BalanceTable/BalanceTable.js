@@ -5,7 +5,6 @@ import productBalance from "../../productBalance";
 import { addDays, parse } from "date-fns";
 import { useState } from "react";
 
-import format from "date-fns/format";
 const BalanceTable = () => {
   const [data, setData] = useState([...productBalance]);
   const [rangeSelected, setRangeSelected] = useState(false);

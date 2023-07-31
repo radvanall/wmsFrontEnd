@@ -1,7 +1,8 @@
 import React from "react";
 import "./ItemTable.css";
 import { Link } from "react-router-dom";
-const ItemTable = ({ data, header, itemLink, children }) => {
+import BasicButton from "../BasicButton/BasicButton";
+const ItemTable = ({ data, header, handleFooterClick, children }) => {
   let dataHeader = "";
   if (data.length > 0) {
     dataHeader = Object.keys(data[0]);
@@ -51,9 +52,10 @@ const ItemTable = ({ data, header, itemLink, children }) => {
             </tbody>
           </table>
           <div className="all__item__table">
-            <Link to={`/${itemLink}`} className="link__to__item">
+            <BasicButton text="Vezi toate" handleClick={handleFooterClick} />
+            {/* <Link to={`/${itemLink}`} className="link__to__item">
               Vezi toate
-            </Link>
+            </Link> */}
           </div>
         </div>
       ) : (
