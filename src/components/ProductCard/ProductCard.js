@@ -10,7 +10,6 @@ const ProductCard = ({ item, refetchPage }) => {
   const { status: isOpenStockData, toggleStatus: toggleStockData } =
     useToggle(false);
 
-  console.log(item);
   const handleDetails = (id) => {
     toggleStockData();
   };
@@ -46,9 +45,7 @@ const ProductCard = ({ item, refetchPage }) => {
       <button onClick={toggleStockData} className="card__link">
         Detalii
       </button>
-      {/* <Link to="/" className="card__link">
-        Detalii
-      </Link> */}
+
       <StockDataModal
         active={isOpenStockData}
         handleCloseModal={toggleStockData}

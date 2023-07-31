@@ -15,7 +15,7 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
   const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
   const { status: isOpenAlert, toggleStatus: toggleAlert } = useToggle(false);
   const navigate = useNavigate();
-  console.log(stock);
+  // console.log(stock);
   const [sellingPrice, setSellingPrice] = useState(stock.sellingPrice);
   const { message, loading, error, resetMessage, postData } = usePostData();
 
