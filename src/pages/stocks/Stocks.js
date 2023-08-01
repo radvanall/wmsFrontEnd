@@ -11,8 +11,15 @@ import useFetch from "../../hooks/useFetch";
 import { FiFilter } from "react-icons/fi";
 import TagHolder from "../../components/TagHolder/TagHolder";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  resetFilterCriterias,
+  resetAllCriterias,
+  setNavigate,
+} from "../../toolkitRedux/stockFilterSlice";
+import { useLocation } from "react-router-dom";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import SimpleSelect from "../../components/SimpleSelect/SimpleSelect";
+import axios from "axios";
 const pageSizeOptions = [
   {
     value: 10,
@@ -37,9 +44,17 @@ const pageSizeOptions = [
 ];
 const Stocks = () => {
   const [dates, setDates] = useState([]);
+  const dispatch = useDispatch();
+  const location = useLocation();
   const filterCriterias = useSelector(
     (state) => state.stockFilterSlice.filterCriterias
   );
+  const checkboxStates = useSelector(
+    (state) => state.stockFilterSlice.checkboxStates
+  );
+  const navigate = useSelector((state) => state.stockFilterSlice.navigate);
+  console.log("filter criterias stocks:", filterCriterias);
+  console.log("checkbox states:", checkboxStates);
 
   const { status: isOpenFilter, toggleStatus: toggleFilter } = useToggle(false);
   const {
@@ -52,12 +67,42 @@ const Stocks = () => {
     setSize,
     toggleSortDirection,
   } = useGetPage("http://localhost:8080/api/stock/readAll", filterCriterias);
-  const {
-    data: filterSettings,
-    loading: loadingFilterSettings,
-    error: errorFilterSettings,
-    fetchData,
-  } = useFetch("http://localhost:8080/api/stock/filterSettings");
+  // const {
+  //   data: filterSettings,
+  //   loading: loadingFilterSettings,
+  //   error: errorFilterSettings,
+  //   fetchData,
+  // } = useFetch("http://localhost:8080/api/stock/filterSettings");
+  const [filterSettings, setFilterSettings] = useState(null);
+  const getSettings = async () => {
+    // await fetchData();
+
+    try {
+      const fetch = await axios.get(
+        "http://localhost:8080/api/stock/filterSettings"
+      );
+      setFilterSettings(fetch.data);
+      if (!navigate) {
+        console.log("filter settings:", fetch.data);
+        console.error("navigate0:", navigate);
+
+        console.log("location changes", location);
+        dispatch(resetFilterCriterias());
+        console.error("navigate:", navigate);
+        dispatch(resetAllCriterias(fetch.data));
+      } else {
+        dispatch(setNavigate(false));
+        console.error("navigate5:", navigate);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    return () => getSettings();
+  }, [location.pathname, navigate]);
+
   useEffect(() => {
     if (localStorage.getItem("pageSize"))
       setSize(parseInt(JSON.parse(localStorage.getItem("pageSize"))));
@@ -68,13 +113,11 @@ const Stocks = () => {
     const newDates = [];
     data.content.forEach((stock) => {
       const dateOfCreation = getFormatedDate(stock.dateOfCreation, "ro-RO");
-      console.log(dateOfCreation);
       if (!newDates.includes(dateOfCreation)) {
         newDates.push(dateOfCreation);
       }
     });
     setDates(newDates);
-    console.log(newDates);
   }, [data]);
 
   const handlePageChange = (page) => {
@@ -87,7 +130,6 @@ const Stocks = () => {
     getPage(0, filterCriteria);
   };
   const handlePageSizeChange = (e) => {
-    console.log(e.target.value);
     setSize(e.target.value);
     localStorage.setItem("pageSize", e.target.value);
   };
@@ -97,6 +139,17 @@ const Stocks = () => {
       {loading && <LoadingComponent />}
       {data && (
         <>
+          <button
+            onClick={() => {
+              console.log(checkboxStates);
+              console.log("filter criterias stocks:", filterCriterias);
+              console.log("navigate:", navigate);
+              console.log("filter settings:", filterSettings);
+              // dispatch(setNavigate(!navigate));
+            }}
+          >
+            click
+          </button>
           <div className="stock__menu">
             <FiFilter
               className={

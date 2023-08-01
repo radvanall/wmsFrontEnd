@@ -65,7 +65,7 @@ const stockFilterSlice = createSlice({
       product: true,
     },
     filterCriterias: null,
-    navigate: true,
+    navigate: false,
   },
 
   reducers: {
