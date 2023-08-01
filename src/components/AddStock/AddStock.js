@@ -128,6 +128,7 @@ const AddStock = ({
             image={productImage}
             selected={selected}
             opened={opened}
+            readOnly={true}
             setOpened={setOpened}
             handleSelect={handleSelect}
           />

@@ -8,7 +8,9 @@ const CustomSelect = ({
   image,
   selected,
   setOpened,
+  onChange,
   opened,
+  readOnly,
 }) => {
   // const [opened, setOpened] = useState(false);
   // const [selected, setSelected] = useState("");
@@ -36,7 +38,14 @@ const CustomSelect = ({
       <div className="custom_select_selected">
         {/* <img src="/img/57x57.png" /> */}
         <img src={image} />
-        <input type="text" className="select_input" readOnly value={selected} />
+        <input
+          type="text"
+          className="select_input"
+          // readOnly
+          readOnly={readOnly}
+          value={selected}
+          onChange={onChange}
+        />
         <button
           className="select_button"
           onClick={(e) => {

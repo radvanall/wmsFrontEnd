@@ -56,6 +56,7 @@ const InvoiceForm = ({
             selected={selected}
             setOpened={setOpened}
             opened={opened}
+            readOnly={true}
           />
 
           <div className="input__wrapper">
