@@ -52,11 +52,15 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
     setSellingPrice(stock.sellingPrice);
     toggleEdit();
   };
+  const closeModal = () => {
+    handleToggleEdit();
+    handleCloseModal();
+  };
   return (
     <Modal active={active}>
-      <CloseModal handleCloseModal={handleCloseModal} />
+      <CloseModal handleCloseModal={closeModal} />
       <div className="stock__data__header">
-        <p className="state__holder">{getState(stock.state)}</p>
+        <div className="state__holder">{getState(stock.state)}</div>
         <div className="stock__data__field">
           <img src={stock.positionImg} alt="" className="stock__data__img" />
           <p>
