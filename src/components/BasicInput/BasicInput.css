@@ -26,3 +26,7 @@
   -webkit-appearance: none;
   margin: 0;
 }
+.basic__input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(38%) sepia(55%) saturate(575%) hue-rotate(154deg)
+    brightness(93%) contrast(89%);
+}
