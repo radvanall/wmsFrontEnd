@@ -93,3 +93,8 @@ th {
   justify-content: center;
   gap: 5px;
 }
+.responsive__table .modified {
+  -webkit-box-shadow: inset 0px 0px 0px 1px #f00;
+  -moz-box-shadow: inset 0px 0px 0px 1px #f00;
+  box-shadow: inset 0px 0px 0px 1px #f00;
+}

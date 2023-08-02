@@ -8,7 +8,7 @@ const CustomSelect = ({
   image,
   selected,
   setOpened,
-  onChange,
+  handleChange,
   opened,
   readOnly,
 }) => {
@@ -44,7 +44,7 @@ const CustomSelect = ({
           // readOnly
           readOnly={readOnly}
           value={selected}
-          onChange={onChange}
+          onChange={handleChange}
         />
         <button
           className="select_button"

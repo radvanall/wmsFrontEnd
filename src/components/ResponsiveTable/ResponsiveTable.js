@@ -5,6 +5,8 @@ import "./ResponsiveTable.css";
 const ResponsiveTable = ({
   data,
   title,
+  isModifying,
+  changingRowId,
   handleEdit,
   handleDelete,
   handleDatails,
@@ -23,8 +25,8 @@ const ResponsiveTable = ({
       setCellWidth(95 / columns);
     }
   }, [data]);
-  console.log(data.id);
-  return (
+
+  return data?.length ? (
     <table className="responsive__table">
       {title && <caption>{title}</caption>}
       <thead>
@@ -39,7 +41,7 @@ const ResponsiveTable = ({
                     : { width: `${cellWidth}%` }
                 }
               >
-                {columnName}
+                {columnName === "image" ? "Imagine" : columnName}
               </th>
             ))}
           {(handleEdit || handleDelete || handleDatails) && (
@@ -49,7 +51,14 @@ const ResponsiveTable = ({
       </thead>
       <tbody>
         {data.map((row) => (
-          <tr key={row.id}>
+          <tr
+            key={row.id}
+            className={
+              isModifying && parseInt(changingRowId) === parseInt(row.id)
+                ? "modified"
+                : row.id
+            }
+          >
             {Object.keys(row).map((cell, index) => (
               <td
                 key={index}
@@ -99,6 +108,8 @@ const ResponsiveTable = ({
         ))}
       </tbody>
     </table>
+  ) : (
+    <p>Tabelul e gol</p>
   );
 };
 
