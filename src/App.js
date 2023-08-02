@@ -18,6 +18,8 @@ import OperatorsInvoice from "./pages/OperatorsInvoice/OperatorsInvoice";
 import { useSelector } from "react-redux";
 //test commgit sent
 import Invoice from "./pages/Invoice/Invoice";
+import Orders from "./pages/orders/Orders";
+import NewOrder from "./pages/NewOrder/NewOrder";
 function App() {
   const opened = useSelector((state) => state.menuState.opened);
   console.log("opened=", opened);
@@ -79,8 +81,9 @@ function App() {
               /> */}
                   </Route>
                   <Route path="orders">
-                    {/* <Route index element={<Table />} /> */}
-                    <Route path=":orderId" element={<SingleOperator />} />
+                    <Route index element={<Orders />} />
+                    {/* <Route path=":orderId" element={<SingleOperator />} /> */}
+                    <Route path="newOrder" element={<NewOrder />} />
                     {/* <Route
                 path="new"
                 element={<New inputs={productInputs} title="Add New Product" />}
