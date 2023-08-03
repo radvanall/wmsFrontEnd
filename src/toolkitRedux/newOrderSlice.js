@@ -7,7 +7,9 @@ const newOrderSlice = createSlice({
       name: "",
       image: "/img/57x57.png",
       quantity: 0,
+      initialQuantity: 0,
       currentStock: {},
+      availableStocks: [],
     },
     formMode: "add",
     selectedTableRowId: -1,
@@ -20,7 +22,9 @@ const newOrderSlice = createSlice({
         name: "",
         image: "/img/57x57.png",
         quantity: 0,
+        initialQuantity: 0,
         currentStock: {},
+        availableStocks: [],
       };
     },
     setSelectedPosition(state, action) {
@@ -32,7 +36,9 @@ const newOrderSlice = createSlice({
         name: action.payload,
         image: "/img/57x57.png",
         quantity: 0,
+        initialQuantity: 0,
         currentStock: {},
+        availableStocks: [],
       };
     },
     setFormMode(state, action) {
