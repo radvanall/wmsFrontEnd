@@ -19,6 +19,7 @@ const SellingForm = ({
   setPositions,
   fullData,
   setIsModifying,
+  getNextStock,
 }) => {
   const dispatch = useDispatch();
   const productQuantity = useSelector(
@@ -32,7 +33,9 @@ const SellingForm = ({
     (state) => state.newOrderSlice.selectedTableRowId
   );
   const [opened, setOpened] = useState(false);
+  const [usedStocks, setUsedStocks] = useState([]);
   const [displayedPositions, setDisplayedPositions] = useState(positions);
+  const [stockArray, setStockArray] = useState([]);
   const [id, setId] = useState(1);
   const { status: isOpenMessage, toggleStatus: toggleMessage } =
     useToggle(false);
@@ -45,12 +48,93 @@ const SellingForm = ({
   //   currentStock: {},
   // });
   // const [productQunatity, setProductQuantity] = useState(0);
+  const getUsedQuantity = (requestedQunatity, stockQuantity) => {
+    const diff = Math.abs(
+      parseInt(stockQuantity) - parseInt(requestedQunatity)
+    );
+    console.log(requestedQunatity - diff);
+    if (requestedQunatity > stockQuantity) return requestedQunatity - diff;
+    else return stockQuantity - diff;
+  };
   const changePositionQuantity = () => {
+    if (parseInt(selectedPosition.quantity) < parseInt(productQuantity))
+      return false;
     if (
       parseInt(selectedPosition.currentStock.remainingQuantity) <
       parseInt(productQuantity)
     ) {
       console.log(true);
+      let remainingProductQuantity = productQuantity;
+      const availableStocks = [...selectedPosition.availableStocks];
+      const usedQuantity = getUsedQuantity(
+        remainingProductQuantity,
+        selectedPosition.currentStock.remainingQuantity
+      );
+      const stockArray = [
+        {
+          ...selectedPosition.currentStock,
+          remainingQuantity:
+            parseInt(selectedPosition.currentStock.remainingQuantity) -
+            parseInt(usedQuantity),
+        },
+      ];
+
+      // parseInt(remainingProductQuantity) -
+      // Math.abs(
+      //   parseInt(selectedPosition.currentStock.remainingQuantity) -
+      //     parseInt(remainingProductQuantity)
+      // );
+      setUsedStocks((prev) => [
+        ...prev,
+        {
+          usedQuantity,
+          id: selectedPosition.currentStock.id,
+          price: selectedPosition.currentStock.sellingPrice,
+        },
+      ]);
+      console.log("abs:", usedQuantity);
+      remainingProductQuantity =
+        parseInt(remainingProductQuantity) -
+        parseInt(selectedPosition.currentStock.remainingQuantity);
+      console.log("remainingProductQuantity", remainingProductQuantity);
+      while (parseInt(remainingProductQuantity) > 0) {
+        const nextStock = getNextStock(availableStocks);
+        if (!nextStock) return;
+        const usedQuantity = getUsedQuantity(
+          remainingProductQuantity,
+          nextStock.remainingQuantity
+        );
+        setUsedStocks((prev) => [
+          ...prev,
+          {
+            id: nextStock.id,
+            usedQuantity: usedQuantity,
+            price: nextStock.sellingPrice,
+          },
+        ]);
+
+        stockArray.push({
+          ...nextStock,
+          remainingQuantity:
+            parseInt(nextStock.remainingQuantity) - parseInt(usedQuantity),
+        });
+        remainingProductQuantity =
+          remainingProductQuantity - nextStock.remainingQuantity;
+        const stockIndexToRemove = availableStocks.findIndex(
+          (stock) => parseInt(stock.id) === parseInt(nextStock.id)
+        );
+        if (stockIndexToRemove !== -1) {
+          availableStocks.splice(stockIndexToRemove, 1);
+        }
+      }
+      console.log("availableStocks=", availableStocks);
+      console.log("stockArray=", stockArray);
+      setStockArray(stockArray);
+
+      // setNextStock(
+      //   getNextStock(selectedPosition.currentStock.id, selectedPosition.id)
+      // );
+      console.log("selected podition:", selectedPosition);
       toggleMessage();
       return false;
     }
@@ -148,14 +232,30 @@ const SellingForm = ({
     };
     const samePosition = fullData.find(
       (position) =>
-        parseInt(position.positionId) === parseInt(newRow.positionId)
+        parseInt(position.positionId) === parseInt(newRow.positionId) &&
+        parseInt(position.currentStockId) === parseInt(newRow.currentStockId)
     );
     console.log("samePosition:", samePosition ? "true" : "false");
     console.log("selectedPosition:", selectedPosition);
-
+    // dispatch(
+    //   setSelectedPosition({
+    //     ...selectedPosition,
+    //     quantity:
+    //       parseInt(selectedPosition.quantity) - parseInt(productQuantity),
+    //     currentStock: {
+    //       ...selectedPosition.currentStock,
+    //       remainingQuantity:
+    //         parseInt(selectedPosition.currentStock.remainingQuantity) -
+    //         parseInt(productQuantity),
+    //     },
+    //   })
+    // );
     if (samePosition) {
       const newFullData = fullData.map((position) => {
-        if (parseInt(position.positionId) === parseInt(newRow.positionId))
+        if (
+          parseInt(position.positionId) === parseInt(newRow.positionId) &&
+          parseInt(position.currentStockId) === parseInt(newRow.currentStockId)
+        )
           return {
             ...position,
             ["Preț total"]:
@@ -204,8 +304,79 @@ const SellingForm = ({
     }, 2000);
   };
 
+  const handleConfirmMultyStock = () => {
+    // const updatedArray = [...stockArray];
+    const newCurrentStock = stockArray[stockArray.length - 1];
+    console.log("newCurrentStock:", newCurrentStock);
+    const newAvailableStocks = selectedPosition.availableStocks.filter(
+      (stock) => {
+        return !stockArray.some(
+          (item) => parseInt(item.id) === parseInt(stock.id)
+        );
+      }
+    );
+    console.log("newAvailableStocks=", newAvailableStocks);
+    const newPositions = positions.map((position) => {
+      if (parseInt(position.id) === parseInt(selectedPosition.id)) {
+        return {
+          ...position,
+          quantity: parseInt(position.quantity) - parseInt(productQuantity),
+          currentStock: newCurrentStock,
+          availableStocks: newAvailableStocks,
+        };
+      } else return position;
+    });
+    setPositions(newPositions);
+    dispatch(
+      setSelectedPosition({
+        ...selectedPosition,
+        quantity:
+          parseInt(selectedPosition.quantity) - parseInt(productQuantity),
+        currentStock: newCurrentStock,
+        availableStocks: newAvailableStocks,
+      })
+    );
+    setDisplayedPositions(newPositions);
+    let newId = id;
+    const newRows = usedStocks.map((stock) => {
+      const newRow = {
+        id: newId,
+        image: selectedPosition.image,
+        Produs: selectedPosition.name,
+        Cantitate: stock.usedQuantity,
+        ["Preț/buc."]: stock.price,
+        ["Preț total"]:
+          parseFloat(stock.usedQuantity) * parseFloat(stock.price),
+        currentStockId: stock.id,
+        positionId: selectedPosition.id,
+      };
+      newId++;
+      return newRow;
+    });
+    console.log(newRows);
+    setFullData([...fullData, ...newRows]);
+    setId(newId);
+  };
+
+  const handleCancelModalMessage = () => {
+    toggleMessage();
+    setUsedStocks([]);
+    console.log("newSelectedPositon:", selectedPosition);
+    console.log("newDisplaeyedPosition:", displayedPositions);
+    console.log("newPositons:", positions);
+  };
+
   return (
     <form onSubmit={handleSubmit}>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          console.log("fullData=", fullData);
+          console.log("positons:", positions);
+        }}
+      >
+        test
+      </button>
       <BasicInput label="Data" type="date" fullBorder={true} />
       <CustomSelect
         positions={displayedPositions}
@@ -250,9 +421,24 @@ const SellingForm = ({
       <ModalMessage
         isOpened={isOpenMessage}
         close={toggleMessage}
-        handleCancel={toggleMessage}
+        handleCancel={handleCancelModalMessage}
+        handleOk={handleConfirmMultyStock}
       >
-        <p>Nu există suficiente bucăți în stoc.</p>
+        <h2>Nu există suficiente bucăți în stocul curent.</h2>
+        <p>
+          Produsele sunt luate din mai multe stocuri de aceea prețul poate fi
+          diferit.
+        </p>
+        {usedStocks.length && (
+          <>
+            {usedStocks.map((stock, index) => (
+              <p key={index}>
+                {stock.usedQuantity} buc. la preț de: {stock.price} lei.
+              </p>
+            ))}
+            <p>Dacă sunteți de acord confirmați, dacă nu anulați.</p>
+          </>
+        )}
       </ModalMessage>
     </form>
   );

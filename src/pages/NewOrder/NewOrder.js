@@ -27,12 +27,76 @@ const NewOrder = () => {
   const selectedTableRowId = useSelector(
     (state) => state.newOrderSlice.selectedTableRowId
   );
+  const getEarliestDate = (arr) => {
+    return arr.reduce((earliest, current) => {
+      const earliestDate = new Date(earliest.dateOfValidation);
+      const currentDate = new Date(current.dateOfValidation);
+      return currentDate < earliestDate ? current : earliest;
+    }, arr[0]);
+  };
+  const resetPositionById = (positionId) => {
+    const position = data.find(
+      (position) => parseInt(position.id) === parseInt(positionId)
+    );
+    const inSale = position.stocks.filter((stock) => stock.state === "inSale");
+    const forSale = position.stocks.filter(
+      (stock) => stock.state === "forSale"
+    );
+    const chosenStock = inSale.length
+      ? getEarliestDate(inSale)
+      : getEarliestDate(forSale);
+    console.log("chosenStock=", chosenStock);
+
+    const availableStocks = position.stocks.filter(
+      (stock) => parseInt(stock.id) !== parseInt(chosenStock.id)
+    );
+    const restoredPosition = {
+      id: position.id,
+      name: position.productName,
+      image: position.productImg,
+      quantity: position.stocks.reduce(
+        (prevValue, currentValue) =>
+          parseInt(prevValue) + parseInt(currentValue.remainingQuantity),
+        0
+      ),
+      currentStock: chosenStock,
+      availableStocks: availableStocks,
+    };
+    setPositions((prev) =>
+      prev.map((position) => {
+        if (parseInt(position.id) === parseInt(positionId))
+          return restoredPosition;
+        else return position;
+      })
+    );
+    if (parseInt(selectedPosition.id) === parseInt(positionId)) {
+      dispatch(setSelectedPosition(restoredPosition));
+    }
+  };
   const handleRowDelete = (id) => {
     console.log("id=", id);
     //  const newArray=fullData.filter(item=>parseInt(item.id)===parseInt(id));
-    setFullData((prev) =>
-      prev.filter((item) => parseInt(item.id) !== parseInt(id))
+    const positionId = fullData.find(
+      (row) => parseInt(row.id) === parseInt(id)
+    )?.positionId;
+    const currentStockId = positions.find(
+      (position) => parseInt(position.id) === parseInt(positionId)
+    )?.currentStock?.id;
+    console.log("positionId:", positionId);
+    console.log("currentStockId", currentStockId);
+    const foundStock = fullData.find(
+      (item) =>
+        parseInt(item.id) === parseInt(id) &&
+        parseInt(item.currentStockId) === parseInt(currentStockId)
     );
+    if (foundStock) {
+      console.log("foundStock=", foundStock);
+      setFullData((prev) =>
+        prev.filter((item) => parseInt(item.id) !== parseInt(id))
+      );
+      resetPositionById(positionId);
+      console.log(true);
+    } else console.log(false);
   };
   const handleRowEdit = (id) => {
     const row = fullData.find((item) => parseInt(item.id) === parseInt(id));
@@ -48,12 +112,20 @@ const NewOrder = () => {
     }
     console.log(position);
   };
-  const getEarliestDate = (arr) => {
-    return arr.reduce((earliest, current) => {
-      const earliestDate = new Date(earliest.dateOfValidation);
-      const currentDate = new Date(current.dateOfValidation);
-      return currentDate < earliestDate ? current : earliest;
-    }, arr[0]);
+
+  // const getStocksByPosition=(positionId)=>{
+  //   return data.
+  // }
+  const getNextStock = (stocks) => {
+    const inSale = stocks.filter((stock) => stock.state === "inSale");
+    const forSale = stocks.filter((stock) => stock.state === "forSale");
+    const nextStock = inSale.length
+      ? getEarliestDate(inSale)
+      : getEarliestDate(forSale);
+
+    console.log("nextStock=", nextStock);
+    if (nextStock) return nextStock;
+    else return false;
   };
   useEffect(() => {
     if (fullData.length) {
@@ -79,13 +151,10 @@ const NewOrder = () => {
           : getEarliestDate(forSale);
         console.log("chosenStock=", chosenStock);
 
-        // .reduce((earliest, current) => {
-        //   const earliestDate = new Date(earliest.dateOfValidation);
-        //   const currentDate = new Date(current.dateOfValidation);
-        //   return currentDate < earliestDate ? current : earliest;
-        // });
-        // console.log("firstInSale=", inSale);
-        // console.log("firstforSale=", forSale);
+        const availableStocks = position.stocks.filter(
+          (stock) => parseInt(stock.id) !== parseInt(chosenStock.id)
+        );
+
         return {
           id: position.id,
           name: position.productName,
@@ -95,7 +164,13 @@ const NewOrder = () => {
               parseInt(prevValue) + parseInt(currentValue.remainingQuantity),
             0
           ),
+          initialQuantity: position.stocks.reduce(
+            (prevValue, currentValue) =>
+              parseInt(prevValue) + parseInt(currentValue.remainingQuantity),
+            0
+          ),
           currentStock: chosenStock,
+          availableStocks: availableStocks,
         };
       });
       console.log("positons:", newPositions);
@@ -111,6 +186,7 @@ const NewOrder = () => {
           fullData={fullData}
           setIsModifying={setIsModifying}
           setPositions={setPositions}
+          getNextStock={getNextStock}
         />
       </div>
       <div className="new__order__table__wrapper">
