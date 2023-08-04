@@ -34,34 +34,97 @@ const NewOrder = () => {
       return currentDate < earliestDate ? current : earliest;
     }, arr[0]);
   };
+  const sortStocks = (a, b) => {
+    if (a.state === "forSale" && b.state === "inSale") return 1;
+    if (a.state == "inSale" && b.state === "forSale") return -1;
+
+    const dateA = new Date(a.dateOfValidation);
+    const dateB = new Date(b.dateOfValidation);
+
+    return dateA - dateB;
+  };
   const resetPositionById = (positionId) => {
-    const position = data.find(
+    const position = positions.find(
       (position) => parseInt(position.id) === parseInt(positionId)
     );
-    const inSale = position.stocks.filter((stock) => stock.state === "inSale");
-    const forSale = position.stocks.filter(
-      (stock) => stock.state === "forSale"
-    );
-    const chosenStock = inSale.length
-      ? getEarliestDate(inSale)
-      : getEarliestDate(forSale);
-    console.log("chosenStock=", chosenStock);
 
-    const availableStocks = position.stocks.filter(
-      (stock) => parseInt(stock.id) !== parseInt(chosenStock.id)
-    );
+    const updatedStocks = [...position.stocks];
+    const newIndex =
+      position.currentStockIndex >= position.stocks.length
+        ? position.currentStockIndex - 1
+        : updatedStocks[position.currentStockIndex].remainingQuantity <
+            updatedStocks[position.currentStockIndex].initialQuantity &&
+          updatedStocks[position.currentStockIndex].remainingQuantity > 0
+        ? position.currentStockIndex
+        : updatedStocks[position.currentStockIndex].remainingQuantity ===
+          updatedStocks[position.currentStockIndex].initialQuantity
+        ? position.currentStockIndex - 1
+        : false;
+    const restoredQuantity =
+      parseInt(position.quantity) +
+      parseInt(updatedStocks[newIndex].initialQuantity) -
+      parseInt(updatedStocks[newIndex].remainingQuantity);
+    // updatedStocks[newIndex].remainingQuantity =
+    //   updatedStocks[newIndex.initialQuantity];
+    console.log("restoredQuantity:", restoredQuantity);
+    const finalStocks = updatedStocks.map((stock, index) => {
+      if (index === newIndex)
+        return {
+          ...stock,
+          remainingQuantity: stock.initialQuantity,
+        };
+      else return stock;
+    });
+
+    // const updatedStocks = position.stocks.map((stock, index) => {
+    //   if (
+    //     parseInt(stock.remainingQuantity) === 0 &&
+    //     position.currentStockIndex - 1 === index
+    //   ) {
+    //     restoredQuantity =
+    //       parseInt(stock.initialQuantity) - parseInt(stock.remainingQuantity);
+    //   }
+    //   if (index === parseInt(position.currentStockIndex)) {
+    //     restoredQuantity =
+    //       parseInt(stock.initialQuantity) - parseInt(stock.remainingQuantity);
+    //     return {
+    //       ...stock,
+    //       remainingQuantity: stock.initialQuantity,
+    //     };
+    //   } else return stock;
+    // });
     const restoredPosition = {
-      id: position.id,
-      name: position.productName,
-      image: position.productImg,
-      quantity: position.stocks.reduce(
-        (prevValue, currentValue) =>
-          parseInt(prevValue) + parseInt(currentValue.remainingQuantity),
-        0
-      ),
-      currentStock: chosenStock,
-      availableStocks: availableStocks,
+      ...position,
+      // quantity: parseInt(position.quantity) + restoredQuantity,
+      currentStockIndex: newIndex,
+      quantity: restoredQuantity,
+      stocks: finalStocks,
     };
+
+    // const inSale = position.stocks.filter((stock) => stock.state === "inSale");
+    // const forSale = position.stocks.filter(
+    //   (stock) => stock.state === "forSale"
+    // );
+    // const chosenStock = inSale.length
+    //   ? getEarliestDate(inSale)
+    //   : getEarliestDate(forSale);
+    // console.log("chosenStock=", chosenStock);
+
+    // const availableStocks = position.stocks.filter(
+    //   (stock) => parseInt(stock.id) !== parseInt(chosenStock.id)
+    // );
+    // const restoredPosition = {
+    //   id: position.id,
+    //   name: position.productName,
+    //   image: position.productImg,
+    //   quantity: position.stocks.reduce(
+    //     (prevValue, currentValue) =>
+    //       parseInt(prevValue) + parseInt(currentValue.remainingQuantity),
+    //     0
+    //   ),
+    //   currentStock: chosenStock,
+    //   availableStocks: availableStocks,
+    // };
     setPositions((prev) =>
       prev.map((position) => {
         if (parseInt(position.id) === parseInt(positionId))
@@ -73,21 +136,84 @@ const NewOrder = () => {
       dispatch(setSelectedPosition(restoredPosition));
     }
   };
+  const resetMultipleStocks = (positionId, stockId) => {
+    const position = positions.find(
+      (position) => parseInt(position.id) === parseInt(positionId)
+    );
+    const stockIndex = position.stocks.findIndex(
+      (stock) => parseInt(stock.id) === parseInt(stockId)
+    );
+    let diff = 0;
+    // parseInt(position.stocks[stockIndex].initialQuantity) -
+    //   parseInt(position.stocks[stockIndex.remainingQuantity]);
+    const finalStocks = position.stocks.map((stock, index) => {
+      if (index >= stockIndex) {
+        diff =
+          diff +
+          parseInt(stock.initialQuantity) -
+          parseInt(stock.remainingQuantity);
+        return {
+          ...stock,
+          remainingQuantity: stock.initialQuantity,
+        };
+      } else return stock;
+    });
+    const restoredPosition = {
+      ...position,
+      // quantity: parseInt(position.quantity) + restoredQuantity,
+      currentStockIndex: stockIndex,
+      quantity: position.quantity + diff,
+      stocks: finalStocks,
+    };
+    setPositions((prev) =>
+      prev.map((position) => {
+        if (parseInt(position.id) === parseInt(positionId))
+          return restoredPosition;
+        else return position;
+      })
+    );
+    if (parseInt(selectedPosition.id) === parseInt(positionId)) {
+      dispatch(setSelectedPosition(restoredPosition));
+    }
+    console.log("stockIndex", stockIndex);
+  };
   const handleRowDelete = (id) => {
     console.log("id=", id);
     //  const newArray=fullData.filter(item=>parseInt(item.id)===parseInt(id));
     const positionId = fullData.find(
       (row) => parseInt(row.id) === parseInt(id)
     )?.positionId;
-    const currentStockId = positions.find(
+    const position = positions.find(
       (position) => parseInt(position.id) === parseInt(positionId)
-    )?.currentStock?.id;
+    );
+
+    const currentStock =
+      position?.stocks.length > position.currentStockIndex
+        ? position?.stocks[position.currentStockIndex]
+        : position?.stocks[position.currentStockIndex - 1];
+
+    const currentStockId =
+      position?.stocks.length > position.currentStockIndex
+        ? currentStock.remainingQuantity < currentStock.initialQuantity
+          ? position?.stocks[position.currentStockIndex]?.id
+          : position?.stocks[position.currentStockIndex - 1]?.id
+        : currentStock.remainingQuantity < currentStock.initialQuantity
+        ? position?.stocks[position.currentStockIndex - 1]?.id
+        : position?.stocks[position.currentStockIndex - 2]?.id;
+    console.log(
+      "current stock comp:",
+      currentStock.remainingQuantity < currentStock.initialQuantity
+        ? currentStockId
+        : currentStockId - 1
+    );
+    console.log("currentStockId=", currentStockId);
+    console.log("currentStock[]id=", currentStock.id);
     console.log("positionId:", positionId);
     console.log("currentStockId", currentStockId);
     const foundStock = fullData.find(
       (item) =>
         parseInt(item.id) === parseInt(id) &&
-        parseInt(item.currentStockId) === parseInt(currentStockId)
+        parseInt(item.stockId) === parseInt(currentStockId)
     );
     if (foundStock) {
       console.log("foundStock=", foundStock);
@@ -96,7 +222,21 @@ const NewOrder = () => {
       );
       resetPositionById(positionId);
       console.log(true);
-    } else console.log(false);
+    } else {
+      const stockId = fullData.find(
+        (row) => parseInt(id) === parseInt(row.id)
+      )?.stockId;
+      setFullData((prev) =>
+        prev.filter(
+          (item) =>
+            parseInt(item.id) !== parseInt(id) &&
+            (parseInt(positionId) !== parseInt(item.positionId) ||
+              parseInt(item.id) <= parseInt(id))
+        )
+      );
+      console.log(false);
+      resetMultipleStocks(positionId, stockId);
+    }
   };
   const handleRowEdit = (id) => {
     const row = fullData.find((item) => parseInt(item.id) === parseInt(id));
@@ -129,9 +269,7 @@ const NewOrder = () => {
   };
   useEffect(() => {
     if (fullData.length) {
-      const newData = fullData.map(
-        ({ currentStockId, positionId, ...rest }) => rest
-      );
+      const newData = fullData.map(({ stockId, positionId, ...rest }) => rest);
       setTableData(newData);
       console.log("Full data:", fullData);
     } else setTableData([]);
@@ -140,20 +278,23 @@ const NewOrder = () => {
     console.log("data", data);
     if (data) {
       const newPositions = data.map((position) => {
-        const inSale = position.stocks.filter(
-          (stock) => stock.state === "inSale"
-        );
-        const forSale = position.stocks.filter(
-          (stock) => stock.state === "forSale"
-        );
-        const chosenStock = inSale.length
-          ? getEarliestDate(inSale)
-          : getEarliestDate(forSale);
-        console.log("chosenStock=", chosenStock);
+        // const sortedStocks = [...position.stocks];
+        // sortedStocks.sort(sortStocks);
+        // console.log("sortedStocks=", sortedStocks);
+        // const inSale = position.stocks.filter(
+        //   (stock) => stock.state === "inSale"
+        // );
+        // const forSale = position.stocks.filter(
+        //   (stock) => stock.state === "forSale"
+        // );
+        // const chosenStock = inSale.length
+        //   ? getEarliestDate(inSale)
+        //   : getEarliestDate(forSale);
+        // console.log("chosenStock=", chosenStock);
 
-        const availableStocks = position.stocks.filter(
-          (stock) => parseInt(stock.id) !== parseInt(chosenStock.id)
-        );
+        // const availableStocks = position.stocks.filter(
+        //   (stock) => parseInt(stock.id) !== parseInt(chosenStock.id)
+        // );
 
         return {
           id: position.id,
@@ -169,8 +310,11 @@ const NewOrder = () => {
               parseInt(prevValue) + parseInt(currentValue.remainingQuantity),
             0
           ),
-          currentStock: chosenStock,
-          availableStocks: availableStocks,
+          currentStockIndex: 0,
+          stocks: position.stocks.sort(sortStocks).map((stock) => ({
+            ...stock,
+            initialQuantity: stock.remainingQuantity,
+          })),
         };
       });
       console.log("positons:", newPositions);
