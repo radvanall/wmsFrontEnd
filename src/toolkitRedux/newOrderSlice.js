@@ -8,8 +8,8 @@ const newOrderSlice = createSlice({
       image: "/img/57x57.png",
       quantity: 0,
       initialQuantity: 0,
-      currentStock: {},
-      availableStocks: [],
+      currentStockIndex: 0,
+      stocks: [],
     },
     formMode: "add",
     selectedTableRowId: -1,
@@ -23,8 +23,8 @@ const newOrderSlice = createSlice({
         image: "/img/57x57.png",
         quantity: 0,
         initialQuantity: 0,
-        currentStock: {},
-        availableStocks: [],
+        currentStockIndex: 0,
+        stocks: [],
       };
     },
     setSelectedPosition(state, action) {
@@ -37,8 +37,8 @@ const newOrderSlice = createSlice({
         image: "/img/57x57.png",
         quantity: 0,
         initialQuantity: 0,
-        currentStock: {},
-        availableStocks: [],
+        currentStockIndex: 0,
+        stocks: [],
       };
     },
     setFormMode(state, action) {
