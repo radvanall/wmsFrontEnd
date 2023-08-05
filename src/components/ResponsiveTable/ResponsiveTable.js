@@ -5,6 +5,7 @@ import "./ResponsiveTable.css";
 const ResponsiveTable = ({
   data,
   title,
+  checkEdit,
   isModifying,
   changingRowId,
   handleEdit,
@@ -16,7 +17,7 @@ const ResponsiveTable = ({
 
   useEffect(() => {
     if (Array.isArray(data) && data.length > 0) {
-      setHeader(Object.keys(data[0]));
+      setHeader(Object.keys(data[0]).filter((key) => key !== "last"));
       const columns =
         handleEdit || handleDelete || handleDatails
           ? Object.keys(data[0]).length
@@ -59,29 +60,43 @@ const ResponsiveTable = ({
                 : row.id
             }
           >
-            {Object.keys(row).map((cell, index) => (
-              <td
-                key={index}
-                className={cell}
-                style={
-                  cell === "id" ? { width: "5%" } : { width: `${cellWidth}%` }
-                }
-              >
-                {cell === "image" ? <img src={row[cell]} /> : row[cell]}
-              </td>
-            ))}
+            {Object.keys(row)
+              .filter((field) => field !== "last")
+              .map((cell, index) => (
+                <td
+                  key={index}
+                  className={cell}
+                  style={
+                    cell === "id" ? { width: "5%" } : { width: `${cellWidth}%` }
+                  }
+                >
+                  {cell === "image" ? <img src={row[cell]} /> : row[cell]}
+                </td>
+              ))}
             {(handleEdit || handleDelete || handleDatails) && (
               <td className="buttons__cell">
-                {handleEdit && (
-                  <button
-                    className="invoice__table__button"
-                    onClick={() => {
-                      handleEdit(row.id);
-                    }}
-                  >
-                    <TiEdit className="search_menu_button menu__opened" />
-                  </button>
-                )}
+                {checkEdit
+                  ? handleEdit &&
+                    row.last && (
+                      <button
+                        className="invoice__table__button"
+                        onClick={() => {
+                          handleEdit(row.id);
+                        }}
+                      >
+                        <TiEdit className="search_menu_button menu__opened" />
+                      </button>
+                    )
+                  : handleEdit && (
+                      <button
+                        className="invoice__table__button"
+                        onClick={() => {
+                          handleEdit(row.id);
+                        }}
+                      >
+                        <TiEdit className="search_menu_button menu__opened" />
+                      </button>
+                    )}
                 {handleDelete && (
                   <button
                     className="invoice__table__button"
