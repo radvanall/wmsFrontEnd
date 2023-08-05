@@ -8,10 +8,12 @@ import {
   setSelectedPosition,
   resetSelectedPosition,
   findPosition,
+  setPositionBeforeEdit,
   setProductQuantity,
   setSelectedTableRowId,
   setFormMode,
 } from "../../toolkitRedux/newOrderSlice";
+import stocks from "../../stock";
 const NewOrder = () => {
   const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/position/getPositionsForSale"
@@ -206,6 +208,7 @@ const NewOrder = () => {
         ? currentStockId
         : currentStockId - 1
     );
+    console.log("currentStock=", currentStock);
     console.log("currentStockId=", currentStockId);
     console.log("currentStock[]id=", currentStock.id);
     console.log("positionId:", positionId);
@@ -217,23 +220,54 @@ const NewOrder = () => {
     );
     if (foundStock) {
       console.log("foundStock=", foundStock);
-      setFullData((prev) =>
-        prev.filter((item) => parseInt(item.id) !== parseInt(id))
-      );
+      setFullData((prev) => {
+        const newData = prev.filter(
+          (item) => parseInt(item.id) !== parseInt(id)
+        );
+
+        let lastStock = null;
+        newData.forEach((item) => {
+          if (parseInt(item.positionId) === parseInt(positionId))
+            lastStock = item;
+        });
+        if (lastStock) {
+          lastStock.last = true;
+        }
+        return newData;
+      });
       resetPositionById(positionId);
       console.log(true);
     } else {
       const stockId = fullData.find(
         (row) => parseInt(id) === parseInt(row.id)
       )?.stockId;
-      setFullData((prev) =>
-        prev.filter(
+      setFullData((prev) => {
+        let lastStock = null;
+        const newData = prev.filter(
           (item) =>
             parseInt(item.id) !== parseInt(id) &&
             (parseInt(positionId) !== parseInt(item.positionId) ||
               parseInt(item.id) <= parseInt(id))
-        )
-      );
+        );
+        newData.forEach((item) => {
+          if (parseInt(item.positionId) === parseInt(positionId))
+            lastStock = item;
+        });
+        if (lastStock) {
+          lastStock.last = true;
+        }
+
+        //   .map((item) => {
+        //     if (parseInt(item.id) === lastStockId)
+        //       return {
+        //         ...item,
+        //         last: true,
+        //       };
+        //     else return item;
+        //   });
+        // console.log("lastStockId:", lastStockId);
+        return newData;
+      });
       console.log(false);
       resetMultipleStocks(positionId, stockId);
     }
@@ -245,12 +279,54 @@ const NewOrder = () => {
       (item) => parseInt(item.id) === parseInt(row.positionId)
     );
     if (position) {
-      dispatch(setSelectedPosition(position));
+      dispatch(setPositionBeforeEdit(position));
+      const stockId = row.stockId;
+      const stock = {
+        ...position.stocks.find(
+          (stock) => parseInt(stock.id) === parseInt(stockId)
+        ),
+      };
+      stock.remainingQuantity = stock.initialQuantity;
+      const stocks = position.stocks;
+      // const newIndex =
+      //   parseInt(position.currentStockIndex) >= parseInt(position.stocks.length)
+      //     ? position.currentStockIndex - 1
+      //     : position.currentStockIndex;
+      const newIndex =
+        position.currentStockIndex >= position.stocks.length
+          ? position.currentStockIndex - 1
+          : stocks[position.currentStockIndex].remainingQuantity <
+              stocks[position.currentStockIndex].initialQuantity &&
+            stocks[position.currentStockIndex].remainingQuantity > 0
+          ? position.currentStockIndex
+          : stocks[position.currentStockIndex].remainingQuantity ===
+            stocks[position.currentStockIndex].initialQuantity
+          ? position.currentStockIndex - 1
+          : false;
+      // position.quantity =
+      //   position.quantity + stock.initialQuantity - stock.remainingQuantity;
+      // console.log(row.positionId);
+      const finalPosition = {
+        ...position,
+        currentStockIndex: newIndex,
+        quantity: parseInt(position.quantity) + parseInt(row.Cantitate),
+        stocks: position.stocks.map((obj) => {
+          if (parseInt(obj.id) === parseInt(stockId)) return stock;
+          else return obj;
+        }),
+      };
+      setPositions((prev) => {
+        return prev.map((item) => {
+          if (item.id === position.id) return finalPosition;
+          else return item;
+        });
+      });
+      dispatch(setSelectedPosition(finalPosition));
       dispatch(setFormMode("edit"));
       dispatch(setSelectedTableRowId(id));
       dispatch(setProductQuantity(row.Cantitate));
+      console.log("finalPosition:", finalPosition);
     }
-    console.log(position);
   };
 
   // const getStocksByPosition=(positionId)=>{
@@ -336,6 +412,7 @@ const NewOrder = () => {
       <div className="new__order__table__wrapper">
         <ResponsiveTable
           data={tableData}
+          checkEdit={true}
           title="Cumpărături"
           isModifying={isModifying}
           changingRowId={selectedTableRowId}

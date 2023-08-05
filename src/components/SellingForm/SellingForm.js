@@ -57,13 +57,13 @@ const SellingForm = ({
     else return stockQuantity - diff;
   };
   const changePositionQuantity = () => {
+    if (parseInt(selectedPosition.quantity) < parseInt(productQuantity))
+      return false;
     const currentStockQuantity =
       selectedPosition.stocks[selectedPosition.currentStockIndex]
         .remainingQuantity;
     const currentStock =
       selectedPosition.stocks[selectedPosition.currentStockIndex];
-    if (parseInt(selectedPosition.quantity) < parseInt(productQuantity))
-      return false;
     if (parseInt(currentStockQuantity) < parseInt(productQuantity)) {
       console.log(true);
       let remainingProductQuantity = productQuantity;
@@ -286,6 +286,8 @@ const SellingForm = ({
     );
     if (samePosition) {
       const newFullData = fullData.map((position) => {
+        console.log("positionCantitate:", position.Cantitate);
+        console.log("newRow:", newRow.Cantitate);
         if (
           parseInt(position.positionId) === parseInt(newRow.positionId) &&
           parseInt(position.stockId) === parseInt(newRow.stockId)
@@ -293,22 +295,39 @@ const SellingForm = ({
           return {
             ...position,
             ["Preț total"]:
-              parseInt(position[["Preț total"]]) +
-              parseInt(newRow[["Preț total"]]),
+              formMode === "add"
+                ? parseInt(position[["Preț total"]]) +
+                  parseInt(newRow[["Preț total"]])
+                : parseInt(newRow[["Preț total"]]),
             Cantitate:
-              parseInt(position.Cantitate) + parseInt(newRow.Cantitate),
+              formMode === "add"
+                ? parseInt(position.Cantitate) + parseInt(newRow.Cantitate)
+                : parseInt(newRow.Cantitate),
           };
         else return position;
       });
+
       setFullData(newFullData);
       return true;
     }
     // setId((prev) => prev + 1);
-    setFullData((prev) => [...prev, newRow]);
+    // setFullData((prev) => [...prev, newRow]);
+    setFullData((prev) => {
+      const newData = prev.map((row) => {
+        if (parseInt(row.positionId) === parseInt(newRow.positionId)) {
+          return {
+            ...row,
+            last: false,
+          };
+        } else return row;
+      });
+      return [...newData, newRow];
+    });
     return false;
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!parseInt(productQuantity)) return;
     if (!changePositionQuantity()) return;
     const sellingPrice =
       selectedPosition.stocks[selectedPosition.currentStockIndex].sellingPrice;
@@ -323,6 +342,7 @@ const SellingForm = ({
       ["Preț total"]: parseFloat(productQuantity) * parseFloat(sellingPrice),
       stockId: stockId,
       positionId: selectedPosition.id,
+      last: true,
     };
     handleTableInsert(newRow);
     // const samePosition = fullData.find(
@@ -361,6 +381,8 @@ const SellingForm = ({
     dispatch(setProductQuantity(0));
   };
   const handleEdit = () => {
+    if (!parseInt(productQuantity)) return;
+    if (!changePositionQuantity()) return;
     const sellingPrice =
       selectedPosition.stocks[selectedPosition.currentStockIndex].sellingPrice;
     const stockId =
@@ -453,6 +475,7 @@ const SellingForm = ({
           parseFloat(stock.usedQuantity) * parseFloat(stock.price),
         stockId: stock.id,
         positionId: selectedPosition.id,
+        last: true,
       };
       if (!handleTableInsert(newRow)) newId++;
 
@@ -488,6 +511,7 @@ const SellingForm = ({
       <BasicInput label="Data" type="date" fullBorder={true} />
       <CustomSelect
         positions={displayedPositions}
+        disableSelect={formMode === "add" ? false : true}
         setOpened={toggleSelect}
         opened={opened}
         image={selectedPosition.image}
@@ -506,10 +530,11 @@ const SellingForm = ({
       <br />
       <label>
         Prețul per bucată:
-        {
-          selectedPosition.stocks[selectedPosition.currentStockIndex]
-            ?.sellingPrice
-        }{" "}
+        {selectedPosition.currentStockIndex >= selectedPosition.stocks.length
+          ? selectedPosition.stocks[selectedPosition.currentStockIndex - 1]
+              ?.sellingPrice
+          : selectedPosition.stocks[selectedPosition.currentStockIndex]
+              ?.sellingPrice}
         lei
       </label>
       <br />
