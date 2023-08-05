@@ -11,6 +11,15 @@ const newOrderSlice = createSlice({
       currentStockIndex: 0,
       stocks: [],
     },
+    positionBeforeEdit: {
+      id: -1,
+      name: "",
+      image: "/img/57x57.png",
+      quantity: 0,
+      initialQuantity: 0,
+      currentStockIndex: 0,
+      stocks: [],
+    },
     formMode: "add",
     selectedTableRowId: -1,
     productQuantity: 0,
@@ -50,6 +59,20 @@ const newOrderSlice = createSlice({
     setProductQuantity(state, action) {
       state.productQuantity = action.payload;
     },
+    setPositionBeforeEdit(state, action) {
+      state.positionBeforeEdit = action.payload;
+    },
+    resetPositionBeforeEdit(state) {
+      state.positionBeforeEdit = {
+        id: -1,
+        name: "",
+        image: "/img/57x57.png",
+        quantity: 0,
+        initialQuantity: 0,
+        currentStockIndex: 0,
+        stocks: [],
+      };
+    },
   },
 });
 export default newOrderSlice.reducer;
@@ -60,4 +83,6 @@ export const {
   setFormMode,
   setSelectedTableRowId,
   setProductQuantity,
+  setPositionBeforeEdit,
+  resetPositionBeforeEdit,
 } = newOrderSlice.actions;
