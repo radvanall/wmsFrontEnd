@@ -25,6 +25,12 @@
 .custom_select_selected .select_button:hover {
   background-color: rgba(48, 113, 170, 0.938);
 }
+.custom_select_selected .disabled {
+  width: 40px;
+  height: 60px;
+  background-color: white;
+  cursor: default;
+}
 .opened {
   rotate: 180deg;
   transition: all 0.1s ease-out;

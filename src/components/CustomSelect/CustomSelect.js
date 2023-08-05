@@ -6,6 +6,7 @@ const CustomSelect = ({
   positions,
   handleSelect,
   image,
+  disableSelect,
   selected,
   setOpened,
   handleChange,
@@ -42,18 +43,21 @@ const CustomSelect = ({
           type="text"
           className="select_input"
           // readOnly
-          readOnly={readOnly}
+          readOnly={readOnly || disableSelect}
           value={selected}
           onChange={handleChange}
         />
+
         <button
-          className="select_button"
+          className={disableSelect ? "disabled" : "select_button"}
           onClick={(e) => {
             e.preventDefault();
-            setOpened((prev) => !prev);
+            !disableSelect && setOpened((prev) => !prev);
           }}
         >
-          <IoIosArrowDown className={opened ? "opened" : "closed"} />
+          {!disableSelect && (
+            <IoIosArrowDown className={opened ? "opened" : "closed"} />
+          )}
         </button>
       </div>
 
