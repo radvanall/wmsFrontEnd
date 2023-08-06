@@ -73,12 +73,36 @@ const newOrderSlice = createSlice({
         stocks: [],
       };
     },
+    resetAllStates(state) {
+      state.formMode = "add";
+      state.positionBeforeEdit = {
+        id: -1,
+        name: "",
+        image: "/img/57x57.png",
+        quantity: 0,
+        initialQuantity: 0,
+        currentStockIndex: 0,
+        stocks: [],
+      };
+      state.productQuantity = 0;
+      state.selectedPosition = {
+        id: -1,
+        name: "",
+        image: "/img/57x57.png",
+        quantity: 0,
+        initialQuantity: 0,
+        currentStockIndex: 0,
+        stocks: [],
+      };
+      state.selectedTableRowId = -1;
+    },
   },
 });
 export default newOrderSlice.reducer;
 export const {
   resetSelectedPosition,
   setSelectedPosition,
+  resetAllStates,
   findPosition,
   setFormMode,
   setSelectedTableRowId,
