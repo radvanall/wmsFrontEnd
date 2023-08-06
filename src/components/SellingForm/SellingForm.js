@@ -11,6 +11,7 @@ import {
   setFormMode,
   setProductQuantity,
   setSelectedTableRowId,
+  resetPositionBeforeEdit,
 } from "../../toolkitRedux/newOrderSlice";
 import BasicButton from "../BasicButton/BasicButton";
 const SellingForm = ({
@@ -18,6 +19,8 @@ const SellingForm = ({
   setFullData,
   setPositions,
   fullData,
+  dateState,
+  handleDateChange,
   setIsModifying,
   getNextStock,
 }) => {
@@ -31,6 +34,9 @@ const SellingForm = ({
   const formMode = useSelector((state) => state.newOrderSlice.formMode);
   const selectedTableRowId = useSelector(
     (state) => state.newOrderSlice.selectedTableRowId
+  );
+  const positionBeforeEdit = useSelector(
+    (state) => state.newOrderSlice.positionBeforeEdit
   );
   const [opened, setOpened] = useState(false);
   const [usedStocks, setUsedStocks] = useState([]);
@@ -375,6 +381,14 @@ const SellingForm = ({
     // setFullData((prev) => [...prev, newRow]);
   };
   const handleCancelEdit = () => {
+    setPositions((prev) =>
+      prev.map((position) => {
+        if (parseInt(position.id) === parseInt(selectedPosition.id))
+          return positionBeforeEdit;
+        else return position;
+      })
+    );
+    dispatch(resetPositionBeforeEdit());
     dispatch(resetSelectedPosition());
     dispatch(setFormMode("add"));
     dispatch(setSelectedTableRowId(-1));
@@ -404,6 +418,7 @@ const SellingForm = ({
     });
     setFullData(newFullData);
     setSelectedTableRowId(-1);
+    dispatch(resetPositionBeforeEdit());
     dispatch(setFormMode("add"));
     setIsModifying(true);
     setTimeout(() => {
@@ -486,6 +501,14 @@ const SellingForm = ({
     setId(newId);
     setStockArray([]);
     setUsedStocks([]);
+    toggleMessage();
+    setSelectedTableRowId(-1);
+    dispatch(resetPositionBeforeEdit());
+    dispatch(setFormMode("add"));
+    setIsModifying(true);
+    setTimeout(() => {
+      setIsModifying(false);
+    }, 2000);
   };
 
   const handleCancelModalMessage = () => {
@@ -508,7 +531,16 @@ const SellingForm = ({
       >
         test
       </button>
-      <BasicInput label="Data" type="date" fullBorder={true} />
+      <BasicInput
+        label="Data"
+        type="date"
+        fullBorder={true}
+        value={
+          dateState?.toISOString().split("T")[0] ||
+          new Date().toISOString().slice(0, 10)
+        }
+        handleChange={handleDateChange}
+      />
       <CustomSelect
         positions={displayedPositions}
         disableSelect={formMode === "add" ? false : true}
@@ -561,7 +593,7 @@ const SellingForm = ({
       )}
       <ModalMessage
         isOpened={isOpenMessage}
-        close={toggleMessage}
+        close={handleCancelModalMessage}
         handleCancel={handleCancelModalMessage}
         handleOk={handleConfirmMultyStock}
       >
