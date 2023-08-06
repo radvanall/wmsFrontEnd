@@ -4,6 +4,8 @@ import "./NewOrder.css";
 import useFetch from "../../hooks/useFetch";
 import ResponsiveTable from "../../components/ResponsiveTable/ResponsiveTable";
 import { useDispatch, useSelector } from "react-redux/es/exports";
+import BasicButton from "../../components/BasicButton/BasicButton";
+import usePostData from "../../hooks/usePostData";
 import {
   setSelectedPosition,
   resetSelectedPosition,
@@ -12,23 +14,38 @@ import {
   setProductQuantity,
   setSelectedTableRowId,
   setFormMode,
+  resetAllStates,
 } from "../../toolkitRedux/newOrderSlice";
 import stocks from "../../stock";
 const NewOrder = () => {
   const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/position/getPositionsForSale"
   );
+  const {
+    message,
+    loading: postLoading,
+    error: postError,
+    resetMessage,
+    postData,
+  } = usePostData();
   const [positions, setPositions] = useState();
   const [isModifying, setIsModifying] = useState(false);
   const [fullData, setFullData] = useState([]);
+  const [dateState, setDateState] = useState(null);
   const [tableData, setTableData] = useState([]);
   const dispatch = useDispatch();
+  const formMode = useSelector((state) => state.newOrderSlice.formMode);
   const selectedPosition = useSelector(
     (state) => state.newOrderSlice.selectedPosition
   );
   const selectedTableRowId = useSelector(
     (state) => state.newOrderSlice.selectedTableRowId
   );
+  const handleDateChange = (e) => {
+    const dateValue = e.target.value;
+    const newDate = new Date(dateValue);
+    setDateState(newDate);
+  };
   const getEarliestDate = (arr) => {
     return arr.reduce((earliest, current) => {
       const earliestDate = new Date(earliest.dateOfValidation);
@@ -397,11 +414,27 @@ const NewOrder = () => {
       setPositions(newPositions);
     }
   }, [data]);
+  useEffect(() => {
+    dispatch(resetAllStates());
+  }, []);
+  const handleSaveInvoice = () => {
+    const invoice = {
+      operatorId: 1,
+      clientId: 3,
+      data: fullData.map((data) => ({
+        quantity: data.Cantitate,
+        stockId: data.stockId,
+      })),
+    };
+    console.log("invoice:", invoice);
+  };
   return data && positions ? (
     <div className="new__order__wrapper">
       <div className="new__order__form__wrapper">
         <SellingForm
           positions={positions}
+          dateState={dateState}
+          handleDateChange={handleDateChange}
           setFullData={setFullData}
           fullData={fullData}
           setIsModifying={setIsModifying}
@@ -416,10 +449,11 @@ const NewOrder = () => {
           title="Cumpărături"
           isModifying={isModifying}
           changingRowId={selectedTableRowId}
-          handleDelete={handleRowDelete}
-          handleEdit={handleRowEdit}
+          handleDelete={formMode === "add" ? handleRowDelete : false}
+          handleEdit={formMode === "add" ? handleRowEdit : false}
         />
       </div>
+      <BasicButton text="Salvează factura" handleClick={handleSaveInvoice} />
     </div>
   ) : (
     <p>Loading</p>
