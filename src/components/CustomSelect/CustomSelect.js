@@ -2,6 +2,7 @@ import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
 import "./CustomSelect.css";
+import zIndex from "@mui/material/styles/zIndex";
 const CustomSelect = ({
   positions,
   handleSelect,
@@ -12,6 +13,7 @@ const CustomSelect = ({
   handleChange,
   opened,
   readOnly,
+  zIndex,
 }) => {
   // const [opened, setOpened] = useState(false);
   // const [selected, setSelected] = useState("");
@@ -38,7 +40,7 @@ const CustomSelect = ({
     <div>
       <div className="custom_select_selected">
         {/* <img src="/img/57x57.png" /> */}
-        <img src={image} />
+        {image && <img src={image} />}
         <input
           type="text"
           className="select_input"
@@ -61,7 +63,10 @@ const CustomSelect = ({
         </button>
       </div>
 
-      <ul className={opened ? "select_list" : "select_list hidden"}>
+      <ul
+        className={opened ? "select_list" : "select_list hidden"}
+        style={zIndex ? { zIndex: zIndex } : ""}
+      >
         {positions &&
           positions.map((item) => (
             <li
@@ -70,7 +75,7 @@ const CustomSelect = ({
               className="list_element"
               onClick={handleSelect}
             >
-              <img className="list_image" src={item.image} />
+              {image && <img className="list_image" src={item.image} />}
               {item.name}
             </li>
           ))}
