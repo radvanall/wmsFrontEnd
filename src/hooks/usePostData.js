@@ -21,7 +21,8 @@ const usePostData = () => {
       })
       .catch((error) => {
         console.log(error.message);
-        setError(error.message);
+        console.log(error.response.data);
+        setError(error.response.data);
         setLoading(false);
       });
 

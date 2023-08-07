@@ -18,11 +18,17 @@ const SellingForm = ({
   positions,
   setFullData,
   setPositions,
+  clientError,
+  setClientError,
   fullData,
   dateState,
   handleDateChange,
   setIsModifying,
-  getNextStock,
+  customers,
+  selectedAddress,
+  selectedCustomer,
+  setSelectedAddress,
+  setSelectedCustomer,
 }) => {
   const dispatch = useDispatch();
   const productQuantity = useSelector(
@@ -39,8 +45,12 @@ const SellingForm = ({
     (state) => state.newOrderSlice.positionBeforeEdit
   );
   const [opened, setOpened] = useState(false);
+  const [customersOpened, setCustomersOpened] = useState(false);
+  const [addressOpened, setAddressOpened] = useState(false);
+  const [addresses, setAddresses] = useState([{ id: 1, name: "Pe loc" }]);
   const [usedStocks, setUsedStocks] = useState([]);
   const [displayedPositions, setDisplayedPositions] = useState(positions);
+  const [displayedCustomers, setDisplayedCustomers] = useState(customers);
   const [stockArray, setStockArray] = useState([]);
   const [id, setId] = useState(1);
   const { status: isOpenMessage, toggleStatus: toggleMessage } =
@@ -247,6 +257,11 @@ const SellingForm = ({
     resetPositions();
     setOpened((prev) => !prev);
   };
+
+  const toggleCustomerSelect = () => {
+    setDisplayedCustomers(customers);
+    setCustomersOpened((prev) => !prev);
+  };
   const handleSelect = (e) => {
     console.log(e.target.id);
     const position = displayedPositions.find(
@@ -259,6 +274,26 @@ const SellingForm = ({
     resetPositions();
     console.log("SELECTED:", position);
     dispatch(setProductQuantity(0));
+  };
+  const handleCustomersSelect = (e) => {
+    const customer = displayedCustomers.find(
+      (customer) => parseInt(customer.id) === parseInt(e.target.id)
+    );
+    setSelectedCustomer(customer);
+    setCustomersOpened(false);
+    setDisplayedCustomers(customers);
+    setAddresses([
+      { id: 1, name: "Pe loc" },
+      { id: 2, name: customer.address },
+    ]);
+    setClientError(false);
+  };
+  const handleAddressSelect = (e) => {
+    const address = addresses.find(
+      (address) => parseInt(address.id) === parseInt(e.target.id)
+    );
+    setSelectedAddress(address);
+    setAddressOpened(false);
   };
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -277,6 +312,17 @@ const SellingForm = ({
     );
     setDisplayedPositions(newPositions);
     dispatch(setProductQuantity(0));
+  };
+  const handleCustomersChange = (e) => {
+    setSelectedCustomer((prev) => ({ id: 0, name: e.target.value }));
+    setCustomersOpened(true);
+    const newCustomers = customers.filter((customer) =>
+      customer.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setDisplayedCustomers(newCustomers);
+  };
+  const handleAddressChange = (e) => {
+    setSelectedAddress({ id: 3, name: e.target.value });
   };
   const changeQuantity = (e) => {
     console.log("cantitatea:", e.target.value);
@@ -541,6 +587,31 @@ const SellingForm = ({
         }
         handleChange={handleDateChange}
       />
+      <label>Selectați clientulȘ</label>
+      <CustomSelect
+        positions={displayedCustomers}
+        // disableSelect={formMode === "add" ? false : true}
+        setOpened={toggleCustomerSelect}
+        opened={customersOpened}
+        image={selectedCustomer.image}
+        selected={selectedCustomer.name}
+        handleSelect={handleCustomersSelect}
+        handleChange={handleCustomersChange}
+        zIndex={5}
+      />
+      <label>Selectați adresa:</label>
+      <CustomSelect
+        positions={addresses}
+        // disableSelect={formMode === "add" ? false : true}
+        setOpened={() => setAddressOpened((prev) => !prev)}
+        opened={addressOpened}
+        // image={selectedCustomer.image}
+        selected={selectedAddress.name}
+        handleSelect={handleAddressSelect}
+        handleChange={handleAddressChange}
+        zIndex={4}
+      />
+      {clientError && <p style={{ color: "red" }}>Selectați clientul</p>}
       <CustomSelect
         positions={displayedPositions}
         disableSelect={formMode === "add" ? false : true}
@@ -550,6 +621,7 @@ const SellingForm = ({
         selected={selectedPosition.name}
         handleSelect={handleSelect}
         handleChange={handleChange}
+        zIndex={3}
       />
       <BasicInput
         label="Introduceți cantitatea"

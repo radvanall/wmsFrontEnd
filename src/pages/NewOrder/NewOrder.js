@@ -22,6 +22,12 @@ const NewOrder = () => {
     "http://localhost:8080/api/position/getPositionsForSale"
   );
   const {
+    data: customers,
+    loading: loadingCustomers,
+    error: errorCustomers,
+    fetchData: fetchCustomers,
+  } = useFetch("http://localhost:8080/api/customer/readCustomerInvoice");
+  const {
     message,
     loading: postLoading,
     error: postError,
@@ -29,10 +35,16 @@ const NewOrder = () => {
     postData,
   } = usePostData();
   const [positions, setPositions] = useState();
+  const [clientError, setClientError] = useState(false);
   const [isModifying, setIsModifying] = useState(false);
   const [fullData, setFullData] = useState([]);
-  const [dateState, setDateState] = useState(null);
+  const [dateState, setDateState] = useState(new Date());
   const [tableData, setTableData] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState({});
+  const [selectedAddress, setSelectedAddress] = useState({
+    id: 1,
+    name: "Pe loc",
+  });
   const dispatch = useDispatch();
   const formMode = useSelector((state) => state.newOrderSlice.formMode);
   const selectedPosition = useSelector(
@@ -415,25 +427,52 @@ const NewOrder = () => {
     }
   }, [data]);
   useEffect(() => {
+    if (customers) {
+      console.log("customers", customers);
+      setSelectedCustomer(
+        customers.find((customer) => parseInt(customer.id) === 3)
+      );
+    }
+  }, [customers]);
+  useEffect(() => {
     dispatch(resetAllStates());
   }, []);
   const handleSaveInvoice = () => {
+    console.log("selectedCustomer:", selectedCustomer);
+    console.log("selectedAddress:", selectedAddress);
+    if (parseInt(selectedCustomer.id) === 0) {
+      setClientError(true);
+      return;
+    }
+    setClientError(false);
     const invoice = {
-      operatorId: 1,
-      clientId: 3,
-      data: fullData.map((data) => ({
+      operatorId: 5,
+      clientId: selectedCustomer.id,
+      date: dateState,
+      shipped: false,
+      address:
+        parseInt(selectedAddress.id) === 1 ? "inStore" : selectedAddress.name,
+      invoiceTableDTOS: fullData.map((data) => ({
         quantity: data.Cantitate,
         stockId: data.stockId,
       })),
     };
+    postData(invoice, "http://localhost:8080/api/invoice/create");
     console.log("invoice:", invoice);
   };
-  return data && positions ? (
+  return data && positions && customers && selectedCustomer ? (
     <div className="new__order__wrapper">
       <div className="new__order__form__wrapper">
         <SellingForm
           positions={positions}
+          customers={customers}
           dateState={dateState}
+          selectedAddress={selectedAddress}
+          selectedCustomer={selectedCustomer}
+          clientError={clientError}
+          setClientError={setClientError}
+          setSelectedAddress={setSelectedAddress}
+          setSelectedCustomer={setSelectedCustomer}
           handleDateChange={handleDateChange}
           setFullData={setFullData}
           fullData={fullData}
