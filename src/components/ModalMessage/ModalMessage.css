@@ -1,0 +1,18 @@
+.modal__message__buttons {
+  padding: 5px 5px 5px 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+.modal__children {
+  padding: 5px;
+  text-align: justify;
+  text-indent: 5px;
+  line-height: 24px;
+}
+.modal__text {
+  padding: 5px;
+  text-align: justify;
+  text-indent: 5px;
+  line-height: 24px;
+}
