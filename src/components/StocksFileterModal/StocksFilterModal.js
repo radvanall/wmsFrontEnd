@@ -379,6 +379,18 @@ const StocksFilterModal = ({
                 checked={status.unvalidated}
                 handleChange={handleStatusChange}
               />
+              <CheckBox
+                id="soldOut"
+                value="soldOut"
+                name="soldOut"
+                label="Stoc epuizat"
+                padding="5px"
+                backgroundColor="#deb1c8"
+                borderRadius="5px"
+                width="150px"
+                checked={status.soldOut}
+                handleChange={handleStatusChange}
+              />
             </div>
             <div className="range__max__wrapper">
               <div className="filter__range__wrapper">

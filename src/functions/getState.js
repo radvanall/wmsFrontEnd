@@ -63,5 +63,21 @@ const getState = (state) => {
         </div>
       </>
     );
+  if (state === "soldOut")
+    return (
+      <>
+        {" "}
+        {/* <div>Statut:</div> */}
+        <div
+          style={{
+            backgroundColor: "#deb1c8",
+            padding: "5px",
+            borderRadius: "5px",
+          }}
+        >
+          Stoc epuizat
+        </div>
+      </>
+    );
 };
 export default getState;

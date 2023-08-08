@@ -51,6 +51,7 @@ const stockFilterSlice = createSlice({
       inSale: false,
       validated: false,
       unvalidated: false,
+      soldOut: false,
     },
     checkboxStates: {
       provider: [],
