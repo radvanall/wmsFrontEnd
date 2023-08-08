@@ -9,9 +9,14 @@ const BasicInput = ({
   inputName,
   handleKeyDown,
   fullBorder,
+  padding,
+  borderRadius,
 }) => {
   return (
-    <div className="basic__input__wrapper">
+    <div
+      className="basic__input__wrapper"
+      style={padding ? { padding: padding } : { padding: "5px" }}
+    >
       {label && (
         <label htmlFor="basic__input_id" className="basic__input__label">
           {label}
@@ -22,6 +27,11 @@ const BasicInput = ({
           fullBorder
             ? "basic__input full__border"
             : "basic__input bottom__border"
+        }
+        style={
+          borderRadius
+            ? { borderRadius: borderRadius }
+            : { borderRadius: "5px" }
         }
         type={type}
         placeholder={placeholder}
