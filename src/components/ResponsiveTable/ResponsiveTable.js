@@ -17,12 +17,13 @@ const ResponsiveTable = ({
 
   useEffect(() => {
     if (Array.isArray(data) && data.length > 0) {
-      setHeader(Object.keys(data[0]).filter((key) => key !== "last"));
+      const header = Object.keys(data[0]).filter((key) => key !== "last");
+      setHeader(header);
       const columns =
         handleEdit || handleDelete || handleDatails
-          ? Object.keys(data[0]).length
-          : Object.keys(data[0]).length - 1;
-      console.log("array lenght:", Object.keys(data[0]).length);
+          ? header.length
+          : header.length - 1;
+      console.log("array lenght:", header.length);
       setCellWidth(95 / columns);
     }
   }, [data]);
@@ -74,7 +75,7 @@ const ResponsiveTable = ({
                 </td>
               ))}
             {(handleEdit || handleDelete || handleDatails) && (
-              <td className="buttons__cell">
+              <td className="buttons__cell" style={{ width: `${cellWidth}%` }}>
                 {checkEdit
                   ? handleEdit &&
                     row.last && (
