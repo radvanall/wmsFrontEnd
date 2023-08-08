@@ -53,7 +53,7 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
     toggleEdit();
   };
   const closeModal = () => {
-    handleToggleEdit();
+    if (isOpenEdit) handleToggleEdit();
     handleCloseModal();
   };
   return (
@@ -111,20 +111,22 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
           <span className="field__name">Preț vânzare:</span>
           <span className="quantity__span">
             {stock.sellingPrice} lei
-            {stock.state !== "inSale" && stock.state !== "forSale" && (
-              <button
-                className="invoice__table__button"
-                onClick={handleToggleEdit}
-              >
-                <TiEdit
-                  className={
-                    isOpenEdit
-                      ? "search_menu_button menu__opened"
-                      : "search_menu_button menu__closed"
-                  }
-                />
-              </button>
-            )}
+            {stock.state !== "inSale" &&
+              stock.state !== "forSale" &&
+              stock.state !== "soldOut" && (
+                <button
+                  className="invoice__table__button"
+                  onClick={handleToggleEdit}
+                >
+                  <TiEdit
+                    className={
+                      isOpenEdit
+                        ? "search_menu_button menu__opened"
+                        : "search_menu_button menu__closed"
+                    }
+                  />
+                </button>
+              )}
           </span>
         </p>
         <div
