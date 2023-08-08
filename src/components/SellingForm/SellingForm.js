@@ -4,6 +4,7 @@ import CustomSelect from "../CustomSelect/CustomSelect";
 import { useToggle } from "../../hooks/useToggle";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import ModalMessage from "../ModalMessage/ModalMessage";
+import "./SellingForm.css";
 import {
   setSelectedPosition,
   resetSelectedPosition,
@@ -18,8 +19,8 @@ const SellingForm = ({
   positions,
   setFullData,
   setPositions,
-  clientError,
-  setClientError,
+  errors,
+  setErrors,
   fullData,
   dateState,
   handleDateChange,
@@ -263,9 +264,9 @@ const SellingForm = ({
     setCustomersOpened((prev) => !prev);
   };
   const handleSelect = (e) => {
-    console.log(e.target.id);
+    console.log(e.currentTarget.id);
     const position = displayedPositions.find(
-      (position) => parseInt(position.id) === parseInt(e.target.id)
+      (position) => parseInt(position.id) === parseInt(e.currentTarget.id)
     );
     //setImage(position.image);
     // setSelectedPosition(position);
@@ -274,10 +275,15 @@ const SellingForm = ({
     resetPositions();
     console.log("SELECTED:", position);
     dispatch(setProductQuantity(0));
+    setErrors((prev) => ({
+      ...prev,
+      clientError: false,
+    }));
   };
   const handleCustomersSelect = (e) => {
+    console.log("customer select e", e.currentTarget);
     const customer = displayedCustomers.find(
-      (customer) => parseInt(customer.id) === parseInt(e.target.id)
+      (customer) => parseInt(customer.id) === parseInt(e.currentTarget.id)
     );
     setSelectedCustomer(customer);
     setCustomersOpened(false);
@@ -286,7 +292,11 @@ const SellingForm = ({
       { id: 1, name: "Pe loc" },
       { id: 2, name: customer.address },
     ]);
-    setClientError(false);
+    // setClientError(false);
+    setErrors((prev) => ({
+      ...prev,
+      clientError: false,
+    }));
   };
   const handleAddressSelect = (e) => {
     const address = addresses.find(
@@ -294,6 +304,10 @@ const SellingForm = ({
     );
     setSelectedAddress(address);
     setAddressOpened(false);
+    setErrors((prev) => ({
+      ...prev,
+      addressError: false,
+    }));
   };
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -323,8 +337,16 @@ const SellingForm = ({
   };
   const handleAddressChange = (e) => {
     setSelectedAddress({ id: 3, name: e.target.value });
+    setErrors((prev) => ({
+      ...prev,
+      addressError: false,
+    }));
   };
   const changeQuantity = (e) => {
+    setErrors((prev) => ({
+      ...prev,
+      quantityError: false,
+    }));
     console.log("cantitatea:", e.target.value);
     if (parseInt(e.target.value) <= parseInt(selectedPosition.quantity))
       dispatch(setProductQuantity(e.target.value));
@@ -346,11 +368,11 @@ const SellingForm = ({
         )
           return {
             ...position,
-            ["Preț total"]:
+            ["Preț total/lei"]:
               formMode === "add"
-                ? parseInt(position[["Preț total"]]) +
-                  parseInt(newRow[["Preț total"]])
-                : parseInt(newRow[["Preț total"]]),
+                ? parseInt(position[["Preț total/lei"]]) +
+                  parseInt(newRow[["Preț total/lei"]])
+                : parseInt(newRow[["Preț total/lei"]]),
             Cantitate:
               formMode === "add"
                 ? parseInt(position.Cantitate) + parseInt(newRow.Cantitate)
@@ -379,8 +401,26 @@ const SellingForm = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!parseInt(productQuantity)) return;
+    if (selectedPosition.name === "") {
+      setErrors((prev) => ({
+        ...prev,
+        productError: true,
+      }));
+      return;
+    }
+    if (!parseInt(productQuantity)) {
+      setErrors((prev) => ({
+        ...prev,
+        quantityError: true,
+      }));
+      return;
+    }
     if (!changePositionQuantity()) return;
+    setErrors((prev) => ({
+      ...prev,
+      quantityError: false,
+      productError: false,
+    }));
     const sellingPrice =
       selectedPosition.stocks[selectedPosition.currentStockIndex].sellingPrice;
     const stockId =
@@ -391,7 +431,8 @@ const SellingForm = ({
       Produs: selectedPosition.name,
       Cantitate: productQuantity,
       ["Preț/buc."]: sellingPrice,
-      ["Preț total"]: parseFloat(productQuantity) * parseFloat(sellingPrice),
+      ["Preț total/lei"]:
+        parseFloat(productQuantity) * parseFloat(sellingPrice),
       stockId: stockId,
       positionId: selectedPosition.id,
       last: true,
@@ -423,6 +464,10 @@ const SellingForm = ({
     //   setFullData(newFullData);
     //   return;
     // }
+    setErrors((prev) => ({
+      ...prev,
+      invoiceError: false,
+    }));
     setId(id + 1);
     // setFullData((prev) => [...prev, newRow]);
   };
@@ -434,6 +479,10 @@ const SellingForm = ({
         else return position;
       })
     );
+    setErrors((prev) => ({
+      ...prev,
+      quantityError: false,
+    }));
     dispatch(resetPositionBeforeEdit());
     dispatch(resetSelectedPosition());
     dispatch(setFormMode("add"));
@@ -441,8 +490,18 @@ const SellingForm = ({
     dispatch(setProductQuantity(0));
   };
   const handleEdit = () => {
-    if (!parseInt(productQuantity)) return;
+    if (!parseInt(productQuantity)) {
+      setErrors((prev) => ({
+        ...prev,
+        quantityError: true,
+      }));
+      return;
+    }
     if (!changePositionQuantity()) return;
+    setErrors((prev) => ({
+      ...prev,
+      quantityError: false,
+    }));
     const sellingPrice =
       selectedPosition.stocks[selectedPosition.currentStockIndex].sellingPrice;
     const stockId =
@@ -455,7 +514,7 @@ const SellingForm = ({
           Produs: selectedPosition.name,
           Cantitate: productQuantity,
           ["Preț/buc."]: sellingPrice,
-          ["Preț total"]:
+          ["Preț total/lei"]:
             parseFloat(productQuantity) * parseFloat(sellingPrice),
           stockId: stockId,
           positionId: selectedPosition.id,
@@ -527,12 +586,11 @@ const SellingForm = ({
     const newRows = usedStocks.map((stock) => {
       const newRow = {
         id: newId,
-        // id: id,
         image: selectedPosition.image,
         Produs: selectedPosition.name,
         Cantitate: stock.usedQuantity,
         ["Preț/buc."]: stock.price,
-        ["Preț total"]:
+        ["Preț total/lei"]:
           parseFloat(stock.usedQuantity) * parseFloat(stock.price),
         stockId: stock.id,
         positionId: selectedPosition.id,
@@ -543,7 +601,10 @@ const SellingForm = ({
       // return newRow;
     });
     console.log(newRows);
-    // setFullData([...fullData, ...newRows]);
+    setErrors((prev) => ({
+      ...prev,
+      invoiceError: false,
+    }));
     setId(newId);
     setStockArray([]);
     setUsedStocks([]);
@@ -567,7 +628,7 @@ const SellingForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="selling__form">
       <button
         onClick={(e) => {
           e.preventDefault();
@@ -581,16 +642,17 @@ const SellingForm = ({
         label="Data"
         type="date"
         fullBorder={true}
+        borderRadius="0px"
+        padding="0"
         value={
           dateState?.toISOString().split("T")[0] ||
           new Date().toISOString().slice(0, 10)
         }
         handleChange={handleDateChange}
       />
-      <label>Selectați clientulȘ</label>
+      <label className="input__label">Selectați clientul:</label>
       <CustomSelect
         positions={displayedCustomers}
-        // disableSelect={formMode === "add" ? false : true}
         setOpened={toggleCustomerSelect}
         opened={customersOpened}
         image={selectedCustomer.image}
@@ -599,7 +661,8 @@ const SellingForm = ({
         handleChange={handleCustomersChange}
         zIndex={5}
       />
-      <label>Selectați adresa:</label>
+      {errors.clientError && <p style={{ color: "red" }}>Selectați clientul</p>}
+      <label className="input__label">Selectați adresa:</label>
       <CustomSelect
         positions={addresses}
         // disableSelect={formMode === "add" ? false : true}
@@ -611,7 +674,10 @@ const SellingForm = ({
         handleChange={handleAddressChange}
         zIndex={4}
       />
-      {clientError && <p style={{ color: "red" }}>Selectați clientul</p>}
+      {errors.addressError && (
+        <p style={{ color: "red" }}>Introduceți adresa</p>
+      )}
+      <label className="input__label">Selectați produsul:</label>
       <CustomSelect
         positions={displayedPositions}
         disableSelect={formMode === "add" ? false : true}
@@ -623,16 +689,31 @@ const SellingForm = ({
         handleChange={handleChange}
         zIndex={3}
       />
+      {errors.productError && (
+        <p style={{ color: "red" }}>Selectați produsul</p>
+      )}
       <BasicInput
         label="Introduceți cantitatea"
         type="number"
+        padding="0"
         fullBorder={true}
+        borderRadius="0px"
         value={productQuantity}
         handleChange={changeQuantity}
       />
-      <label>Cantitatea disponibilă:{selectedPosition.quantity}</label>
+      {errors.quantityError && (
+        <p style={{ color: "red" }}>Selectați cantitatea</p>
+      )}
+
+      <div className="quantity__container">
+        <label>Cantitatea disponibilă:{selectedPosition.quantity} buc.</label>
+      </div>
+      {errors.invoiceError && (
+        <p style={{ color: "red" }}>Nu a-ți selectat nici un produs</p>
+      )}
+
       <br />
-      <label>
+      {/* <label>
         Prețul per bucată:
         {selectedPosition.currentStockIndex >= selectedPosition.stocks.length
           ? selectedPosition.stocks[selectedPosition.currentStockIndex - 1]
@@ -650,19 +731,26 @@ const SellingForm = ({
               ?.sellingPrice
           ) ?? 0}
         lei
-      </label>
-      {formMode === "add" ? (
-        <BasicButton type="submit" text="Adaugă" />
-      ) : (
-        <div>
-          <BasicButton type="button" text="Modifică" handleClick={handleEdit} />
-          <BasicButton
-            type="button"
-            text="Anulează"
-            handleClick={handleCancelEdit}
-          />
-        </div>
-      )}
+      </label> */}
+      <div className="button__container">
+        {formMode === "add" ? (
+          <BasicButton type="submit" text="Adaugă" />
+        ) : (
+          <>
+            <BasicButton
+              type="button"
+              text="Modifică"
+              handleClick={handleEdit}
+            />
+            <BasicButton
+              type="button"
+              text="Anulează"
+              handleClick={handleCancelEdit}
+            />
+          </>
+        )}
+      </div>
+
       <ModalMessage
         isOpened={isOpenMessage}
         close={handleCancelModalMessage}

@@ -1,12 +1,33 @@
 .new__order__wrapper {
   display: flex;
+  padding: 5px;
   width: 100%;
+  gap: 5px;
 }
 .new__order__form__wrapper {
   flex: 0 1 30%;
   padding: 5px;
+  border: 1px solid var(--blue-color);
+  border-radius: 10px;
 }
 .new__order__table__wrapper {
-  flex: 0 1 68%;
+  flex: 0 1 70%;
   padding: 5px;
+  border: 1px solid var(--blue-color);
+  border-radius: 10px;
+}
+.new__order__wrapper .total__price__container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+}
+.new__order__wrapper .total__price__container label {
+  border-top: 1px solid var(--blue-color);
+  padding-top: 5px;
+}
+.button__container {
+  padding: 5px 5px 5px 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
 }

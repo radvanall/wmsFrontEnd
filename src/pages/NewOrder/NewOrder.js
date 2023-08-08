@@ -6,6 +6,8 @@ import ResponsiveTable from "../../components/ResponsiveTable/ResponsiveTable";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import BasicButton from "../../components/BasicButton/BasicButton";
 import usePostData from "../../hooks/usePostData";
+import ModalMessage from "../../components/ModalMessage/ModalMessage";
+import { useToggle } from "../../hooks/useToggle";
 import {
   setSelectedPosition,
   resetSelectedPosition,
@@ -16,7 +18,6 @@ import {
   setFormMode,
   resetAllStates,
 } from "../../toolkitRedux/newOrderSlice";
-import stocks from "../../stock";
 const NewOrder = () => {
   const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/position/getPositionsForSale"
@@ -35,7 +36,18 @@ const NewOrder = () => {
     postData,
   } = usePostData();
   const [positions, setPositions] = useState();
-  const [clientError, setClientError] = useState(false);
+  // const [clientError, setClientError] = useState(false);
+  const [errors, setErrors] = useState({
+    clientError: false,
+    addressError: false,
+    productError: false,
+    invoiceError: false,
+    quantityError: false,
+  });
+  const { status: isOpenServerMessage, toggleStatus: toggleServerMessage } =
+    useToggle(false);
+  const { status: isOpenSaveModal, toggleStatus: toggleSaveModal } =
+    useToggle(false);
   const [isModifying, setIsModifying] = useState(false);
   const [fullData, setFullData] = useState([]);
   const [dateState, setDateState] = useState(new Date());
@@ -437,19 +449,45 @@ const NewOrder = () => {
   useEffect(() => {
     dispatch(resetAllStates());
   }, []);
-  const handleSaveInvoice = () => {
+  const handleSaveInvoice = async (shipped) => {
     console.log("selectedCustomer:", selectedCustomer);
     console.log("selectedAddress:", selectedAddress);
-    if (parseInt(selectedCustomer.id) === 0) {
-      setClientError(true);
+    console.log("fullData.length", fullData.length, Array.isArray(fullData));
+    if (!fullData.length) {
+      setErrors((prev) => ({
+        ...prev,
+        invoiceError: true,
+      }));
       return;
     }
-    setClientError(false);
+    if (parseInt(selectedCustomer.id) === 0) {
+      // setClientError(true);
+      setErrors((prev) => ({
+        ...prev,
+        clientError: true,
+      }));
+      return;
+    }
+    if (selectedAddress.name.trim() === "") {
+      console.log("error address");
+      setErrors((prev) => ({
+        ...prev,
+        addressError: true,
+      }));
+      return;
+    }
+
+    // setErrors((prev) => ({
+    //   ...prev,
+    //   addressError: false,
+    //   clientError: false,
+    //   invoiceError: false,
+    // }));
     const invoice = {
       operatorId: 5,
       clientId: selectedCustomer.id,
       date: dateState,
-      shipped: false,
+      shipped: shipped,
       address:
         parseInt(selectedAddress.id) === 1 ? "inStore" : selectedAddress.name,
       invoiceTableDTOS: fullData.map((data) => ({
@@ -457,42 +495,91 @@ const NewOrder = () => {
         stockId: data.stockId,
       })),
     };
-    postData(invoice, "http://localhost:8080/api/invoice/create");
+    await postData(invoice, "http://localhost:8080/api/invoice/create");
+    toggleServerMessage();
     console.log("invoice:", invoice);
   };
+  const handleCloseServerModal = () => {
+    resetMessage();
+    toggleServerMessage();
+  };
+  const handleOkSaveModal = () => {
+    toggleSaveModal();
+    handleSaveInvoice(true);
+  };
   return data && positions && customers && selectedCustomer ? (
-    <div className="new__order__wrapper">
-      <div className="new__order__form__wrapper">
-        <SellingForm
-          positions={positions}
-          customers={customers}
-          dateState={dateState}
-          selectedAddress={selectedAddress}
-          selectedCustomer={selectedCustomer}
-          clientError={clientError}
-          setClientError={setClientError}
-          setSelectedAddress={setSelectedAddress}
-          setSelectedCustomer={setSelectedCustomer}
-          handleDateChange={handleDateChange}
-          setFullData={setFullData}
-          fullData={fullData}
-          setIsModifying={setIsModifying}
-          setPositions={setPositions}
-          getNextStock={getNextStock}
+    <div>
+      <div className="new__order__wrapper">
+        <div className="new__order__form__wrapper">
+          <SellingForm
+            positions={positions}
+            customers={customers}
+            dateState={dateState}
+            selectedAddress={selectedAddress}
+            selectedCustomer={selectedCustomer}
+            errors={errors}
+            setErrors={setErrors}
+            setSelectedAddress={setSelectedAddress}
+            setSelectedCustomer={setSelectedCustomer}
+            handleDateChange={handleDateChange}
+            setFullData={setFullData}
+            fullData={fullData}
+            setIsModifying={setIsModifying}
+            setPositions={setPositions}
+            getNextStock={getNextStock}
+          />
+        </div>
+        <div className="new__order__table__wrapper">
+          <ResponsiveTable
+            data={tableData}
+            checkEdit={true}
+            title="Cumpărături"
+            isModifying={isModifying}
+            changingRowId={selectedTableRowId}
+            handleDelete={formMode === "add" ? handleRowDelete : false}
+            handleEdit={formMode === "add" ? handleRowEdit : false}
+          />
+          <div className="total__price__container">
+            <label>
+              Suma totală:{" "}
+              {fullData.reduce((accumulator, item) => {
+                const price = parseInt(item["Preț total/lei"]);
+                return accumulator + price;
+              }, 0)}{" "}
+              lei
+            </label>
+          </div>
+        </div>
+      </div>
+      <div className="button__container">
+        <BasicButton
+          text="Salvează factura"
+          handleClick={() => handleSaveInvoice(false)}
+        />
+        <BasicButton
+          text="Salvează și validează factura"
+          handleClick={toggleSaveModal}
         />
       </div>
-      <div className="new__order__table__wrapper">
-        <ResponsiveTable
-          data={tableData}
-          checkEdit={true}
-          title="Cumpărături"
-          isModifying={isModifying}
-          changingRowId={selectedTableRowId}
-          handleDelete={formMode === "add" ? handleRowDelete : false}
-          handleEdit={formMode === "add" ? handleRowEdit : false}
-        />
-      </div>
-      <BasicButton text="Salvează factura" handleClick={handleSaveInvoice} />
+      <ModalMessage
+        isOpened={isOpenServerMessage}
+        close={handleCloseServerModal}
+        handleOk={handleCloseServerModal}
+      >
+        {message && <p>{message}</p>}
+        {postError && <p>{postError}</p>}
+      </ModalMessage>
+      <ModalMessage
+        isOpened={isOpenSaveModal}
+        close={toggleSaveModal}
+        handleCancel={toggleSaveModal}
+        handleOk={handleOkSaveModal}
+      >
+        <p>
+          Sunteți siguri că doriți să validați factura? Dacă o validați nu veți
+          putea face modificări.
+        </p>
+      </ModalMessage>
     </div>
   ) : (
     <p>Loading</p>
