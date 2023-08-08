@@ -1,0 +1,14 @@
+.input__label {
+  line-height: 26px;
+  font-weight: 600;
+}
+.quantity__container {
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+.selling__form .button__container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
