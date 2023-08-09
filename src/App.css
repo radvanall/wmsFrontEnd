@@ -110,6 +110,9 @@ h6 {
 .page__container {
   height: 100%;
 }
+.page__wrapper {
+  padding: 5px;
+}
 .sidebar {
   flex: 15%;
   min-height: 100vh;

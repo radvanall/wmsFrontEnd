@@ -12,6 +12,7 @@ import Stocks from "./pages/stocks/Stocks";
 import Providers from "./pages/providers/Providers";
 import SingleProvider from "./pages/SingleProvider/SingleProvider";
 import SingleInvoice from "./pages/SingleInvoice/SingleInvoice";
+import SingleOrder from "./pages/SingleOrder/SingleOrder";
 import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import OperatorsInvoice from "./pages/OperatorsInvoice/OperatorsInvoice";
@@ -82,7 +83,7 @@ function App() {
                   </Route>
                   <Route path="orders">
                     <Route index element={<Orders />} />
-                    {/* <Route path=":orderId" element={<SingleOperator />} /> */}
+                    <Route path=":orderId" element={<SingleOrder />} />
                     <Route path="newOrder" element={<NewOrder />} />
                     {/* <Route
                 path="new"
