@@ -74,7 +74,7 @@ const Orders = () => {
         (invoices.length !== 0 ? (
           <>
             <OrderMenu filterInvoicesByStatus={filterInvoicesByStatus} />
-            <Table data={invoices} page="invoices" coloredCell="Validat" />
+            <Table data={invoices} page="orders" coloredCell="Validat" />
           </>
         ) : (
           <h2>Nu exista rezultate</h2>
