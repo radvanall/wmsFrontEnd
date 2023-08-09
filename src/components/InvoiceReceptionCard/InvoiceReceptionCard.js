@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import usePostData from "../../hooks/usePostData";
 import Card from "../Card/Card";
 import Modal from "../Modal/Modal";
+import StatusContainer from "../StatusContaier/StatusContainer";
 import "./InvoiceReceptionCard.css";
 
 const InvoiceReceptionCard = ({ invoice, getData }) => {
@@ -29,21 +30,8 @@ const InvoiceReceptionCard = ({ invoice, getData }) => {
     : "none";
   return (
     <Card>
-      <div className="status__container">
-        {invoice.validated ? (
-          <span className="status_v">validat</span>
-        ) : (
-          <div className="status__unvalidated">
-            <span className="status_n">nevalidat</span>
-            <button
-              className="invoice__table__button"
-              onClick={() => setActive(true)}
-            >
-              <AiOutlineCheck className="search_menu_button validate__button" />
-            </button>
-          </div>
-        )}
-      </div>
+      <StatusContainer validated={invoice.validated} setActive={setActive} />
+
       <div className="invoice__reception__wrapper">
         <div className="invoice__reception__block">
           <img src={invoice.image} alt="" />

@@ -27,28 +27,3 @@
 .invoice__reception__block p span:first-child {
   font-weight: 700;
 }
-.status__container {
-  display: flex;
-  justify-content: flex-end;
-}
-.status_n {
-  margin: 10px;
-  padding: 0 5px 0 5px;
-  background-color: #ffaeae;
-  border-radius: 5px;
-}
-.status_v {
-  margin: 10px;
-  padding: 0 5px 0 5px;
-  background-color: #b4f8c8;
-  border-radius: 5px;
-}
-.validate__button {
-  background-color: rgb(0, 91, 150);
-  color: white;
-}
-.status__unvalidated {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
