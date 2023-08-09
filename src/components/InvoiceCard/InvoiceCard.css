@@ -1,0 +1,47 @@
+.single__order__card__wrapper {
+  min-width: 230px;
+  /* 
+  justify-content: space-between;
+  ;
+  width: 230px;
+  gap: 5px; */
+}
+.order__card {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+.single__order__card__wrapper .client__block {
+  align-self: center;
+  /* flex: 0 0 35%; */
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px;
+  overflow: hidden;
+  /* text-align: center; */
+}
+.single__order__card__wrapper .client__block img {
+  width: 100%;
+  /* max-width: 300px; */
+}
+.single__order__card__wrapper .client__block p {
+  font-weight: 600;
+}
+.single__order__card__wrapper .invoice__block {
+  flex: 0 0 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 20px;
+}
+.single__order__card__wrapper .invoice__block p {
+  display: flex;
+  justify-content: space-between;
+  line-height: 24px;
+}
+.single__order__card__wrapper .invoice__block p span:first-child {
+  font-weight: 600;
+}
