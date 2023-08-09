@@ -14,6 +14,7 @@ import { useToggle } from "../../hooks/useToggle";
 import AddStock from "../../components/AddStock/AddStock";
 import BasicButton from "../../components/BasicButton/BasicButton";
 import DeleteItem from "../../components/DeleteItem/DeleteItem";
+import InvoiceContentTable from "../../components/InvoiceContentTable/InvoiceContentTable";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
@@ -97,27 +98,15 @@ const SingleInvoice = () => {
       {invoice && <InvoiceReceptionCard invoice={invoice} getData={getData} />}
       <br />
       {stocks && (
-        <Card>
-          {invoice.validated ? null : (
-            <div className="stock__button__wrapper">
-              <BiPlusMedical
-                className={
-                  isOpenCreate
-                    ? "search_menu_button menu__opened"
-                    : "search_menu_button menu__closed"
-                }
-                onClick={toggleCreate}
-              />
-            </div>
-          )}
-
-          <ResponsiveTable
-            data={stocks}
-            title="Stocuri:"
-            handleEdit={invoice.validated ? null : openEdit}
-            handleDelete={invoice.validated ? null : openDelete}
-          />
-        </Card>
+        <InvoiceContentTable
+          validated={invoice.validated}
+          data={stocks}
+          title="Stocuri:"
+          isOpenCreate={isOpenCreate}
+          toggleCreate={toggleCreate}
+          openEdit={openEdit}
+          openDelete={openDelete}
+        />
       )}
       {stocks && selectedStock && (
         <EditStock
