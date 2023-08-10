@@ -41,7 +41,40 @@
   display: flex;
   justify-content: space-between;
   line-height: 24px;
+  align-items: center;
 }
 .single__order__card__wrapper .invoice__block p span:first-child {
   font-weight: 600;
+}
+.address__container {
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+  flex-wrap: wrap;
+  gap: 5px;
+  /* align-items: center; */
+}
+.address__container div {
+  display: flex;
+  gap: 5px;
+  align-items: flex-start;
+  line-height: 20px;
+  /* white-space: nowrap; */
+}
+.edit__address__button {
+  height: 20px;
+  width: 20px;
+
+  border-radius: 5px;
+  padding: 3px;
+  margin: 2px;
+}
+.edit__address__button:hover {
+  background-color: rgb(143, 176, 199);
+  cursor: pointer;
+}
+
+.address__button {
+  height: 20px;
+  width: 20px;
 }
