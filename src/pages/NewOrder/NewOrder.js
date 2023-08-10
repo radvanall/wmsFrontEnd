@@ -119,55 +119,12 @@ const NewOrder = () => {
       else return stock;
     });
 
-    // const updatedStocks = position.stocks.map((stock, index) => {
-    //   if (
-    //     parseInt(stock.remainingQuantity) === 0 &&
-    //     position.currentStockIndex - 1 === index
-    //   ) {
-    //     restoredQuantity =
-    //       parseInt(stock.initialQuantity) - parseInt(stock.remainingQuantity);
-    //   }
-    //   if (index === parseInt(position.currentStockIndex)) {
-    //     restoredQuantity =
-    //       parseInt(stock.initialQuantity) - parseInt(stock.remainingQuantity);
-    //     return {
-    //       ...stock,
-    //       remainingQuantity: stock.initialQuantity,
-    //     };
-    //   } else return stock;
-    // });
     const restoredPosition = {
       ...position,
-      // quantity: parseInt(position.quantity) + restoredQuantity,
       currentStockIndex: newIndex,
       quantity: restoredQuantity,
       stocks: finalStocks,
     };
-
-    // const inSale = position.stocks.filter((stock) => stock.state === "inSale");
-    // const forSale = position.stocks.filter(
-    //   (stock) => stock.state === "forSale"
-    // );
-    // const chosenStock = inSale.length
-    //   ? getEarliestDate(inSale)
-    //   : getEarliestDate(forSale);
-    // console.log("chosenStock=", chosenStock);
-
-    // const availableStocks = position.stocks.filter(
-    //   (stock) => parseInt(stock.id) !== parseInt(chosenStock.id)
-    // );
-    // const restoredPosition = {
-    //   id: position.id,
-    //   name: position.productName,
-    //   image: position.productImg,
-    //   quantity: position.stocks.reduce(
-    //     (prevValue, currentValue) =>
-    //       parseInt(prevValue) + parseInt(currentValue.remainingQuantity),
-    //     0
-    //   ),
-    //   currentStock: chosenStock,
-    //   availableStocks: availableStocks,
-    // };
     setPositions((prev) =>
       prev.map((position) => {
         if (parseInt(position.id) === parseInt(positionId))
