@@ -13,7 +13,7 @@ import "./SingleOrder.css";
 
 const SingleOrder = () => {
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
-  const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
+  //   const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
   const [selectedOrderId, setSelectedOrderId] = useState();
   const { orderId } = useParams();
@@ -57,11 +57,11 @@ const SingleOrder = () => {
     }
   }, [data]);
   console.log(orderId);
-  const openEdit = (id) => {
-    console.log("edit-", id);
-    setSelectedOrderId(id);
-    toggleEdit();
-  };
+  //   const openEdit = (id) => {
+  //     console.log("edit-", id);
+  //     setSelectedOrderId(id);
+  //     toggleEdit();
+  //   };
   const openDelete = (id) => {
     setSelectedOrderId(id);
     toggleDelete();
@@ -79,7 +79,9 @@ const SingleOrder = () => {
     <div className="page__wrapper single__order__page">
       {data && (
         <>
-          {invoice && <InvoiceCard invoice={invoice} />}
+          {invoice && (
+            <InvoiceCard invoice={invoice} refetch={() => getData(orderId)} />
+          )}
           {orders && invoice && (
             <InvoiceContentTable
               validated={invoice.shipped}
@@ -87,17 +89,22 @@ const SingleOrder = () => {
               title="Cumpărături:"
               isOpenCreate={isOpenCreate}
               toggleCreate={toggleCreate}
-              openEdit={openEdit}
+              //   openEdit={openEdit}
               openDelete={openDelete}
             />
           )}
         </>
       )}
-      <OrderForm
-        active={isOpenEdit}
-        handleCloseModal={toggleEdit}
-        orderId={selectedOrderId}
-      />
+
+      {isOpenCreate && (
+        <OrderForm
+          active={isOpenCreate}
+          handleCloseModal={toggleCreate}
+          invoiceId={invoice.id}
+          refetch={() => getData(orderId)}
+        />
+      )}
+
       <AlertMessage
         active={isOpenDelete}
         message="Sunteți siguri că doriți să ștergeți produsul dat?"
