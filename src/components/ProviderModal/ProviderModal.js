@@ -2,17 +2,16 @@ import React from "react";
 import { CgCloseR } from "react-icons/cg";
 import Modal from "../Modal/Modal";
 import { MdOutlineOpenInBrowser } from "react-icons/md";
+import ImagePicker from "../ImagePicker/ImagePicker";
 import "./ProviderModal.css";
 const ProviderModal = ({
   active,
   title,
   image,
   onSelectedFile,
-  pickFile,
   formFields,
   nameError,
   message,
-  filePicker,
   handleCloseForm,
   handleFormChange,
   handleSubmit,
@@ -61,7 +60,12 @@ const ProviderModal = ({
           />
           <label className="img_label">
             Alegeți imaginea:
-            <button onClick={pickFile} className="img_browse_button">
+            <ImagePicker
+              imgName={formFields.imgName}
+              onSelectedFile={onSelectedFile}
+              handleImgNameChange={handleFormChange}
+            />
+            {/* <button onClick={pickFile} className="img_browse_button">
               <MdOutlineOpenInBrowser className="img_browse" />
             </button>
             <input
@@ -79,7 +83,7 @@ const ProviderModal = ({
               ref={filePicker}
               accept="image/*,.png,.jpg,.jpeg,.web"
               onChange={onSelectedFile}
-            ></input>
+            ></input> */}
           </label>
           <button type="submit" className="submit_product_buton">
             Submit

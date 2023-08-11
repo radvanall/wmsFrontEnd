@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import SearchBarView from "../SearchBarView/SearchBarView";
 import { useToggle } from "../../hooks/useToggle";
-import { BiSearchAlt, BiPlusMedical } from "react-icons/bi";
 import CreateProvider from "../CreateProvider/CreateProvider";
+import MenuWrapper from "../MenuWrapper/MenuWrapper";
 
 const ProvidersMenu = ({ data, setProviders, fetchData }) => {
-  const { status: isOpenSearch, toggleStatus: toggleSearch } = useToggle(false);
+  // const { status: isOpenSearch, toggleStatus: toggleSearch } = useToggle(false);
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const [searchValue, setSearchValue] = useState("");
   const handleChange = (event) => {
@@ -40,37 +39,50 @@ const ProvidersMenu = ({ data, setProviders, fetchData }) => {
     setProviders(newArray);
   };
   return (
-    <div>
-      <div className="menu__buttons">
-        <BiPlusMedical
-          className={
-            isOpenCreate
-              ? "search_menu_button menu__opened"
-              : "search_menu_button menu__closed"
-          }
-          onClick={toggleCreate}
-        />
-        <BiSearchAlt
-          className={
-            isOpenSearch
-              ? "search_menu_button menu__opened"
-              : "search_menu_button menu__closed"
-          }
-          onClick={toggleSearch}
-        />
-      </div>
+    <MenuWrapper
+      searchValue={searchValue}
+      isOpenCreate={isOpenCreate}
+      toggleCreate={toggleCreate}
+      handleChange={handleChange}
+      handleClick={handleClick}
+    >
       <CreateProvider
         active={isOpenCreate}
         setActive={toggleCreate}
         fetchData={fetchData}
       />
-      <SearchBarView
-        isOpenSearch={isOpenSearch}
-        searchValue={searchValue}
-        handleChange={handleChange}
-        handleClick={handleClick}
-      />
-    </div>
+    </MenuWrapper>
+    // <div>
+    //   <div className="menu__buttons">
+    //     <BiPlusMedical
+    //       className={
+    //         isOpenCreate
+    //           ? "search_menu_button menu__opened"
+    //           : "search_menu_button menu__closed"
+    //       }
+    //       onClick={toggleCreate}
+    //     />
+    //     <BiSearchAlt
+    //       className={
+    //         isOpenSearch
+    //           ? "search_menu_button menu__opened"
+    //           : "search_menu_button menu__closed"
+    //       }
+    //       onClick={toggleSearch}
+    //     />
+    //   </div>
+    //   <CreateProvider
+    //     active={isOpenCreate}
+    //     setActive={toggleCreate}
+    //     fetchData={fetchData}
+    //   />
+    //   <SearchBarView
+    //     isOpenSearch={isOpenSearch}
+    //     searchValue={searchValue}
+    //     handleChange={handleChange}
+    //     handleClick={handleClick}
+    //   />
+    // </div>
   );
 };
 

@@ -28,12 +28,12 @@ const EditProvider = ({ provider, active, setActive, fetchData }) => {
     }
   }, [active]);
   const { message, loading, error, resetMessage, postData } = usePostData();
-  const filePicker = useRef(null);
+  // const filePicker = useRef(null);
   const formRef = useRef(null);
-  const pickFile = (event) => {
-    event.preventDefault();
-    filePicker.current.click();
-  };
+  // const pickFile = (event) => {
+  //   event.preventDefault();
+  //   filePicker.current.click();
+  // };
   const handleFormChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -88,11 +88,11 @@ const EditProvider = ({ provider, active, setActive, fetchData }) => {
       title="Editați furnizorul:"
       image={image}
       onSelectedFile={onSelectedFile}
-      pickFile={pickFile}
+      // pickFile={pickFile}
       formFields={formFields}
       nameError={nameError}
       message={message}
-      filePicker={filePicker}
+      // filePicker={filePicker}
       handleCloseForm={handleCloseForm}
       handleFormChange={handleFormChange}
       handleSubmit={handleSubmit}
