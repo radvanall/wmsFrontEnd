@@ -3,6 +3,7 @@ import "./Orders.css";
 import OrderMenu from "../../components/OrderMenu/OrderMenu";
 import useFetch from "../../hooks/useFetch";
 import Table from "../../components/Table/Table";
+import DeleteMessage from "../../components/DeleteMessage/DeleteMessage";
 
 const Orders = () => {
   const { data, loading, error, fetchData } = useFetch(
@@ -79,6 +80,7 @@ const Orders = () => {
         ) : (
           <h2>Nu exista rezultate</h2>
         ))}
+      <DeleteMessage />
     </div>
   );
 };
