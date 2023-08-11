@@ -1,0 +1,8 @@
+.customer__form {
+  max-width: 355px;
+  display: flex;
+  flex-direction: column;
+}
+.customer__button {
+  margin-left: auto;
+}
