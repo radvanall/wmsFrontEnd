@@ -6,6 +6,7 @@ import Products from "./pages/products/Products";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import Table from "./components/Table/Table";
 import SingleOperator from "./pages/Single/SingleOperator";
+import Customers from "./pages/customers/Customers";
 import Navbar from "./components/navbar/Navbar";
 import Operators from "./pages/operators/Operators";
 import Stocks from "./pages/stocks/Stocks";
@@ -13,6 +14,7 @@ import Providers from "./pages/providers/Providers";
 import SingleProvider from "./pages/SingleProvider/SingleProvider";
 import SingleInvoice from "./pages/SingleInvoice/SingleInvoice";
 import SingleOrder from "./pages/SingleOrder/SingleOrder";
+import SingleCustomer from "./pages/SingleCustomer/SingleCustomer";
 import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import OperatorsInvoice from "./pages/OperatorsInvoice/OperatorsInvoice";
@@ -74,8 +76,8 @@ function App() {
               /> */}
                   </Route>
                   <Route path="customers">
-                    {/* <Route index element={<Table />} /> */}
-                    <Route path=":customerId" element={<SingleOperator />} />
+                    <Route index element={<Customers />} />
+                    <Route path=":customerId" element={<SingleCustomer />} />
                     {/* <Route
                 path="new"
                 element={<New inputs={productInputs} title="Add New Product" />}
