@@ -1,0 +1,38 @@
+.single__order__card .client__avatar {
+  width: 100%;
+}
+.single__order__card .client__block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.single__order__card .client__block h3,
+.single__order__card .client__block p {
+  font-weight: 600;
+  line-height: 24px;
+}
+.data__block {
+  flex: 0 0 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+}
+.data__block p {
+  display: flex;
+  justify-content: space-between;
+  line-height: 24px;
+  align-items: center;
+}
+.data__block p span:first-child {
+  font-weight: 600;
+}
+.data__block p span {
+  text-align: right;
+}
+.customer__actions {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
