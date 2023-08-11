@@ -3,3 +3,7 @@
   width: 100%;
   gap: 10px;
 }
+.single__order__menu {
+  display: flex;
+  justify-content: flex-end;
+}

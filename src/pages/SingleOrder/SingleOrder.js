@@ -9,12 +9,18 @@ import BasicButton from "../../components/BasicButton/BasicButton";
 import usePostData from "../../hooks/usePostData";
 import useDelete from "../../hooks/useDelete";
 import OrderForm from "../../components/OrderForm/OrderForm";
+import DeleteItem from "../../components/DeleteItem/DeleteItem";
+import ValidateButton from "../../components/ValidateButton/ValidateButton";
+import StatusContainer from "../../components/StatusContaier/StatusContainer";
 import "./SingleOrder.css";
 
 const SingleOrder = () => {
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   //   const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
+  const { status: isOpenDeleteInvoice, toggleStatus: toggleDeleteInvoice } =
+    useToggle(false);
+  const { status, toggleStatus } = useToggle(false);
   const [selectedOrderId, setSelectedOrderId] = useState();
   const { orderId } = useParams();
   const { data, loading, error, getData } = useGetData(
@@ -75,24 +81,56 @@ const SingleOrder = () => {
     setSelectedOrderId(null);
     toggleDelete();
   };
+  const setActive = (value) => {
+    if (value) toggleStatus();
+  };
+  const validateInvoice = async () => {
+    await postData(
+      { id: invoice.id },
+      `http://localhost:8080/api/invoice/validateInvoice`
+    );
+    getData(orderId);
+    setTimeout(() => {
+      resetMessage();
+    }, 2000);
+  };
   return (
-    <div className="page__wrapper single__order__page">
+    <div className="page__wrapper">
       {data && (
         <>
           {invoice && (
-            <InvoiceCard invoice={invoice} refetch={() => getData(orderId)} />
+            <div className="single__order__menu">
+              <StatusContainer
+                validated={invoice.shipped}
+                setActive={setActive}
+              />
+              <ValidateButton
+                validated={invoice.shipped}
+                toggleDeleteInvoice={toggleDeleteInvoice}
+              />
+            </div>
           )}
-          {orders && invoice && (
-            <InvoiceContentTable
-              validated={invoice.shipped}
-              data={orders}
-              title="Cumpărături:"
-              isOpenCreate={isOpenCreate}
-              toggleCreate={toggleCreate}
-              //   openEdit={openEdit}
-              openDelete={openDelete}
-            />
-          )}
+          <div className="single__order__page">
+            {invoice && (
+              <>
+                <InvoiceCard
+                  invoice={invoice}
+                  refetch={() => getData(orderId)}
+                />
+              </>
+            )}
+            {orders && invoice && (
+              <InvoiceContentTable
+                validated={invoice.shipped}
+                data={orders}
+                title="Cumpărături:"
+                isOpenCreate={isOpenCreate}
+                toggleCreate={toggleCreate}
+                //   openEdit={openEdit}
+                openDelete={openDelete}
+              />
+            )}
+          </div>
         </>
       )}
 
@@ -112,6 +150,27 @@ const SingleOrder = () => {
         <BasicButton type="button" text="Șterge" handleClick={deleteItem} />
         <BasicButton type="button" text="Anulează" handleClick={toggleDelete} />
       </AlertMessage>
+      <AlertMessage
+        active={status}
+        message="Sunteți siguri că doriți să validați factura? Dacă o validați nu veți
+        putea face modificări."
+      >
+        {message && <p style={{ color: "red" }}>{message}</p>}
+        <BasicButton
+          type="button"
+          text="Validează"
+          handleClick={validateInvoice}
+        />
+        <BasicButton type="button" text="Închide" handleClick={toggleStatus} />
+      </AlertMessage>
+      <DeleteItem
+        active={isOpenDeleteInvoice}
+        setActive={toggleDeleteInvoice}
+        endpoint="invoice"
+        id={orderId}
+        title="Sunteți siguri că doriți să ștergeți factura dată?"
+        navigateTo="/orders"
+      />
     </div>
   );
 };
