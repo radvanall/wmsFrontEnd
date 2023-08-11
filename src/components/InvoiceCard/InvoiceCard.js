@@ -36,14 +36,16 @@ const InvoiceCard = ({ invoice, refetch }) => {
               <div>
                 {invoice.address === "inStore" ? "Pe loc" : invoice.address}
                 {/* Chisinau sarmisegetusa 23 ap 3 */}
-                <button
-                  className="address__button"
-                  onClick={() => {
-                    toggleAddressModal();
-                  }}
-                >
-                  <TiEdit className="edit__address__button menu__opened" />
-                </button>
+                {!invoice.shipped && (
+                  <button
+                    className="address__button"
+                    onClick={() => {
+                      toggleAddressModal();
+                    }}
+                  >
+                    <TiEdit className="edit__address__button menu__opened" />
+                  </button>
+                )}
               </div>
             </div>
             <p>

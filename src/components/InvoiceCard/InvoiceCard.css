@@ -64,7 +64,6 @@
 .edit__address__button {
   height: 20px;
   width: 20px;
-
   border-radius: 5px;
   padding: 3px;
   margin: 2px;
@@ -77,4 +76,5 @@
 .address__button {
   height: 20px;
   width: 20px;
+  background-color: transparent;
 }

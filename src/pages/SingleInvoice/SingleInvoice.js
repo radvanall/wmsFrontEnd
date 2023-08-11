@@ -9,12 +9,12 @@ import "./SingleInvoice.css";
 import Card from "../../components/Card/Card";
 import usePostData from "../../hooks/usePostData";
 import { BiPlusMedical } from "react-icons/bi";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import AddStock from "../../components/AddStock/AddStock";
 import BasicButton from "../../components/BasicButton/BasicButton";
 import DeleteItem from "../../components/DeleteItem/DeleteItem";
 import InvoiceContentTable from "../../components/InvoiceContentTable/InvoiceContentTable";
+import ValidateButton from "../../components/ValidateButton/ValidateButton";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
@@ -84,7 +84,13 @@ const SingleInvoice = () => {
   console.log("invoiceId:", invoiceId);
   return (
     <div className="single__invoice">
-      {invoice?.validated ? null : (
+      {invoice && (
+        <ValidateButton
+          validated={invoice.validated}
+          toggleDeleteInvoice={toggleDeleteInvoice}
+        />
+      )}
+      {/* {invoice?.validated ? null : (
         <div className="delete__invoce__wrapper">
           <button
             className="invoice__table__button"
@@ -93,7 +99,7 @@ const SingleInvoice = () => {
             <RiDeleteBin6Line className="search_menu_button menu__opened" />
           </button>
         </div>
-      )}
+      )} */}
 
       {invoice && <InvoiceReceptionCard invoice={invoice} getData={getData} />}
       <br />
