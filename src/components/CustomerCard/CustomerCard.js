@@ -4,7 +4,8 @@ import "./CustomerCard.css";
 import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
-const CustomerCard = ({ customer }) => {
+import EditCustomer from "../EditCustomer/EditCustomer";
+const CustomerCard = ({ customer, fetchData }) => {
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
   return (
@@ -76,6 +77,12 @@ const CustomerCard = ({ customer }) => {
           </div>
         </div>
       </div>
+      <EditCustomer
+        customer={customer}
+        active={isOpenModify}
+        setActive={toggleModify}
+        fetchData={fetchData}
+      />
     </Card>
   );
 };

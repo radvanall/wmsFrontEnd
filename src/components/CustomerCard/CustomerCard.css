@@ -1,5 +1,7 @@
 .single__order__card .client__avatar {
   width: 100%;
+  /* max-width: 300px; */
+  max-height: 250px;
 }
 .single__order__card .client__block {
   display: flex;
