@@ -33,6 +33,9 @@ const CreateCustomer = ({ active, setActive, fetchData }) => {
       setNameError(true);
       return;
     }
+    if (data.phone === "" || data.phone === null) {
+      dataEntities.set("phone", 0);
+    }
     console.log("false");
     setNameError(false);
     await postData(dataEntities, "http://localhost:8080/api/customer/create");
