@@ -12,7 +12,7 @@ const SingleCustomer = () => {
   const { data, loading, error, getData } = useGetData(
     "http://localhost:8080/api/customer/read/"
   );
-
+  const fetchData = () => getData(customerId);
   useEffect(() => {
     if (data) {
       console.log("data:", data);
@@ -40,7 +40,7 @@ const SingleCustomer = () => {
         <>
           {customer && (
             <div className="card">
-              <CustomerCard customer={customer} />{" "}
+              <CustomerCard customer={customer} fetchData={fetchData} />{" "}
             </div>
           )}
         </>
