@@ -23,14 +23,6 @@ const CustomerModal = ({
       <h2 className="form__title">{title}</h2>
       <div className="provider__form__wrapper">
         <form className="customer__form" onSubmit={handleSubmit} ref={formRef}>
-          {/* <label htmlFor="providerNameId">Numele furnizorului:</label>
-          <input
-            type="text"
-            name="providerName"
-            id="providerNameId"
-            value={formFields.providerName}
-            onChange={handleFormChange}
-          /> */}
           <BasicInput
             inputName="nickname"
             label="Numele clientului"
@@ -52,6 +44,7 @@ const CustomerModal = ({
           />
           <BasicInput
             inputName="phone"
+            type="number"
             label="Numărul the telefon al clientului"
             value={formFields.phone}
             handleChange={handleFormChange}
@@ -66,30 +59,6 @@ const CustomerModal = ({
             fullBorder={true}
             id="address"
           />
-          {/* <label htmlFor="providerAddressId">Adresa furnizorului:</label>
-          <input
-            type="text"
-            name="address"
-            id="providerAddressId"
-            value={formFields.address}
-            onChange={handleFormChange}
-          /> */}
-          {/* <label htmlFor="providerEmailId">Email-ul furnizorului:</label>
-          <input
-            type="text"
-            name="email"
-            id="providerEmailId"
-            value={formFields.email}
-            onChange={handleFormChange}
-          />
-          <label htmlFor="providerTelId">Telefonul furnizorului:</label>
-          <input
-            type="text"
-            name="tel"
-            id="providerTelId"
-            value={formFields.tel}
-            onChange={handleFormChange}
-          /> */}
           <label className="img_label">
             Alegeți imaginea:
             <ImagePicker
