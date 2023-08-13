@@ -19,7 +19,6 @@ const CustomersMenu = ({ data, setCustomers, fetchData }) => {
         Tel: customer.phone,
         Adresa: customer.address,
       }));
-    // changeProducts([...newData]);
     setSearchValue(newWord);
     setCustomers(newData);
     console.log("newData=", newData);
@@ -38,9 +37,6 @@ const CustomersMenu = ({ data, setCustomers, fetchData }) => {
     });
     setCustomers(newArray);
   };
-  const handleCloseModal = () => {
-    toggleCreate();
-  };
   return (
     <MenuWrapper
       searchValue={searchValue}
@@ -54,11 +50,6 @@ const CustomersMenu = ({ data, setCustomers, fetchData }) => {
         setActive={toggleCreate}
         fetchData={fetchData}
       />
-      {/* <CreateProvider
-        active={isOpenCreate}
-        setActive={toggleCreate}
-        fetchData={fetchData}
-      /> */}
     </MenuWrapper>
   );
 };
