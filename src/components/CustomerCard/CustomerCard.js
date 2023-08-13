@@ -5,6 +5,7 @@ import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import EditCustomer from "../EditCustomer/EditCustomer";
+import DeleteItem from "../DeleteItem/DeleteItem";
 const CustomerCard = ({ customer, fetchData }) => {
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
@@ -82,6 +83,14 @@ const CustomerCard = ({ customer, fetchData }) => {
         active={isOpenModify}
         setActive={toggleModify}
         fetchData={fetchData}
+      />
+      <DeleteItem
+        active={isOpenDelete}
+        setActive={toggleDelete}
+        endpoint="customer"
+        id={customer.id}
+        title="Sunteți siguri că doriți să ștergeți clientul ales?"
+        navigateTo="/customers"
       />
     </Card>
   );

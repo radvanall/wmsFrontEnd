@@ -3,6 +3,7 @@ import "./Customers.css";
 import useFetch from "../../hooks/useFetch";
 import Table from "../../components/Table/Table";
 import CustomersMenu from "../../components/CustomersMenu/CustomersMenu";
+import DeleteMessage from "../../components/DeleteMessage/DeleteMessage";
 const Customers = () => {
   const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/customer/readAll"
@@ -40,6 +41,7 @@ const Customers = () => {
           )}
         </>
       )}
+      <DeleteMessage />
     </div>
   );
 };
