@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import BasicButton from "../BasicButton/BasicButton";
 import "./ResponsiveTable.css";
 const ResponsiveTable = ({
   data,
@@ -10,7 +11,7 @@ const ResponsiveTable = ({
   changingRowId,
   handleEdit,
   handleDelete,
-  handleDatails,
+  handleDetails,
 }) => {
   const [header, setHeader] = useState([]);
   const [cellWidth, setCellWidth] = useState(0);
@@ -20,7 +21,7 @@ const ResponsiveTable = ({
       const header = Object.keys(data[0]).filter((key) => key !== "last");
       setHeader(header);
       const columns =
-        handleEdit || handleDelete || handleDatails
+        handleEdit || handleDelete || handleDetails
           ? header.length
           : header.length - 1;
       console.log("array lenght:", header.length);
@@ -46,7 +47,7 @@ const ResponsiveTable = ({
                 {columnName === "image" ? "Imagine" : columnName}
               </th>
             ))}
-          {(handleEdit || handleDelete || handleDatails) && (
+          {(handleEdit || handleDelete || handleDetails) && (
             <th style={{ width: `${cellWidth}%` }}>Acțiuni</th>
           )}
         </tr>
@@ -74,7 +75,7 @@ const ResponsiveTable = ({
                   {cell === "image" ? <img src={row[cell]} /> : row[cell]}
                 </td>
               ))}
-            {(handleEdit || handleDelete || handleDatails) && (
+            {(handleEdit || handleDelete || handleDetails) && (
               <td className="buttons__cell" style={{ width: `${cellWidth}%` }}>
                 {checkEdit
                   ? handleEdit &&
@@ -108,15 +109,19 @@ const ResponsiveTable = ({
                     <RiDeleteBin6Line className="search_menu_button menu__opened" />
                   </button>
                 )}
-                {handleDatails && (
-                  <button
-                    className="invoice__table__button"
-                    onClick={() => {
-                      handleDatails(row.id);
+                {handleDetails && (
+                  <BasicButton
+                    text="Detalii"
+                    handleClick={() => {
+                      handleDetails(row.id);
                     }}
-                  >
-                    Detalii
-                  </button>
+                  />
+                  // <button
+                  //   className="invoice__table__button"
+                  //   onClick={}
+                  // >
+                  //   Detalii
+                  // </button>
                 )}
               </td>
             )}
