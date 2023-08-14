@@ -1,0 +1,6 @@
+.month__radio__buttons {
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+  height: 40px;
+}
