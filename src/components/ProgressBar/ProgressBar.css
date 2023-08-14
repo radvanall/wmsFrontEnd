@@ -1,0 +1,27 @@
+.progress__bar__wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.progress__bar {
+  width: 65%;
+  height: 15px;
+  flex-grow: 1;
+  -webkit-appearance: none;
+}
+.progress__bar::-webkit-progress-bar {
+  background: #63c2ff;
+}
+.progress__bar::-webkit-progress-value {
+  background: var(--blue-color);
+}
+.progress__bar__wrapper label {
+  word-break: normal;
+  width: 30%;
+  text-align: right;
+  min-width: 4.5em;
+  flex-grow: 1;
+}
