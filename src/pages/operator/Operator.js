@@ -4,7 +4,7 @@ const Operator = ({ operator }) => {
   return (
     <div className="operator__data">
       <div className="operator__img__container">
-        <img src={operator.img} alt="" />
+        <img src={operator.avatar} alt="" />
       </div>
       <div className="operator__fields">
         <div className="field__container">
@@ -29,7 +29,7 @@ const Operator = ({ operator }) => {
         </div>
         <div className="field__container">
           <h2>Tel:</h2>
-          <h2>{operator.tel}</h2>
+          <h2>{operator.phone}</h2>
         </div>
         <div className="field__container">
           <h2>Status:</h2>
