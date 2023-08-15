@@ -4,9 +4,10 @@ import moment from "moment";
 import { useState, useEffect, useRef } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Modal from "../Modal/Modal";
+import CloseModal from "../CloseModal/CloseModal";
+import BasicButton from "../BasicButton/BasicButton";
 
-const Calendar = ({ operator }) => {
-  const calendar = [];
+const Calendar = ({ operator, workedDays, handleHours }) => {
   moment.updateLocale("en", {
     months: [
       "Ianuarie",
@@ -23,47 +24,63 @@ const Calendar = ({ operator }) => {
       "Decembrie",
     ],
   });
-  //   const [currentMonth, setCurrentMonth] = useState(moment().month());
   moment.updateLocale("en", { week: { dow: 1 } });
   const [modalActive, setModalActive] = useState(false);
-  const [today, setToday] = useState(moment());
+  const [today, setToday] = useState(moment().clone());
   const [dayIndex, setDayIndex] = useState(0);
   const [activeMonth, setActiveMonth] = useState(today.month());
   const [hours, setHours] = useState(0);
 
   const [selectedDay, setSelectedDay] = useState(moment());
-  const startDay = today.clone().startOf("month").startOf("week");
-  const endDay = today.clone().endOf("month").endOf("week");
+  const [calendarState, setCalendarState] = useState([]);
   const weekDays = ["L", "M", "Mc", "J", "V", "S", "D"];
   console.log(moment().month());
-  if (endDay.diff(startDay, "days") < 41) {
-    endDay.add(7, "day");
-  }
-  const day = startDay.clone();
-  //   console.log(calendarState);
-
-  while (!day.isAfter(endDay)) {
-    // {workedHours:0;
-    // date:day.clone()}
-    // setCalendarState([...calendarState, { workedHours: 0, date: day.clone() }]);
-    calendar.push({ workedHours: 0, date: day.clone() });
-    day.add(1, "day");
-  }
-  console.log(calendar);
-  const [calendarState, setCalendarState] = useState(calendar);
-  // const calendarState = useRef(calendar);
+  const getCalendar = () => {
+    const calendar = [];
+    const startDay = today.clone().startOf("month").startOf("week");
+    const endDay = today.clone().endOf("month").endOf("week");
+    if (endDay.diff(startDay, "days") < 41) {
+      endDay.add(7, "day");
+    }
+    const day = startDay.clone();
+    while (!day.isAfter(endDay)) {
+      // console.log("days", day);
+      const foundDay = workedDays.find((dayw) => {
+        const momentDay = moment(dayw.data, "YYYY-MM-DD HH:mm:ss.S");
+        if (
+          momentDay.isSame(day, "day") &&
+          momentDay.isSame(day, "month") &&
+          momentDay.isSame(day, "year")
+        )
+          console.log("the same");
+        return (
+          momentDay.isSame(day, "day") &&
+          momentDay.isSame(day, "month") &&
+          momentDay.isSame(day, "year")
+        );
+      });
+      if (foundDay) {
+        calendar.push({ workedHours: foundDay.workedHours, date: day.clone() });
+      } else calendar.push({ workedHours: 0, date: day.clone() });
+      day.add(1, "day");
+      setCalendarState(calendar);
+    }
+  };
   useEffect(() => {
-    setCalendarState([...calendar]);
+    getCalendar();
+  }, [workedDays]);
+  // console.log(calendar);
+
+  useEffect(() => {
+    getCalendar();
+    // setCalendarState([...calendar]);
     setActiveMonth(today.clone().month());
   }, [today]);
   console.log(today.month());
   function lastMonth() {
-    console.log("cal:", calendar);
+    // console.log("cal:", calendar);
     setToday(today.clone().subtract(1, "month"));
-    console.log("cal-=chage:", calendar);
-    // setCalendarState(calendar);
-
-    // setCalendarState([...calendar]);
+    // console.log("cal-=chage:", calendar);
   }
   function nextMonth() {
     setToday(today.clone().add(1, "month"));
@@ -73,8 +90,6 @@ const Calendar = ({ operator }) => {
     setModalActive(true);
     setSelectedDay(day.clone());
     setDayIndex(index);
-
-    // console.log(day.format("DD-MM-YYYY"));
   }
   function handleMinus() {
     if (hours === 0) return;
@@ -83,16 +98,6 @@ const Calendar = ({ operator }) => {
   function handlePlus() {
     if (hours === 12) return;
     setHours((hours) => hours + 1);
-  }
-  function handleHours() {
-    const newCalendar = calendarState.map((item, index) => {
-      if (index === dayIndex) {
-        return { ...item, workedHours: hours };
-      }
-
-      return item;
-    });
-    setCalendarState(newCalendar);
   }
 
   return (
@@ -117,48 +122,67 @@ const Calendar = ({ operator }) => {
           </div>
         ))}
       </div>
-
-      <div className="calendar">
-        {calendarState.map((item, index) => (
-          <div
-            className={`days day${item.date.day()} ${
-              item.date.month() === activeMonth ? "current" : "another"
-            }`}
-            key={index}
-          >
+      {calendarState.length && (
+        <div className="calendar">
+          {calendarState.map((item, index) => (
             <div
-              className="day__container "
-              onClick={() => {
-                dayHandler(index, item.date);
-
-                // console.log(e.currentTarget);
-              }}
+              className={`days day${item.date.day()} ${
+                item.date.month() === activeMonth ? "current" : "another"
+              }  
+             ${
+               item.date.isSame(moment(), "month") &&
+               item.date.isSame(moment(), "day")
+                 ? " today"
+                 : " not_today"
+             }`}
+              key={index}
             >
-              <div className="day__of__month">{item.date.format("D")}</div>
-              <div className="worked__hours">{item.workedHours} ore</div>
+              <div
+                className="day__container "
+                onClick={() => {
+                  dayHandler(index, item.date);
+                }}
+              >
+                <div className="day__of__month">{item.date.format("D")}</div>
+                <div className="worked__hours">{item.workedHours} ore</div>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <Modal active={modalActive} setActive={setModalActive}>
+          ))}
+        </div>
+      )}
+      <Modal active={modalActive}>
+        <CloseModal
+          handleCloseModal={() => {
+            setModalActive(false);
+          }}
+        />
         <div className="modal__name__container">
-          <h2 className="modal__name">Name:</h2>
-          <h2 className="modal__name">
-            {operator.name + " " + operator.surname}
-          </h2>
+          <p>
+            <span>Nume:</span>
+            <span>{operator.name + " " + operator.surname}</span>
+          </p>
         </div>
-        <div className="modal__date__container">
-          <h2 className="modal__date">Data:</h2>
-          <h2 className="modal__date">{selectedDay.format("DD-MM-YYYY")}</h2>
+        <div className="modal__name__container">
+          <p>
+            <span>Data:</span>
+            <span>{selectedDay.format("DD MMMM YYYY")}</span>
+          </p>
         </div>
-        <div className="modal__hour__container">
-          <h2 className="modal__hour">Ore lucrate:</h2>
-          <div className="hours">
-            <button onClick={handleMinus}>-</button>
-            <h2 className="modal__hour">{hours}</h2>
-            <button onClick={handlePlus}>+</button>
-          </div>
-          <button onClick={handleHours}>Submit</button>
+        <div className="modal__name__container">
+          <p>
+            <span>Ore lucrate:</span>
+            <span>
+              <button onClick={handleMinus}>-</button>
+              <span className="worked__hours__span">{hours}</span>
+              <button onClick={handlePlus}>+</button>
+            </span>
+          </p>
+        </div>
+        <div className="calendar__button__container">
+          <BasicButton
+            handleClick={() => handleHours(hours, selectedDay.toDate())}
+            text="Salvează"
+          />
         </div>
       </Modal>
     </div>
