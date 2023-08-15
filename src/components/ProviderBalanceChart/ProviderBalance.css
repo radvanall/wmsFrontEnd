@@ -1,0 +1,13 @@
+.balance__fields {
+  min-width: 150px;
+  padding: 5px;
+}
+.balance__fields {
+  line-height: 20px;
+}
+.month__menu__buttons {
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+  height: 60px;
+}
