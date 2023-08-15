@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useGetData from "../../hooks/useGetData";
 import hoverLine from "../../CustomChart/hoverLine";
 import Card from "../Card/Card";
-import getFormatedDate from "../../functions/getFormatedDate";
 import getMonthAndYear from "../../functions/getMonthAndYear";
 import CustomChart from "../../CustomChart/CustomChart";
 import RadioButton from "../RadioButton/RadioButton";

@@ -19,6 +19,7 @@
 .provider__card__wrapper {
   width: 100%;
   padding: 5px;
+  min-height: 500px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

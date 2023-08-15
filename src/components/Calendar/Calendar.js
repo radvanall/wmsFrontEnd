@@ -44,7 +44,6 @@ const Calendar = ({ operator, workedDays, handleHours }) => {
     }
     const day = startDay.clone();
     while (!day.isAfter(endDay)) {
-      // console.log("days", day);
       const foundDay = workedDays.find((dayw) => {
         const momentDay = moment(dayw.data, "YYYY-MM-DD HH:mm:ss.S");
         if (
@@ -69,18 +68,14 @@ const Calendar = ({ operator, workedDays, handleHours }) => {
   useEffect(() => {
     getCalendar();
   }, [workedDays]);
-  // console.log(calendar);
 
   useEffect(() => {
     getCalendar();
-    // setCalendarState([...calendar]);
     setActiveMonth(today.clone().month());
   }, [today]);
   console.log(today.month());
   function lastMonth() {
-    // console.log("cal:", calendar);
     setToday(today.clone().subtract(1, "month"));
-    // console.log("cal-=chage:", calendar);
   }
   function nextMonth() {
     setToday(today.clone().add(1, "month"));
