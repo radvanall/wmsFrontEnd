@@ -6,7 +6,7 @@ import getMonthAndYear from "../../functions/getMonthAndYear";
 import hoverLine from "../../CustomChart/hoverLine";
 import RadioButton from "../RadioButton/RadioButton";
 import "./ProviderBalance.css";
-const ProviderBalanceChart = ({ id }) => {
+const ProviderBalanceChart = ({ endpoint }) => {
   const [period, setPeriod] = useState(6);
   const [chartData, setChartData] = useState(null);
   const [balance, setBalance] = useState({
@@ -14,14 +14,16 @@ const ProviderBalanceChart = ({ id }) => {
     totalSales: 0,
   });
   const { data, loading, error, getData } = useGetData(
-    "http://localhost:8080/api/provider/getBalance/"
+    // "http://localhost:8080/api/provider/getBalance/"
+    "http://localhost:8080/api/"
   );
   const getChartData = async () => {
-    await getData(`?id=${id}&period=${period}`);
+    // await getData(`?id=${id}&period=${period}`);
+    await getData(`${endpoint}&period=${period}`);
   };
   useEffect(() => {
     getChartData();
-  }, [period, id]);
+  }, [period, endpoint]);
   useEffect(() => {
     if (data) {
       console.log("chartData=", data);
@@ -72,9 +74,6 @@ const ProviderBalanceChart = ({ id }) => {
           padding: 10,
         },
       },
-      //   legend: {
-      //     display: false,
-      //   },
       tooltip: {
         usePointStyle: true,
         callbacks: {
@@ -102,7 +101,6 @@ const ProviderBalanceChart = ({ id }) => {
         },
       },
       x: {
-        // reverse: true,
         ticks: {
           callback: function (value, index, values) {
             console.log("ticks:", value, index, values);
@@ -123,8 +121,6 @@ const ProviderBalanceChart = ({ id }) => {
   return (
     <Card>
       {data && chartData && (
-        // <div className="balance__chart">
-        //   <div className="radio__chart">
         <>
           <div className="month__menu__buttons">
             <RadioButton
@@ -169,8 +165,6 @@ const ProviderBalanceChart = ({ id }) => {
             height="430px"
           />
         </>
-        //   </div>
-        // </div>
       )}
     </Card>
   );

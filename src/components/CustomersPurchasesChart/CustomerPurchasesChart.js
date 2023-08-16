@@ -6,11 +6,12 @@ import getMonthAndYear from "../../functions/getMonthAndYear";
 import CustomChart from "../../CustomChart/CustomChart";
 import RadioButton from "../RadioButton/RadioButton";
 import "./CustomerPurchasesChart.css";
-const CustomerPurchasesChart = ({ id }) => {
+const CustomerPurchasesChart = ({ id, url, label }) => {
   const [period, setPeriod] = useState(1);
   const [chartData, setChartData] = useState(null);
   const { data, loading, error, getData } = useGetData(
-    "http://localhost:8080/api/invoice/getWeeklySales"
+    url
+    // "http://localhost:8080/api/invoice/getWeeklySales"
   );
   const getChartData = async () => {
     await getData(`?id=${id}&period=${period}`);
@@ -25,7 +26,7 @@ const CustomerPurchasesChart = ({ id }) => {
         labels: data.map((item) => getMonthAndYear(item.weekStart, "RO-ro")),
         datasets: [
           {
-            label: "Cumpărături",
+            label: label,
             data: data.map((item) => item.totalSales),
             backgroundColor: "#4361ee",
             borderColor: "#4361ee",
@@ -59,26 +60,13 @@ const CustomerPurchasesChart = ({ id }) => {
         usePointStyle: true,
         callbacks: {
           label: function (tooltipItem, data) {
-            // const value = tooltipItem.value;
-            // console.log(tooltipItem.raw);
-            return "Cumpărături: " + tooltipItem.raw + " lei";
-            // return "$" + value.toFixed(2);
-            //   afterTitle: (context) => {
-            //     console.log("p-context:", context);
-            //     return context[0].raw + " lei";
-            // const difference = context[0].raw - context[1].raw;
-            // if (chartState) {
-            //   return "Bilanța vânzărilor constituie " + difference + " lei";
-            // } else {
-            //   return "Bilanța vânzărilor constituie " + difference + " bucăți";
-            // }
+            return label + ": " + tooltipItem.raw + " lei";
           },
         },
       },
     },
     responsive: true,
     maintainAspectRatio: false,
-    // height: 500,
   };
   const isStatusSelected = (value) => parseInt(period) === parseInt(value);
   const handlePeriodCheck = (e) => {
