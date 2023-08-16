@@ -72,7 +72,11 @@ const SingleCustomer = () => {
             </div>
           )}
           <div className="lineChart">
-            <CustomerPurchasesChart id={customerId} />
+            <CustomerPurchasesChart
+              id={customerId}
+              url="http://localhost:8080/api/invoice/getWeeklySales"
+              label="Cumpărături"
+            />
           </div>
           <div className="invoices">
             <Card>

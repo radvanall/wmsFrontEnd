@@ -102,7 +102,10 @@ const SingleProvider = () => {
             </div>
           )}
           <div className="lineChart">
-            <ProviderBalanceChart id={providerId} />
+            <ProviderBalanceChart
+              // id={providerId}
+              endpoint={`provider/getBalance?id=${providerId}`}
+            />
           </div>
           <div className="invoices">
             <Card>
