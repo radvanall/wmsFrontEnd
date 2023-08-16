@@ -27,12 +27,7 @@ const EditCustomer = ({ customer, active, setActive, fetchData }) => {
     }
   }, [active]);
   const { message, loading, error, resetMessage, postData } = usePostData();
-  // const filePicker = useRef(null);
   const formRef = useRef(null);
-  // const pickFile = (event) => {
-  //   event.preventDefault();
-  //   filePicker.current.click();
-  // };
   const handleFormChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -86,12 +81,9 @@ const EditCustomer = ({ customer, active, setActive, fetchData }) => {
       title="Editați clientul:"
       image={image}
       onSelectedFile={onSelectedFile}
-      // pickFile={pickFile}
       formFields={formFields}
       nameError={nameError}
       message={message}
-      // filePicker={filePicker}
-
       handleFormChange={handleFormChange}
       handleSubmit={handleSubmit}
       formRef={formRef}
