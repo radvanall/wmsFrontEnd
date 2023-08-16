@@ -1,18 +1,13 @@
 import React from "react";
 import "./SingleProduct.css";
 import { useParams } from "react-router-dom";
-import ItemTable from "../../components/ItemTable/ItemTable";
-import stocks from "../../stock";
-import productBalance from "../../productBalance";
+import ProviderBalanceChart from "../../components/ProviderBalanceChart/ProviderBalanceChart";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../../toolkitRedux/productsSlice";
 import ProductWidged from "../../components/ProductWidged/ProductWidged";
-import BalanceTable from "../../components/BalanceTable/BalanceTable";
-import SaleChart from "../../components/SaleChart/SaleChart";
-import RangeDatePiker from "../../components/RangeDatePicker/RangeDatePicker";
 import StockTable from "../../components/StockTable/StockTable";
-
+import PositionOrders from "../../components/PositionOrders/PositionOrders";
 import SingleProductMenu from "../../components/SingleProductMenu/SingleProductMenu";
 
 const SingleProduct = () => {
@@ -41,8 +36,14 @@ const SingleProduct = () => {
           <SingleProductMenu id={productId} />
           <ProductWidged product={product} />
           <StockTable productId={productId} />
-          <SaleChart />
-          <BalanceTable />
+          <div className="product__chart">
+            <ProviderBalanceChart
+              endpoint={`position/getBalance?id=${productId}`}
+            />
+          </div>
+          <div className="product__chart">
+            <PositionOrders id={productId} />
+          </div>
         </div>
       )}
     </div>

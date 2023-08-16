@@ -29,16 +29,12 @@ const ProductWidged = ({ product }) => {
           <h2>{product.producator}</h2>
         </div>
         <div className="field__container">
-          <h2>Cantitate:</h2>
+          <h2>Cantitate în stoc:</h2>
           <h2>{product.cantitate}</h2>
         </div>
         <div className="field__container">
           <h2>Unitate:</h2>
           <h2>{product.unitate}</h2>
-        </div>
-        <div className="field__container">
-          <h2>Pret:</h2>
-          <h2>{product.pret}</h2>
         </div>
       </div>
     </div>
