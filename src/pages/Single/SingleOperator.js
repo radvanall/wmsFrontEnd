@@ -9,7 +9,9 @@ import getFormatedDate from "../../functions/getFormatedDate";
 import Calendar from "../../components/Calendar/Calendar";
 import Chart from "../../components/Chart/Chart";
 import OperatorInvoice from "../../components/OperatorInvoice/OperatorInvoice";
+import SingleOperatorMenu from "../../components/SingleOperatorMenu/SingleOperatorMenu";
 import Operator from "../operator/Operator";
+import CustomerPurchasesChart from "../../components/CustomersPurchasesChart/CustomerPurchasesChart";
 
 const SingleOperator = () => {
   const { operatorId } = useParams();
@@ -30,7 +32,23 @@ const SingleOperator = () => {
     if (data) {
       console.log("data:", data);
       const { invoices, workedDays, ...operatorData } = data;
-      setOperator(operatorData);
+
+      const today = moment();
+      let hoursWorkedThisMonth = 0;
+      if (workedDays.length > 0) {
+        workedDays.forEach((day) => {
+          const momentDay = moment(day.data, "YYYY-MM-DD HH:mm:ss.S");
+          if (
+            momentDay.isSame(today, "month") &&
+            momentDay.isSame(today, "year")
+          )
+            hoursWorkedThisMonth += day.workedHours;
+        });
+      }
+      console.log("workedHours;", hoursWorkedThisMonth);
+      setOperator({ ...operatorData, hoursThisMonth: hoursWorkedThisMonth });
+      console.log("single operator:", today);
+
       //  const workDayArray=workedDays.map(day=>{
 
       //  })
@@ -83,6 +101,12 @@ const SingleOperator = () => {
   };
   return (
     <div className="Single">
+      {operator && data && (
+        <SingleOperatorMenu
+          operator={operator}
+          fetchData={() => getData(operatorId)}
+        />
+      )}
       {operator && data && <Operator operator={operator} />}
       {data && (
         <Calendar
@@ -91,8 +115,16 @@ const SingleOperator = () => {
           handleHours={handleHours}
         />
       )}
-      <Chart />
-      <OperatorInvoice />
+      {/* <Chart /> */}
+      <div className="chart">
+        <CustomerPurchasesChart
+          id={operatorId}
+          url="http://localhost:8080/api/operator/getSales"
+          label="Vânzări"
+        />
+      </div>
+
+      <OperatorInvoice invoices={invoices} />
     </div>
   );
 };
