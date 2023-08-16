@@ -32,6 +32,10 @@ const Operator = ({ operator }) => {
           <h2>{operator.phone}</h2>
         </div>
         <div className="field__container">
+          <h2>Ore lucrate luna curentă:</h2>
+          <h2>{operator.hoursThisMonth}</h2>
+        </div>
+        <div className="field__container">
           <h2>Status:</h2>
           <h2>{operator.status}</h2>
         </div>
