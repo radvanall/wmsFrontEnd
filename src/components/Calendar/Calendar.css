@@ -114,6 +114,8 @@
 }
 .today {
   border: 1px solid #fe6240;
+}
+.worked_day {
   background-color: #2c5866;
 }
 .modal__name__container {

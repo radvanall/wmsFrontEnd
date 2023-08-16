@@ -129,7 +129,13 @@ const Calendar = ({ operator, workedDays, handleHours }) => {
                item.date.isSame(moment(), "day")
                  ? " today"
                  : " not_today"
-             }`}
+             }
+             ${
+               parseInt(item.workedHours) > 0
+                 ? " worked_day"
+                 : " day_not_worked"
+             }
+             `}
               key={index}
             >
               <div
