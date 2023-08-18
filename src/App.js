@@ -23,104 +23,66 @@ import { useSelector } from "react-redux";
 import Invoice from "./pages/Invoice/Invoice";
 import Orders from "./pages/orders/Orders";
 import NewOrder from "./pages/NewOrder/NewOrder";
+import Layout from "./components/Layout/Layout";
+import RequireAuth from "./components/Layout/RequireAuth";
+import Unauthorized from "./components/Unauthorized/Unauthorized";
 function App() {
   const opened = useSelector((state) => state.menuState.opened);
   console.log("opened=", opened);
   return (
-    <div className="App">
-      <div className={opened ? "page_opened" : "page_closed"}></div>
-      <div className="_container">
-        {/* <div className="page__container"> */}
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="login" element={<Login />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
+        <Route
+          element={
+            <RequireAuth
+              allowedRoles={["ROLE_ADMIN", "ROLE_MAIN", "ROLE_OPERATOR"]}
+            />
+          }
+        >
+          <Route index element={<Home />} />
+          <Route path="products">
+            <Route index element={<Products />} />
+            <Route path=":productId" element={<SingleProduct />} />
+          </Route>
+          <Route path="providers">
+            <Route index element={<Providers />} />
+            <Route path=":providerId" element={<SingleProvider />} />
+          </Route>
+          <Route path="customers">
+            <Route index element={<Customers />} />
+            <Route path=":customerId" element={<SingleCustomer />} />
+          </Route>
+          <Route path="orders">
+            <Route index element={<Orders />} />
+            <Route path=":orderId" element={<SingleOrder />} />
+            <Route path="newOrder" element={<NewOrder />} />
+          </Route>
+          <Route path="stocks">
+            <Route index element={<Stocks />} />
+            <Route path=":stockId" element={<SingleOperator />} />
+          </Route>
+        </Route>
+        <Route
+          element={<RequireAuth allowedRoles={["ROLE_ADMIN", "ROLE_MAIN"]} />}
+        >
+          <Route path="operators">
+            <Route index element={<Operators />} />
+            <Route path=":operatorId" element={<SingleOperator />} />
+          </Route>
+          <Route path="invoices">
+            <Route index element={<Invoice />} />
+            <Route path=":invoiceId" element={<SingleInvoice />} />
+          </Route>
 
-        <BrowserRouter>
-          {" "}
-          <Navbar />
-          <div className="content">
-            <div className={opened ? " sidebar_opened" : "sidebar"}>
-              <Sidebar />
-            </div>
-            <div className="page">
-              <Routes>
-                <Route path="/">
-                  <Route index element={<Home />} />
-                  <Route path="login" element={<Login />} />
-                  <Route path="operators">
-                    {/* <Route index element={<Table />} /> */}
-                    <Route index element={<Operators />} />
-                    <Route path=":operatorId" element={<SingleOperator />} />
-                    {/* <Route
-                path="new"
-                element={
-                  <New inputs={operatorInputs} title="Add New Operator" />
-                }
-              /> */}
-                  </Route>
-                  <Route path="invoices">
-                    <Route index element={<Invoice />} />
-                    <Route path=":invoiceId" element={<SingleInvoice />} />
-                  </Route>
-                  <Route path="products">
-                    <Route index element={<Products />} />
-                    <Route path=":productId" element={<SingleProduct />} />
-                    {/* <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
-              /> */}
-                  </Route>
-                  <Route path="providers">
-                    <Route index element={<Providers />} />
-                    <Route path=":providerId" element={<SingleProvider />} />
-                    {/* <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
-              /> */}
-                  </Route>
-                  <Route path="customers">
-                    <Route index element={<Customers />} />
-                    <Route path=":customerId" element={<SingleCustomer />} />
-                    {/* <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
-              /> */}
-                  </Route>
-                  <Route path="orders">
-                    <Route index element={<Orders />} />
-                    <Route path=":orderId" element={<SingleOrder />} />
-                    <Route path="newOrder" element={<NewOrder />} />
-                    {/* <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
-              /> */}
-                  </Route>
-                  <Route path="stocks">
-                    {/* <Route index element={<Table />} /> */}
-                    <Route index element={<Stocks />} />
-                    <Route path=":stockId" element={<SingleOperator />} />
-                    {/* <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
-              /> */}
-                  </Route>
-                  <Route path="sales">
-                    {/* <Route index element={<Table />} /> */}
-                    <Route path=":saleId" element={<SingleOperator />} />
-                    {/* <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
-              /> */}
-                  </Route>
-                </Route>
-                <Route
-                  path="operatorsinvoice"
-                  element={<OperatorsInvoice />}
-                ></Route>
-              </Routes>
-            </div>
-          </div>
-        </BrowserRouter>
-        {/* </div> */}
-      </div>
-    </div>
+          <Route path="sales">
+            <Route path=":saleId" element={<SingleOperator />} />
+          </Route>
+          <Route path="operatorsinvoice" element={<OperatorsInvoice />}></Route>
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
