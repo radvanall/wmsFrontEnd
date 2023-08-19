@@ -2,19 +2,24 @@ import React, { useState } from "react";
 import "./login.css";
 import BasicInput from "../../components/BasicInput/BasicInput";
 import BasicButton from "../../components/BasicButton/BasicButton";
+import useAuth from "../../hooks/useAuth";
+import { useSelector, useDispatch } from "react-redux";
 const Login = () => {
+  const userData = useSelector((state) => state.userSlice.userData);
+  const jwt = useSelector((state) => state.userSlice.jwt);
+  const { login } = useAuth();
   const [errors, setErrors] = useState({
-    nickname: false,
+    username: false,
     password: false,
   });
   const [fields, setFields] = useState({
-    nickname: "",
+    username: "",
     password: "",
   });
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (fields.nickname === "") {
-      setErrors({ ...errors, nickname: true });
+    if (fields.username === "") {
+      setErrors({ ...errors, username: true });
       return;
     }
     if (fields.password === "") {
@@ -22,6 +27,7 @@ const Login = () => {
       return;
     }
     console.log("submit");
+    login(fields);
   };
   const handleChange = (e) => {
     const name = e.target.name;
@@ -33,18 +39,23 @@ const Login = () => {
       [name]: value,
     });
   };
+  const revelState = () => {
+    console.log("revel", userData);
+    console.log("revel", jwt);
+  };
   return (
     <div className="login">
+      <button onClick={revelState}>revelState</button>
       <form className="login__form" onSubmit={handleSubmit}>
         <h2>Logare</h2>
         <BasicInput
           label="Introduceți nikname-ul"
           fullBorder={true}
-          value={fields.nickname}
-          inputName="nickname"
+          value={fields.username}
+          inputName="username"
           handleChange={handleChange}
         />
-        {errors.nickname && (
+        {errors.username && (
           <p style={{ color: "red" }}>Nickname-ul e obligatoriu</p>
         )}
         <BasicInput
