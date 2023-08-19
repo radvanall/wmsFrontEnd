@@ -1,28 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
+  async (jwt) => {
     const response = await axios.get(
-      "http://localhost:8080/api/position/readtablepositions"
+      "http://localhost:8080/api/position/readtablepositions",
+      { headers: { Authorization: `Bearer ${jwt}` } }
     );
     console.log("response=", response.data);
     return response.data;
   }
 );
-// export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
-//   return axios
-//     .get("http://localhost:8080/api/position/readtablepositions")
-//     .then((response) => response.data);
-// });
+
 const productsSlice = createSlice({
   name: "productsState",
   initialState: {
-    // data: [...productsData],
     data: [],
-
-    // displaiedData: [...productsData],
     displaiedData: [],
     loading: false,
     error: "",
@@ -30,11 +23,9 @@ const productsSlice = createSlice({
   reducers: {
     setData(state, action) {
       state.data = action.payload;
-      //   return { data: [...action.payload] };
     },
     setDisplaiedData(state, action) {
       state.displaiedData = action.payload;
-      //   return { ...state, displaiedData: [...action.payload] };
     },
   },
   extraReducers: (builder) => {

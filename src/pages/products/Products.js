@@ -9,6 +9,7 @@ import { fetchProducts } from "../../toolkitRedux/productsSlice";
 import productsData from "../../productsData";
 import useFetch from "../../hooks/useFetch";
 const Products = () => {
+  const jwt = useSelector((state) => state.userSlice.jwt);
   // const [products, setProducts] = useState(productsData);
   // const changeProducts = (newProducts) => {
   //   setProducts([...newProducts]);
@@ -20,7 +21,7 @@ const Products = () => {
 
   const data = useSelector((state) => state.productsSlice.data);
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts(jwt));
   }, [dispatch]);
   const products = useSelector((state) => state.productsSlice.displaiedData);
   //console.log("data=", data);

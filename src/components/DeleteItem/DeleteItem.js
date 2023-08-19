@@ -9,10 +9,11 @@ import deleteItem from "./functions/deleteItem";
 import "./DeleteItem.css";
 const DeleteItem = ({ active, setActive, endpoint, id, navigateTo, title }) => {
   const dispatch = useDispatch();
+  const jwt = useSelector((state) => state.userSlice.jwt);
 
   const navigate = useNavigate();
   const handleDelete = () => {
-    deleteItem(id, endpoint, dispatch, setMessage);
+    deleteItem(id, endpoint, dispatch, setMessage, jwt);
     navigate(navigateTo);
     dispatch(toggle());
   };

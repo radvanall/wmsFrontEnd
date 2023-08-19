@@ -3,22 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "userSlice",
   initialState: {
-    logged: false,
     userData: {
-      nickname: "",
-      surname: "",
+      userName: "",
+      id: null,
       avatar: "",
-      role: "ROLE_ADMIN",
+      authority: "",
     },
     jwt: "",
   },
   reducers: {
     setUserData(state, action) {
       //   state.opened = !state.opened;
-      state.opened = action.payload;
+      state.userData = action.payload;
+    },
+    setJwt(state, action) {
+      state.jwt = action.payload;
     },
   },
 });
 
 export default userSlice.reducer;
-export const { setUserData } = userSlice.actions;
+export const { setUserData, setJwt } = userSlice.actions;

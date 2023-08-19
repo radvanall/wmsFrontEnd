@@ -1,16 +1,24 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux/es/exports";
 
 const useFetch = (url) => {
+  const jwt = useSelector((state) => state.userSlice.jwt);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const fetchData = async () => {
     setLoading(true);
-    fetch(url)
+    console.log(jwt);
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           console.log("errorar la connectare");
+          console.log(res);
           throw Error("Eroare la conectare..");
         }
         return res.json();

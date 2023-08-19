@@ -1,8 +1,9 @@
 import axios from "axios";
-import queryString from "query-string";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux/es/exports";
 
 const useGetPage = (url, filters) => {
+  const jwt = useSelector((state) => state.userSlice.jwt);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -20,7 +21,10 @@ const useGetPage = (url, filters) => {
     try {
       const response = await axios.post(
         url + `/?page=${page}&size=${size}&sortDirection=${sortDirection}`,
-        filterCriteria ? filterCriteria : undefined
+        filterCriteria ? filterCriteria : undefined,
+        {
+          headers: { Authorization: `Bearer ${jwt}` },
+        }
       );
       setData(response.data);
       // console.log("data:", response.data);

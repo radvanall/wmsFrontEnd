@@ -43,6 +43,7 @@ const pageSizeOptions = [
   },
 ];
 const Stocks = () => {
+  const jwt = useSelector((state) => state.userSlice.jwt);
   const [dates, setDates] = useState([]);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -79,7 +80,8 @@ const Stocks = () => {
 
     try {
       const fetch = await axios.get(
-        "http://localhost:8080/api/stock/filterSettings"
+        "http://localhost:8080/api/stock/filterSettings",
+        { headers: { Authorization: `Bearer ${jwt}` } }
       );
       setFilterSettings(fetch.data);
       if (!navigate) {

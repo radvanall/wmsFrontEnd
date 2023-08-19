@@ -13,10 +13,11 @@ import SingleProductMenu from "../../components/SingleProductMenu/SingleProductM
 const SingleProduct = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
+  const jwt = useSelector((state) => state.userSlice.jwt);
 
   const data = useSelector((state) => state.productsSlice);
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts(jwt));
   }, [dispatch]);
 
   const product = useSelector((state) =>
