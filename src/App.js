@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import New from "./pages/New/New";
@@ -18,7 +19,8 @@ import SingleCustomer from "./pages/SingleCustomer/SingleCustomer";
 import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import OperatorsInvoice from "./pages/OperatorsInvoice/OperatorsInvoice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setJwt, setUserData } from "./toolkitRedux/userSlice";
 //test commgit sent
 import Invoice from "./pages/Invoice/Invoice";
 import Orders from "./pages/orders/Orders";
@@ -27,6 +29,11 @@ import Layout from "./components/Layout/Layout";
 import RequireAuth from "./components/Layout/RequireAuth";
 import Unauthorized from "./components/Unauthorized/Unauthorized";
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setJwt(window.localStorage.getItem("jwt")));
+    dispatch(setUserData(JSON.parse(window.localStorage.getItem("userData"))));
+  }, []);
   const opened = useSelector((state) => state.menuState.opened);
   console.log("opened=", opened);
   return (
