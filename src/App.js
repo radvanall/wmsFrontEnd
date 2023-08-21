@@ -30,16 +30,21 @@ import RequireAuth from "./components/Layout/RequireAuth";
 import Unauthorized from "./components/Unauthorized/Unauthorized";
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
+  // useEffect(() => {
+  const jwt = window.localStorage.getItem("jwt");
+  if (jwt === null) {
+    console.log("Key 'jwt' does not exist in localStorage.");
+  } else {
+    console.log("Value of 'jwt' in localStorage:", jwt);
     dispatch(setJwt(window.localStorage.getItem("jwt")));
     dispatch(setUserData(JSON.parse(window.localStorage.getItem("userData"))));
-  }, []);
+  }
+  // }, []);
   const opened = useSelector((state) => state.menuState.opened);
   console.log("opened=", opened);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="login" element={<Login />} />
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route
           element={
@@ -70,6 +75,9 @@ function App() {
             <Route index element={<Stocks />} />
             <Route path=":stockId" element={<SingleOperator />} />
           </Route>
+          <Route path="sales">
+            <Route path=":saleId" element={<SingleOperator />} />
+          </Route>
         </Route>
         <Route
           element={<RequireAuth allowedRoles={["ROLE_ADMIN", "ROLE_MAIN"]} />}
@@ -83,11 +91,9 @@ function App() {
             <Route path=":invoiceId" element={<SingleInvoice />} />
           </Route>
 
-          <Route path="sales">
-            <Route path=":saleId" element={<SingleOperator />} />
-          </Route>
           <Route path="operatorsinvoice" element={<OperatorsInvoice />}></Route>
         </Route>
+        <Route path="login" element={<Login />} />
       </Route>
     </Routes>
   );
