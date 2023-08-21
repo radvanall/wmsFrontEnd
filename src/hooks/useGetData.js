@@ -10,7 +10,7 @@ const useGetData = (url) => {
   const getData = async (id) => {
     setLoading(true);
     try {
-      const fetch = await axios.get(url + `${id}`, {
+      const fetch = await axios.get(id === null ? url : url + `${id}`, {
         headers: { Authorization: `Bearer ${jwt}` },
       });
       console.log("data is: ", fetch);
