@@ -1,24 +1,33 @@
 import React from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
-import {
-  FaRegIdCard,
-  FaUserTie,
-  FaWarehouse,
-  FaShippingFast,
-  FaMoneyBill,
-  FaBox,
-  FaOutdent,
-  FaChartBar,
-  FaPager,
-  FaFileInvoice,
-} from "react-icons/fa";
+import { adminLinks, operatorLinks } from "../../links";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  console.log(adminLinks);
+  const authority = useSelector((state) => state.userSlice.userData?.authority);
   return (
     <div className="Sidebar">
       <ul>
-        <li>
+        {authority === "ROLE_ADMIN"
+          ? adminLinks.map((item) => (
+              <li key={item.text}>
+                <item.icon className="fa" />
+                <Link to={item.link} className="list">
+                  {item.text}
+                </Link>
+              </li>
+            ))
+          : operatorLinks.map((item) => (
+              <li key={item.text}>
+                <item.icon className="fa" />
+                <Link to={item.link} className="list">
+                  {item.text}
+                </Link>
+              </li>
+            ))}
+        {/* <li>
           <FaRegIdCard className="fa" />
           <Link to="/operators" className="list">
             Operatori
@@ -78,7 +87,7 @@ const Sidebar = () => {
           <Link to="/invoices" className="list">
             Facturi
           </Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
