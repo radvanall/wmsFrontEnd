@@ -124,6 +124,7 @@ h6 {
 }
 .page {
   flex: 85%;
+  flex-grow: 1;
 }
 @media (max-width: 990px) {
   .sidebar {

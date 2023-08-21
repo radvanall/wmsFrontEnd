@@ -7,7 +7,15 @@ import Modal from "../Modal/Modal";
 import CloseModal from "../CloseModal/CloseModal";
 import BasicButton from "../BasicButton/BasicButton";
 
-const Calendar = ({ operator, workedDays, handleHours }) => {
+const Calendar = ({
+  operator,
+  workedDays,
+  handleHours,
+  width,
+  marginLeft,
+  minWidth,
+  minHeight,
+}) => {
   moment.updateLocale("en", {
     months: [
       "Ianuarie",
@@ -96,7 +104,15 @@ const Calendar = ({ operator, workedDays, handleHours }) => {
   }
 
   return (
-    <div className="calendar__wrapper">
+    <div
+      className="calendar__wrapper"
+      style={{
+        width: width ? width : "45%",
+        marginLeft: marginLeft ? marginLeft : "20px",
+        minWidth: minWidth ? minWidth : "",
+        // minHeight: minHeight ? minHeight : "",
+      }}
+    >
       <h2 className="calendar__title">Zile lucrate:</h2>
       <div className="month">
         <FaAngleLeft
@@ -140,9 +156,13 @@ const Calendar = ({ operator, workedDays, handleHours }) => {
             >
               <div
                 className="day__container "
-                onClick={() => {
-                  dayHandler(index, item.date);
-                }}
+                onClick={
+                  handleHours
+                    ? () => {
+                        dayHandler(index, item.date);
+                      }
+                    : null
+                }
               >
                 <div className="day__of__month">{item.date.format("D")}</div>
                 <div className="worked__hours">{item.workedHours} ore</div>
@@ -181,7 +201,11 @@ const Calendar = ({ operator, workedDays, handleHours }) => {
         </div>
         <div className="calendar__button__container">
           <BasicButton
-            handleClick={() => handleHours(hours, selectedDay.toDate())}
+            handleClick={
+              handleHours
+                ? () => handleHours(hours, selectedDay.toDate())
+                : null
+            }
             text="Salvează"
           />
         </div>
