@@ -12,8 +12,8 @@ const DeleteItem = ({ active, setActive, endpoint, id, navigateTo, title }) => {
   const jwt = useSelector((state) => state.userSlice.jwt);
 
   const navigate = useNavigate();
-  const handleDelete = () => {
-    deleteItem(id, endpoint, dispatch, setMessage, jwt);
+  const handleDelete = async () => {
+    await deleteItem(id, endpoint, dispatch, setMessage, jwt);
     navigate(navigateTo);
     dispatch(toggle());
   };
