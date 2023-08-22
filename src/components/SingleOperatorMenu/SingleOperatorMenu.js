@@ -6,7 +6,14 @@ import EditOperator from "../EditOperator/EditOperator";
 import DeleteItem from "../DeleteItem/DeleteItem";
 // import useGetData from "../../hooks/useGetData";
 
-const SingleOperatorMenu = ({ operator, fetchData }) => {
+const SingleOperatorMenu = ({
+  operator,
+  fetchData,
+  user,
+  url,
+  navigateTo,
+  isEraseble = true,
+}) => {
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
   //   const { data, loading, error, getData } = useGetData(
@@ -27,14 +34,16 @@ const SingleOperatorMenu = ({ operator, fetchData }) => {
         }
         onClick={handleModify}
       />
-      <RiDeleteBin6Line
-        className={
-          isOpenDelete
-            ? "search_menu_button menu__opened"
-            : "search_menu_button menu__closed"
-        }
-        onClick={toggleDelete}
-      />
+      {isEraseble && (
+        <RiDeleteBin6Line
+          className={
+            isOpenDelete
+              ? "search_menu_button menu__opened"
+              : "search_menu_button menu__closed"
+          }
+          onClick={toggleDelete}
+        />
+      )}
 
       {operator && (
         <EditOperator
@@ -42,16 +51,18 @@ const SingleOperatorMenu = ({ operator, fetchData }) => {
           setActive={toggleModify}
           operator={operator}
           fetchData={fetchData}
+          user={user}
+          url={url}
         />
       )}
 
       <DeleteItem
         active={isOpenDelete}
         setActive={toggleDelete}
-        endpoint="operator"
+        endpoint={user}
         id={operator.id}
-        title="Sunteți siguri că doriți să ștergeți operatorul ales?"
-        navigateTo="/operators"
+        title={`Sunteți siguri că doriți să ștergeți ${user}ul ales?`}
+        navigateTo={navigateTo}
       />
     </div>
   );

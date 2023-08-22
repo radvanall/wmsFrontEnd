@@ -3,7 +3,14 @@ import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import usePostData from "../../hooks/usePostData";
 import OperatorModal from "../OperatorModal/OperatorModal";
 
-const EditOperator = ({ operator, active, setActive, fetchData }) => {
+const EditOperator = ({
+  operator,
+  active,
+  setActive,
+  fetchData,
+  user,
+  url,
+}) => {
   const [image, setImage] = useState("\\img\\placeholder.jpg");
   const [nameError, setNameError] = useState(false);
   const [formFields, setFormFields] = useState({
@@ -61,7 +68,8 @@ const EditOperator = ({ operator, active, setActive, fetchData }) => {
     setNameError(false);
     await postData(
       dataEntities,
-      "http://localhost:8080/api/operator/update/" + operator.id
+      url + operator.id
+      // "http://localhost:8080/api/operator/update/" + operator.id
     );
     fetchData();
   };
@@ -85,7 +93,8 @@ const EditOperator = ({ operator, active, setActive, fetchData }) => {
     <OperatorModal
       active={active}
       handleCloseForm={handleCloseForm}
-      title="Editați operatorul:"
+      title={`Editați ${user}ul`}
+      user={user}
       image={image}
       onSelectedFile={onSelectedFile}
       formFields={formFields}

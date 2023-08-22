@@ -3,7 +3,7 @@ import { useToggle } from "../../hooks/useToggle";
 import MenuWrapper from "../MenuWrapper/MenuWrapper";
 import CreateOperator from "../CreateOperator/CreateOperator";
 // import CreateCustomer from "../CreateCustomer/CreateCustomer";
-const OperatorMenu = ({ data, setOperators, fetchData }) => {
+const OperatorMenu = ({ data, setOperators, fetchData, url, user }) => {
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const [searchValue, setSearchValue] = useState("");
   const handleChange = (event) => {
@@ -63,6 +63,8 @@ const OperatorMenu = ({ data, setOperators, fetchData }) => {
         active={isOpenCreate}
         setActive={toggleCreate}
         fetchData={fetchData}
+        url={url}
+        user={user}
       />
     </MenuWrapper>
   );

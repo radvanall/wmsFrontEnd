@@ -3,7 +3,7 @@ import OperatorModal from "../OperatorModal/OperatorModal";
 import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import usePostData from "../../hooks/usePostData";
 
-const CreateOperator = ({ active, setActive, fetchData }) => {
+const CreateOperator = ({ active, setActive, fetchData, url, user }) => {
   const [image, setImage] = useState("\\img\\placeholder.jpg");
   const [nameError, setNameError] = useState(false);
   const [formFields, setFormFields] = useState({
@@ -41,7 +41,8 @@ const CreateOperator = ({ active, setActive, fetchData }) => {
     }
     console.log("false");
     setNameError(false);
-    await postData(dataEntities, "http://localhost:8080/api/operator/create");
+    await postData(dataEntities, url);
+    // await postData(dataEntities, "http://localhost:8080/api/operator/create");
     fetchData();
     setTimeout(() => {
       resetMessage();
@@ -71,7 +72,8 @@ const CreateOperator = ({ active, setActive, fetchData }) => {
     <OperatorModal
       active={active}
       handleCloseForm={handleCloseForm}
-      title="Creați un nou operator:"
+      title={`Creați un nou ${user}`}
+      user={user}
       image={image}
       onSelectedFile={onSelectedFile}
       formFields={formFields}

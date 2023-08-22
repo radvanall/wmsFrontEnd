@@ -6,6 +6,7 @@ import BasicInput from "../BasicInput/BasicInput";
 const OperatorModal = ({
   active,
   title,
+  user,
   image,
   onSelectedFile,
   formFields,
@@ -24,7 +25,7 @@ const OperatorModal = ({
         <form className="customer__form" onSubmit={handleSubmit} ref={formRef}>
           <BasicInput
             inputName="nickname"
-            label="Nick-ul operatorului"
+            label={`Nick-ul ${user}ului`}
             value={formFields.nickname}
             handleChange={handleFormChange}
             fullBorder={true}
@@ -32,7 +33,7 @@ const OperatorModal = ({
           />
           <BasicInput
             inputName="name"
-            label="Numele operatorului"
+            label={`Numele ${user}ului`}
             value={formFields.name}
             handleChange={handleFormChange}
             fullBorder={true}
@@ -43,7 +44,7 @@ const OperatorModal = ({
           )}
           <BasicInput
             inputName="surname"
-            label="Prenumele operatorului"
+            label={`Preumele ${user}ului`}
             value={formFields.surname}
             handleChange={handleFormChange}
             fullBorder={true}
@@ -52,7 +53,7 @@ const OperatorModal = ({
 
           <BasicInput
             inputName="email"
-            label="Email-ul operatorului"
+            label={`Email-ul ${user}ului`}
             value={formFields.email}
             handleChange={handleFormChange}
             fullBorder={true}
@@ -61,7 +62,7 @@ const OperatorModal = ({
           <BasicInput
             inputName="phone"
             type="number"
-            label="Numărul the telefon al operatorului"
+            label={`Nuărul de telefon al ${user}ului`}
             value={formFields.phone}
             handleChange={handleFormChange}
             fullBorder={true}
@@ -69,7 +70,7 @@ const OperatorModal = ({
           />
           <BasicInput
             inputName="address"
-            label="Adresa operatorului"
+            label={`Adresa ${user}ului`}
             value={formFields.address}
             handleChange={handleFormChange}
             fullBorder={true}
