@@ -58,7 +58,64 @@ export const adminLinks = [
     text: "Facturi",
   },
 ];
+export const mainLinks = [
+  {
+    icon: FaHome,
+    link: "/",
+    text: "Cabinet",
+  },
+  {
+    icon: FaRegIdCard,
+    link: "/administrators",
+    text: "Administratori",
+  },
+  {
+    icon: FaRegIdCard,
+    link: "/operators",
+    text: "Operatori",
+  },
+  {
+    icon: FaUserTie,
+    link: "/customers",
+    text: "Clienți",
+  },
+  {
+    icon: FaWarehouse,
+    link: "/stocks",
+    text: "Stocuri",
+  },
+  {
+    icon: FaShippingFast,
+    link: "/providers",
+    text: "Furnizori",
+  },
+  {
+    icon: FaMoneyBill,
+    link: "/orders",
+    text: "Vânzări",
+  },
+  {
+    icon: FaBox,
+    link: "/products",
+    text: "Produse",
+  },
+  {
+    icon: FaChartBar,
+    link: "/stats",
+    text: "Statistica",
+  },
+  {
+    icon: FaFileInvoice,
+    link: "/invoices",
+    text: "Facturi",
+  },
+];
 export const operatorLinks = [
+  {
+    icon: FaHome,
+    link: "/",
+    text: "Cabinet",
+  },
   {
     icon: FaUserTie,
     link: "/customers",
