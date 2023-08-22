@@ -28,6 +28,8 @@ import NewOrder from "./pages/NewOrder/NewOrder";
 import Layout from "./components/Layout/Layout";
 import RequireAuth from "./components/Layout/RequireAuth";
 import Unauthorized from "./components/Unauthorized/Unauthorized";
+import Administrators from "./pages/Administrators/Administrators";
+import SingleAdmin from "./pages/SingleAdmin/SingleAdmin";
 function App() {
   const dispatch = useDispatch();
   // useEffect(() => {
@@ -92,6 +94,14 @@ function App() {
           </Route>
 
           <Route path="operatorsinvoice" element={<OperatorsInvoice />}></Route>
+        </Route>
+        <Route
+          element={<RequireAuth allowedRoles={["ROLE_ADMIN", "ROLE_MAIN"]} />}
+        >
+          <Route path="administrators">
+            <Route index element={<Administrators />} />
+            <Route path=":administratorId" element={<SingleAdmin />} />
+          </Route>
         </Route>
         <Route path="login" element={<Login />} />
       </Route>
