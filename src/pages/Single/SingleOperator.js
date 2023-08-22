@@ -48,10 +48,6 @@ const SingleOperator = () => {
       console.log("workedHours;", hoursWorkedThisMonth);
       setOperator({ ...operatorData, hoursThisMonth: hoursWorkedThisMonth });
       console.log("single operator:", today);
-
-      //  const workDayArray=workedDays.map(day=>{
-
-      //  })
       setWorkedDays(workedDays);
       const newArray = invoices.map((invoice) => ({
         id: invoice.id,
@@ -105,9 +101,14 @@ const SingleOperator = () => {
         <SingleOperatorMenu
           operator={operator}
           fetchData={() => getData(operatorId)}
+          user="operator"
+          url="http://localhost:8080/api/operator/update/"
+          navigateTo="/operators"
         />
       )}
-      {operator && data && <Operator operator={operator} />}
+      {operator && data && (
+        <Operator operator={operator} title="Facturile operatorului:" />
+      )}
       {data && (
         <Calendar
           operator={operator}

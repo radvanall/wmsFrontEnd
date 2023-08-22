@@ -2,7 +2,7 @@ import React from "react";
 import ResponsiveTable from "../ResponsiveTable/ResponsiveTable";
 import { useNavigate } from "react-router-dom";
 import "./OperatorInvoice.css";
-const OperatorInvoice = ({ invoices }) => {
+const OperatorInvoice = ({ invoices, title }) => {
   const navigate = useNavigate();
   const handleDetails = (id) => {
     navigate(`/orders/${id}`);
@@ -12,7 +12,7 @@ const OperatorInvoice = ({ invoices }) => {
       {invoices.length && (
         <ResponsiveTable
           data={invoices}
-          title="Facturile operatorului:"
+          title={title}
           handleDetails={handleDetails}
         />
       )}

@@ -46,22 +46,24 @@ const Operators = () => {
     <div>
       {error && <div>{error}</div>}
       {loading && <div>Loading...</div>}
-      {operators &&
-        (operators.length !== 0 ? (
-          <>
-            {data && (
-              <OperatorMenu
-                data={data}
-                setOperators={setOperators}
-                fetchData={fetchData}
-              />
-            )}
-
+      {operators && data && (
+        <>
+          {data && (
+            <OperatorMenu
+              data={data}
+              setOperators={setOperators}
+              fetchData={fetchData}
+              url="http://localhost:8080/api/operator/create"
+              user="operator"
+            />
+          )}
+          {operators.length !== 0 ? (
             <Table data={operators} page={"operators"} coloredCell="Status" />
-          </>
-        ) : (
-          <h2>Nu exista rezultate</h2>
-        ))}
+          ) : (
+            <h2>Nu exista rezultate</h2>
+          )}
+        </>
+      )}
       <DeleteMessage />
     </div>
   );
