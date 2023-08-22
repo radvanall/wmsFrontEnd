@@ -68,7 +68,11 @@ const AdminHomePage = () => {
   return (
     // <div className="Single">
     <>
-      <AdminHomePageMenu admin={admin} workedDays={workedDays} />
+      <AdminHomePageMenu
+        admin={admin}
+        workedDays={workedDays}
+        fetchData={() => getData(id)}
+      />
       {admin && data && <Operator operator={admin} />}
       <AdminPageTable
         getId={20}

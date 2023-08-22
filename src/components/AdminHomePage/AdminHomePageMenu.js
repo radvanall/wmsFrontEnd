@@ -6,12 +6,12 @@ import { useToggle } from "../../hooks/useToggle";
 import Modal from "../Modal/Modal";
 import CloseModal from "../CloseModal/CloseModal";
 import Calendar from "../Calendar/Calendar";
+import EditAdmin from "../EditAdmin/EditAdmin";
 // import EditOperator from "../EditOperator/EditOperator";
 import DeleteItem from "../DeleteItem/DeleteItem";
 
-const AdminHomePageMenu = ({ admin, workedDays }) => {
+const AdminHomePageMenu = ({ admin, workedDays, fetchData }) => {
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
-  const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
   const { status: isOpenCalendar, toggleStatus: toggleCalendar } =
     useToggle(false);
   //   const { data, loading, error, getData } = useGetData(
@@ -40,14 +40,7 @@ const AdminHomePageMenu = ({ admin, workedDays }) => {
         }
         onClick={handleModify}
       />
-      <RiDeleteBin6Line
-        className={
-          isOpenDelete
-            ? "search_menu_button menu__opened"
-            : "search_menu_button menu__closed"
-        }
-        onClick={toggleDelete}
-      />
+
       <Modal active={isOpenCalendar} width="50%" minWidth="470px">
         <CloseModal handleCloseModal={toggleCalendar} />
 
@@ -61,14 +54,14 @@ const AdminHomePageMenu = ({ admin, workedDays }) => {
         />
       </Modal>
 
-      {/* {operator && (
-          <EditOperator
-            active={isOpenModify}
-            setActive={toggleModify}
-            operator={operator}
-            fetchData={fetchData}
-          />
-        )} */}
+      {admin && (
+        <EditAdmin
+          active={isOpenModify}
+          setActive={toggleModify}
+          administrator={admin}
+          fetchData={fetchData}
+        />
+      )}
 
       {/* <DeleteItem
           active={isOpenDelete}
