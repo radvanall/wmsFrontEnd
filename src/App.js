@@ -30,6 +30,7 @@ import RequireAuth from "./components/Layout/RequireAuth";
 import Unauthorized from "./components/Unauthorized/Unauthorized";
 import Administrators from "./pages/Administrators/Administrators";
 import SingleAdmin from "./pages/SingleAdmin/SingleAdmin";
+import Statistics from "./pages/Statistics/Statistics";
 function App() {
   const dispatch = useDispatch();
   // useEffect(() => {
@@ -94,6 +95,7 @@ function App() {
           </Route>
 
           <Route path="operatorsinvoice" element={<OperatorsInvoice />}></Route>
+          <Route path="stats" element={<Statistics />}></Route>
         </Route>
         <Route
           element={<RequireAuth allowedRoles={["ROLE_ADMIN", "ROLE_MAIN"]} />}
