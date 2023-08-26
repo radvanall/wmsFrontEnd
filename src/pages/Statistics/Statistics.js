@@ -1,6 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import StatisticChart from "../../components/StatisticsChart/StatisticChart";
 import getMonthAndYear from "../../functions/getMonthAndYear";
+import useGetData from "../../hooks/useGetData";
+import DoughnutChart from "../../components/DoughnutChart/DoughnutChart";
+import areDateEquals from "../../functions/areDatesEquals";
+import ChartTable from "../../components/ChartTable/ChartTable";
+import "./Statistics.css";
+const getRandomColor = () => {
+  const symbols = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color = color + symbols[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+function getStartOfWeek(date) {
+  const day = date.getDay();
+  const diff = date.getDate() - day + (day === 0 ? -7 : 0);
+  return new Date(date.setDate(diff));
+  //   return new Date(date.setDate(day));
+}
+
+function generateWeekStartDates(startDate, endDate) {
+  const weekStartDates = [];
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    weekStartDates.push(currentDate.toISOString());
+    currentDate.setDate(currentDate.getDate() + 7); // Move to the next week
+  }
+
+  return weekStartDates;
+}
+const uniqueDates = (arr) => {
+  const dates = [];
+  arr.forEach((element) => {
+    element.sales.forEach((sale) => {
+      if (!dates.includes(sale.weekStart)) {
+        dates.push(sale.weekStart);
+      }
+    });
+  });
+  return dates;
+};
 const totalBalanceSetter = (data) => {
   return {
     totalAcquisitions: data.reduce((sum, currentValue) => {
@@ -34,15 +76,207 @@ const totalProductsDataSetter = (data) => {
     ],
   };
 };
+const topSoldProducts = (data, period) => {
+  const today = new Date();
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - period);
+
+  const weekStartDates = generateWeekStartDates(
+    getStartOfWeek(sixMonthsAgo),
+    getStartOfWeek(today)
+  );
+  const chartData = weekStartDates.map((day) => {
+    const productArray = data.map((product) => {
+      let totalSales = 0;
+      const targetSalesEntry = product.sales.find((sale) =>
+        areDateEquals(sale.weekStart, day)
+      );
+      if (targetSalesEntry) totalSales = targetSalesEntry.totalSales;
+      return {
+        [product.name]: totalSales,
+      };
+    });
+    const chartField = {};
+    productArray.forEach((pa) => {
+      const key = Object.keys(pa)[0];
+      const value = pa[key];
+      chartField[key.toLowerCase()] = value;
+    });
+    chartField.weekStart = day;
+    console.log("productsArray", chartField);
+    return chartField;
+  });
+  console.log("products DATA", chartData);
+  const chartDataSet = [];
+  if (chartData.length > 0) {
+    const { weekStart, ...firstProd } = chartData[0];
+    const keys = Object.keys(firstProd);
+    for (const key of keys) {
+      const color = getRandomColor();
+      chartDataSet.push({
+        label: key,
+        data: chartData.map((product) => product[key]),
+        backgroundColor: color,
+        borderColor: color,
+        type: "line",
+      });
+    }
+  }
+  console.error("PRODdATAsETS", chartDataSet);
+  return {
+    labels: weekStartDates.map((item) => getMonthAndYear(item, "RO-ro")),
+    datasets: [...chartDataSet],
+  };
+};
+const getTopBalance = (data, period) => {
+  const today = new Date();
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - period);
+
+  const weekStartDates = generateWeekStartDates(
+    getStartOfWeek(sixMonthsAgo),
+    getStartOfWeek(today)
+  );
+  const chartData = weekStartDates.map((day) => {
+    const productArray = data.map((product) => {
+      let totalSales = 0;
+      const targetSalesEntry = product.balance.find((item) =>
+        areDateEquals(item.weekStart, day)
+      );
+      if (targetSalesEntry) totalSales = targetSalesEntry.balance;
+      return {
+        [product.name]: totalSales,
+      };
+    });
+    const chartField = {};
+    productArray.forEach((pa) => {
+      const key = Object.keys(pa)[0];
+      const value = pa[key];
+      chartField[key] = value;
+    });
+    chartField.weekStart = day;
+    console.log("productsArray", chartField);
+    return chartField;
+  });
+  const chartDataSet = [];
+  if (chartData.length > 0) {
+    const { weekStart, ...firstProd } = chartData[0];
+    const keys = Object.keys(firstProd);
+    for (const key of keys) {
+      const color = getRandomColor();
+      chartDataSet.push({
+        label: key,
+        data: chartData.map((product) => product[key]),
+        backgroundColor: color,
+        borderColor: color,
+        type: "line",
+      });
+    }
+  }
+  return {
+    labels: weekStartDates.map((item) => getMonthAndYear(item, "RO-ro")),
+    datasets: [...chartDataSet],
+  };
+};
+const getTableData = (data) => {
+  return data.map((item) => ({
+    id: item.id,
+    image: item.avatar,
+    Produs: item.name,
+    ["Vânzări totale"]: item.balance.reduce(
+      (sum, element) => sum + element.totalSales,
+      0
+    ),
+    ["Achiziții totale"]: item.balance.reduce(
+      (sum, element) => sum + element.totalAcquisitions,
+      0
+    ),
+    Balanța: item.balance.reduce((sum, element) => sum + element.balance, 0),
+  }));
+};
 
 const Statistics = () => {
+  //   const { data, loading, error, getData } = useGetData(
+  //     "http://localhost:8080/api/position/getTopBalance"
+  //   );
+  //   useEffect(() => {
+  //     getData("?period=6&nrOfPositions=4");
+  //   }, []);
+  //   useEffect(() => {
+  //     if (data) {
+  //       console.log("fullBalance", data);
+  //       const weekStartDates = data[0].balance.map((item) => item.weekStart);
+  //       const chartData = weekStartDates.map((day) => {
+  //         const productArray = data.map((product) => {
+  //           let totalSales = 0;
+  //           const targetSalesEntry = product.balance.find((item) =>
+  //             areDateEquals(item.weekStart, day)
+  //           );
+  //           if (targetSalesEntry) totalSales = targetSalesEntry.totalSales;
+  //           return {
+  //             [product.name]: totalSales,
+  //           };
+  //         });
+  //         const chartField = {};
+  //         productArray.forEach((pa) => {
+  //           const key = Object.keys(pa)[0];
+  //           const value = pa[key];
+  //           chartField[key.toLowerCase()] = value;
+  //         });
+  //         chartField.weekStart = day;
+  //         console.log("productsArray", chartField);
+  //         return chartField;
+  //       });
+  //       const chartDataSet = [];
+  //       if (chartData.length > 0) {
+  //         const { weekStart, ...firstProd } = chartData[0];
+  //         const keys = Object.keys(firstProd);
+  //         for (const key of keys) {
+  //           const color = getRandomColor();
+  //           chartDataSet.push({
+  //             label: key,
+  //             data: chartData.map((product) => product[key]),
+  //             backgroundColor: color,
+  //             borderColor: color,
+  //             type: "line",
+  //           });
+  //         }
+  //       }
+  //       console.error("PRODdATAsETS", chartDataSet);
+  //     }
+  //   }, [data]);
   return (
-    <div>
-      <StatisticChart
-        endpoint="http://localhost:8080/api/position/getTotalBalance/"
-        balanceSetter={totalBalanceSetter}
-        chartDataSetter={totalProductsDataSetter}
-      />
+    <div className="stats">
+      <div className="totalBalance">
+        <StatisticChart
+          endpoint="http://localhost:8080/api/position/getTotalBalance/"
+          balanceSetter={totalBalanceSetter}
+          chartDataSetter={totalProductsDataSetter}
+          title="Bilanțul vânzărilor"
+          id="balance"
+        />
+      </div>
+      <div className="todayChart">
+        <DoughnutChart />
+      </div>
+
+      {/* <StatisticChart
+        endpoint="http://localhost:8080/api/position/getTopBalance/"
+        // balanceSetter={totalBalanceSetter}
+        withCriteria={false}
+        chartDataSetter={getTopBalance}
+        id="prod"
+      /> */}
+      <div className="productBalance ">
+        <ChartTable
+          endpoint="http://localhost:8080/api/position/getTopBalance/"
+          chartDataSetter={getTopBalance}
+          tableDataSetter={getTableData}
+          title="Cele mai profitabile produse"
+          navTo="products"
+          id="prod"
+        />
+      </div>
     </div>
   );
 };
