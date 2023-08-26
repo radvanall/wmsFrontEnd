@@ -6,9 +6,16 @@ import getMonthAndYear from "../../functions/getMonthAndYear";
 import hoverLine from "../../CustomChart/hoverLine";
 import RadioButton from "../RadioButton/RadioButton";
 
-const StatisticChart = ({ endpoint, balanceSetter, chartDataSetter }) => {
+const StatisticChart = ({
+  endpoint,
+  balanceSetter,
+  chartDataSetter,
+  id,
+  title,
+  withCriteria = true,
+}) => {
   const [period, setPeriod] = useState(6);
-  const [criteria, setCriteria] = useState(1);
+  const [criteria, setCriteria] = useState(2);
   const [chartData, setChartData] = useState(null);
   const [balance, setBalance] = useState({
     totalAcquisitions: 0,
@@ -21,7 +28,7 @@ const StatisticChart = ({ endpoint, balanceSetter, chartDataSetter }) => {
   );
   const getChartData = async () => {
     // await getData(`?id=${id}&period=${period}`);
-    await getData(`?criteria=${criteria}&period=${period}`);
+    await getData(`?criteria=${criteria}&period=${period}&nrOfPositions=4`);
   };
   useEffect(() => {
     getChartData();
@@ -29,41 +36,8 @@ const StatisticChart = ({ endpoint, balanceSetter, chartDataSetter }) => {
   useEffect(() => {
     if (data) {
       console.log("chartData=", data);
-      setBalance(
-        balanceSetter(data)
-        //     {
-        //     totalAcquisitions: data.reduce((sum, currentValue) => {
-        //       return parseInt(sum) + parseInt(currentValue.totalAcquisitions);
-        //     }, 0),
-        //     totalSales: data.reduce((sum, currentValue) => {
-        //       return parseInt(sum) + parseInt(currentValue.totalSales);
-        //     }, 0),
-        //   }
-      );
-      setChartData(
-        chartDataSetter(data)
-        //     {
-        //     labels: data
-        //       .reverse()
-        //       .map((item) => getMonthAndYear(item.weekStart, "RO-ro")),
-        //     datasets: [
-        //       {
-        //         label: "Vânzari",
-        //         data: data.map((item) => item.totalSales),
-        //         backgroundColor: "#4361ee",
-        //         borderColor: "#4361ee",
-        //         type: "line",
-        //       },
-        //       {
-        //         label: "Achiziții",
-        //         data: data.map((item) => item.totalAcquisitions),
-        //         backgroundColor: "#fca311",
-        //         borderColor: "#fca311",
-        //         type: "line",
-        //       },
-        //     ],
-        //   }
-      );
+      balanceSetter && setBalance(balanceSetter(data));
+      setChartData(chartDataSetter(data, period));
     }
   }, [data]);
   function formatCurrency(value) {
@@ -170,63 +144,71 @@ const StatisticChart = ({ endpoint, balanceSetter, chartDataSetter }) => {
     <Card>
       {data && chartData && (
         <>
+          <h2 className="chart__title">{title}</h2>
           <div className="month__menu__buttons">
+            {withCriteria && (
+              <>
+                <RadioButton
+                  id={"quant" + id}
+                  name={"criteria__radio" + id}
+                  label="Bucăți"
+                  value={1}
+                  checked={isCriteriaSelected(1)}
+                  handleChange={handleCriteriaCheck}
+                />
+                <RadioButton
+                  id={"money" + id}
+                  name={"criteria__radio" + id}
+                  label="Bani"
+                  value={2}
+                  checked={isCriteriaSelected(2)}
+                  handleChange={handleCriteriaCheck}
+                />
+              </>
+            )}
+
             <RadioButton
-              id="quant"
-              name="criteria__radio"
-              label="Bucăți"
-              value={1}
-              checked={isCriteriaSelected(1)}
-              handleChange={handleCriteriaCheck}
-            />
-            <RadioButton
-              id="money"
-              name="criteria__radio"
-              label="Bani"
-              value={2}
-              checked={isCriteriaSelected(2)}
-              handleChange={handleCriteriaCheck}
-            />
-            <RadioButton
-              id="1month"
-              name="month__radio"
+              id={"1month" + id}
+              name={"month__radio" + id}
               label="Ultima lună"
               value={1}
               checked={isStatusSelected(1)}
               handleChange={handlePeriodCheck}
             />
             <RadioButton
-              id="3month"
-              name="month__radio"
+              id={"3month" + id}
+              name={"month__radio" + id}
               label="Ultimele 3 luni"
               value={3}
               checked={isStatusSelected(3)}
               handleChange={handlePeriodCheck}
             />
             <RadioButton
-              id="6month"
-              name="month__radio"
+              id={"6month" + id}
+              name={"month__radio" + id}
               label="Ultimele 6 luni"
               value={6}
               checked={isStatusSelected(6)}
               handleChange={handlePeriodCheck}
             />
-            <div className="balance__fields">
-              <p>
-                Total achiziții:{balance.totalAcquisitions}{" "}
-                {criteria == 1 ? "buc" : "lei"}
-              </p>
-              <p>
-                Total vânzări:{balance.totalSales}{" "}
-                {criteria == 1 ? "buc." : "lei"}
-              </p>
-              <p>
-                Balanța:
-                {parseInt(balance.totalSales) -
-                  parseInt(balance.totalAcquisitions)}{" "}
-                {criteria == 1 ? "buc." : "lei"}
-              </p>
-            </div>
+            {balanceSetter && (
+              <div className="balance__fields">
+                <p>
+                  Total achiziții:{balance.totalAcquisitions}{" "}
+                  {criteria == 1 ? "buc" : "lei"}
+                </p>
+                <p>
+                  Total vânzări:{balance.totalSales}{" "}
+                  {criteria == 1 ? "buc." : "lei"}
+                </p>
+                <p>
+                  Balanța:
+                  {parseInt(balance.totalSales) -
+                    parseInt(balance.totalAcquisitions)}{" "}
+                  {criteria == 1 ? "buc." : "lei"}
+                </p>
+              </div>
+            )}
           </div>
           <CustomChart
             chartData={chartData}
