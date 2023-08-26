@@ -1,0 +1,21 @@
+.stats {
+  width: 100%;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "totalBalance totalBalance totalBalance todayChart"
+    "productBalance productBalance productBalance productBalance";
+  overflow: hidden;
+}
+.totalBalance {
+  grid-area: totalBalance;
+}
+.todayChart {
+  grid-area: todayChart;
+}
+.productBalance {
+  grid-area: productBalance;
+}
