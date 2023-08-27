@@ -15,6 +15,10 @@
 }
 .todayChart {
   grid-area: todayChart;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
 }
 .productBalance {
   grid-area: productBalance;

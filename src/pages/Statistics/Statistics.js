@@ -194,57 +194,20 @@ const getTableData = (data) => {
     Balanța: item.balance.reduce((sum, element) => sum + element.balance, 0),
   }));
 };
-
+const doughnutSetter = (data) => {
+  return {
+    labels: data.map((item) => item.name),
+    datasets: [
+      {
+        type: "doughnut",
+        data: data.map((item) => item.sum),
+        backgroundColor: data.map(() => getRandomColor()),
+        hoverOffset: 4,
+      },
+    ],
+  };
+};
 const Statistics = () => {
-  //   const { data, loading, error, getData } = useGetData(
-  //     "http://localhost:8080/api/position/getTopBalance"
-  //   );
-  //   useEffect(() => {
-  //     getData("?period=6&nrOfPositions=4");
-  //   }, []);
-  //   useEffect(() => {
-  //     if (data) {
-  //       console.log("fullBalance", data);
-  //       const weekStartDates = data[0].balance.map((item) => item.weekStart);
-  //       const chartData = weekStartDates.map((day) => {
-  //         const productArray = data.map((product) => {
-  //           let totalSales = 0;
-  //           const targetSalesEntry = product.balance.find((item) =>
-  //             areDateEquals(item.weekStart, day)
-  //           );
-  //           if (targetSalesEntry) totalSales = targetSalesEntry.totalSales;
-  //           return {
-  //             [product.name]: totalSales,
-  //           };
-  //         });
-  //         const chartField = {};
-  //         productArray.forEach((pa) => {
-  //           const key = Object.keys(pa)[0];
-  //           const value = pa[key];
-  //           chartField[key.toLowerCase()] = value;
-  //         });
-  //         chartField.weekStart = day;
-  //         console.log("productsArray", chartField);
-  //         return chartField;
-  //       });
-  //       const chartDataSet = [];
-  //       if (chartData.length > 0) {
-  //         const { weekStart, ...firstProd } = chartData[0];
-  //         const keys = Object.keys(firstProd);
-  //         for (const key of keys) {
-  //           const color = getRandomColor();
-  //           chartDataSet.push({
-  //             label: key,
-  //             data: chartData.map((product) => product[key]),
-  //             backgroundColor: color,
-  //             borderColor: color,
-  //             type: "line",
-  //           });
-  //         }
-  //       }
-  //       console.error("PRODdATAsETS", chartDataSet);
-  //     }
-  //   }, [data]);
   return (
     <div className="stats">
       <div className="totalBalance">
@@ -257,16 +220,18 @@ const Statistics = () => {
         />
       </div>
       <div className="todayChart">
-        <DoughnutChart />
+        <DoughnutChart
+          chartDataSetter={doughnutSetter}
+          endpoint="http://localhost:8080/api/position/getLastWeekAcquisitions"
+          title="Achiziții săptămîna curentă"
+        />
+        <DoughnutChart
+          chartDataSetter={doughnutSetter}
+          endpoint="http://localhost:8080/api/position/getLastWeekSales"
+          title="Vânzări săptămîna curentă"
+        />
       </div>
 
-      {/* <StatisticChart
-        endpoint="http://localhost:8080/api/position/getTopBalance/"
-        // balanceSetter={totalBalanceSetter}
-        withCriteria={false}
-        chartDataSetter={getTopBalance}
-        id="prod"
-      /> */}
       <div className="productBalance ">
         <ChartTable
           endpoint="http://localhost:8080/api/position/getTopBalance/"
