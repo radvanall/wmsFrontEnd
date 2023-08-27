@@ -1,0 +1,19 @@
+.doughnut__container {
+  overflow: auto;
+  padding: 10px;
+  height: 100%;
+}
+.doughnut__container canvas {
+  width: 100% !important;
+  height: 200px !important;
+}
+.doughnut__container h2 {
+  text-align: center;
+  line-height: 24px;
+}
+@media (max-width: 1090px) {
+  .doughnut__container canvas {
+    width: 100% !important;
+    height: 180px !important;
+  }
+}
