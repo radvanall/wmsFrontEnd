@@ -81,22 +81,6 @@ const StatisticChart = ({
                 TooltipItem.raw +
                 (criteria === 1 ? " buc." : " lei.")
               );
-            // console.log(TooltipItems.forEach((item) => item.raw));
-            // return TooltipItem.raw;
-            // return (
-            //   "Vânzari " +
-            //   context[0].raw +
-            //   " lei" +
-            //   "Achiziții " +
-            //   context[1].raw +
-            //   " lei"
-            // );
-            // const difference = context[0].raw - context[1].raw;
-            // return (
-            //   "Bilanța vânzărilor constituie " +
-            //   difference +
-            //   (criteria == 2 ? " lei" : " buc.")
-            // );
           },
         },
       },
