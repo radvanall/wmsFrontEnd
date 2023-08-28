@@ -109,6 +109,7 @@ th {
   color: var(--caption-color);
   font-size: 18px;
   font-weight: 600;
+  line-height: 30px;
 }
 .responsive__table .buttons__cell {
   display: flex;
