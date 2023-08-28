@@ -46,6 +46,14 @@ const DoughnutChart = ({ chartDataSetter, endpoint, title }) => {
       legend: {
         display: false, // Set to false to hide the legend
       },
+      tooltip: {
+        usePointStyle: true,
+        callbacks: {
+          label: (TooltipItem) => {
+            return TooltipItem.label + " :   " + TooltipItem.raw + " lei";
+          },
+        },
+      },
     },
   };
   const centerTextDoughnut = {
@@ -56,7 +64,7 @@ const DoughnutChart = ({ chartDataSetter, endpoint, title }) => {
       ctx.textBaseline = "middle";
       ctx.font = "bold 14px sans-serif";
       const text = `Suma totală: ${totalSum} de lei.`;
-      const textWidth = ctx.measureText(text).width;
+      //const textWidth = ctx.measureText(text).width;
       const x = chart.getDatasetMeta(0).data[0].x;
       const y = chart.getDatasetMeta(0).data[0].y;
       ctx.fillText(text, x, y);
