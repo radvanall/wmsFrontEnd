@@ -6,6 +6,9 @@ import DoughnutChart from "../../components/DoughnutChart/DoughnutChart";
 import areDateEquals from "../../functions/areDatesEquals";
 import ChartTable from "../../components/ChartTable/ChartTable";
 import "./Statistics.css";
+import StatisticsTable from "../../components/StatisitcsTable/StatisticsTable";
+import AdminPageTable from "../../components/AdminPageTable/AdminPageTable";
+import Card from "../../components/Card/Card";
 const getRandomColor = () => {
   const symbols = "0123456789ABCDEF";
   let color = "#";
@@ -207,6 +210,25 @@ const doughnutSetter = (data) => {
     ],
   };
 };
+const getProviders = (item) => ({
+  id: item.id,
+  image: item.image,
+  Furnizor: item.name,
+  ["Vânzări/ lei."]: item.sales,
+  ["Achiziții/ lei."]: item.acquisitions,
+  ["Balanța/ lei."]:
+    parseInt(item.balance) > 0 ? (
+      <span style={{ color: "green" }}>{item.balance}</span>
+    ) : (
+      <span style={{ color: "red" }}>{item.balance}</span>
+    ),
+});
+const getCustomers = (item) => ({
+  id: item.id,
+  image: item.image,
+  Client: item.name,
+  ["Vânzări/ lei."]: item.sum,
+});
 const Statistics = () => {
   return (
     <div className="stats">
@@ -240,6 +262,24 @@ const Statistics = () => {
           title="Cele mai profitabile produse"
           navTo="products"
           id="prod"
+        />
+      </div>
+      <div className="providerBalance">
+        <StatisticsTable
+          url={"http://localhost:8080/api/provider/getTotalBalance"}
+          getFields={getProviders}
+          title="Balanța furnizorilor:"
+          navTo="providers"
+          id="prov"
+        />
+      </div>
+      <div className="customerP">
+        <StatisticsTable
+          url={"http://localhost:8080/api/customer/getSales"}
+          getFields={getCustomers}
+          title="Cumpărăturile clienților:"
+          navTo="customers"
+          id="cust"
         />
       </div>
     </div>

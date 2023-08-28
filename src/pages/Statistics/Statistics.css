@@ -7,7 +7,8 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
     "totalBalance totalBalance totalBalance todayChart"
-    "productBalance productBalance productBalance productBalance";
+    "productBalance productBalance productBalance productBalance"
+    "providerBalance providerBalance customerP customerP";
   overflow: hidden;
 }
 .totalBalance {
@@ -22,4 +23,10 @@
 }
 .productBalance {
   grid-area: productBalance;
+}
+.providerBalance {
+  grid-area: providerBalance;
+}
+.customerP {
+  grid-area: customerP;
 }
