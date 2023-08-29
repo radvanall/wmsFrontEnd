@@ -1,5 +1,6 @@
 import React from "react";
 import getFormatedDate from "../../functions/getFormatedDate";
+import roboFont from "../../fonts/Roboto-Thin.ttf";
 // import logo from "../../../public/img.redux.svg";
 import {
   Page,
@@ -8,8 +9,12 @@ import {
   View,
   Document,
   StyleSheet,
+  Font,
 } from "@react-pdf/renderer";
-
+Font.register({
+  family: "RoboThin",
+  src: roboFont,
+});
 const PDFFile = ({ invoiceHeader, data }) => {
   const tableHeader = Object.keys(data[0]);
   console.log(invoiceHeader);
@@ -18,6 +23,7 @@ const PDFFile = ({ invoiceHeader, data }) => {
     page: {
       flexDirection: "column",
       padding: 20,
+      fontSize: "14px",
     },
     table: {
       display: "table",
@@ -32,20 +38,20 @@ const PDFFile = ({ invoiceHeader, data }) => {
       flexDirection: "row",
       width: "100%",
       borderStyle: "solid",
-      borderWidth: 1,
+      borderTopWidth: 1,
       padding: "5px",
-      borderBottomWidth: 0,
     },
     tableCell: {
       margin: "auto",
       width: `${cellWidth}%`,
       // margin: 5,
       // padding: 5,
-
+      fontFamily: "RoboThin",
       borderLeftWidth: 0,
       borderTopWidth: 0,
     },
     header: {
+      fontFamily: "RoboThin",
       display: "flex",
       width: "100%",
       flexDirection: "row",
@@ -53,6 +59,7 @@ const PDFFile = ({ invoiceHeader, data }) => {
     },
     footer: {
       display: "flex",
+      fontFamily: "RoboThin",
       width: "100%",
       flexDirection: "row",
       justifyContent: "space-between",
@@ -81,6 +88,7 @@ const PDFFile = ({ invoiceHeader, data }) => {
       justifyContent: "center",
       gap: "10px",
       padding: "5px",
+      fontFamily: "RoboThin",
     },
     totalSum: {
       display: "flex",
@@ -88,9 +96,11 @@ const PDFFile = ({ invoiceHeader, data }) => {
       justifyContent: "flex-end",
       textAlign: "end",
       padding: "10px",
+      fontFamily: "RoboThin",
     },
     footerText: {
       borderTopWidth: "1px",
+      fontFamily: "RoboThin",
       maxWidth: "200px",
       borderStyle: "solid",
       textAlign: "right",
@@ -108,7 +118,7 @@ const PDFFile = ({ invoiceHeader, data }) => {
             <Text>{invoiceHeader.provider}</Text>
           </View>
           <View style={styles.leftHeader}>
-            <Text>Cumparator:</Text>
+            <Text>Cumpărător:</Text>
             <Text>{invoiceHeader.customer}</Text>
           </View>
         </View>
