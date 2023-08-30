@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import InvoiceReceptionCard from "../../components/InvoiceReceptionCard/InvoiceReceptionCard";
+import { AiOutlineDownload } from "react-icons/ai";
 import AlertMessage from "../../components/AlertMessage/AlertMessage";
 import ResponsiveTable from "../../components/ResponsiveTable/ResponsiveTable";
 import EditStock from "../../components/EditStock/EditStock";
@@ -15,6 +16,8 @@ import BasicButton from "../../components/BasicButton/BasicButton";
 import DeleteItem from "../../components/DeleteItem/DeleteItem";
 import InvoiceContentTable from "../../components/InvoiceContentTable/InvoiceContentTable";
 import ValidateButton from "../../components/ValidateButton/ValidateButton";
+// import PDFFile from "../../components/PDFFile/PDFFile";
+// import { PDFDownloadLink } from "@react-pdf/renderer";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
@@ -24,6 +27,7 @@ const SingleInvoice = () => {
     useToggle(false);
   const [invoice, setInvoice] = useState();
   const [stocks, setStocks] = useState();
+  const [pdfStocks, setPdfStocks] = useState([]);
   const [selectedStock, setSelectedStock] = useState();
   const { data, loading, error, getData } = useGetData(
     "http://localhost:8080/api/invoiceReception/read/"
@@ -57,7 +61,15 @@ const SingleInvoice = () => {
         ["Cantitate"]: stock.stockQuantity,
         Unitate: stock.position.unity,
       }));
+      const newPdfStocks = newStocks.map((stock) => ({
+        Produs: stock.position.name,
+        ["Preț de cumpărare /lei"]: stock.buyingPrice,
+        ["Cantitate"]: stock.stockQuantity,
+        Unitate: stock.position.unity,
+        ["Preț total /lei"]: stock.stockQuantity * stock.buyingPrice,
+      }));
       setStocks(newArray);
+      setPdfStocks(newPdfStocks);
     }
   }, [data]);
   const deleteStock = async () => {
@@ -82,23 +94,49 @@ const SingleInvoice = () => {
   };
 
   console.log("invoiceId:", invoiceId);
+
   return (
     <div className="single__invoice">
-      {invoice && (
+      {invoice && pdfStocks && (
         <ValidateButton
           validated={invoice.validated}
           toggleDeleteInvoice={toggleDeleteInvoice}
+          invoiceHeader={{
+            id: invoice.id,
+            date: invoice.dateOfCreation,
+            provider: invoice.provider,
+            totalBuyingPrice: invoice.totalBuyingPrice,
+            customer: "Firma srl",
+          }}
+          pdfStocks={pdfStocks}
         />
       )}
-      {/* {invoice?.validated ? null : (
-        <div className="delete__invoce__wrapper">
-          <button
-            className="invoice__table__button"
-            onClick={toggleDeleteInvoice}
-          >
-            <RiDeleteBin6Line className="search_menu_button menu__opened" />
-          </button>
-        </div>
+      {/* {invoice && pdfStocks && (
+        <PDFDownloadLink
+          document={
+            <PDFFile
+              invoiceHeader={{
+                id: invoice.id,
+                date: invoice.dateOfCreation,
+                provider: invoice.provider,
+                totalBuyingPrice: invoice.totalBuyingPrice,
+                customer: "Firma srl",
+              }}
+              data={pdfStocks}
+            />
+          }
+          fileName="factura"
+        >
+          {({ loading }) =>
+            loading ? (
+              "loading>>"
+            ) : (
+              <AiOutlineDownload
+                className={"search_menu_button menu__opened"}
+              />
+            )
+          }
+        </PDFDownloadLink>
       )} */}
 
       {invoice && <InvoiceReceptionCard invoice={invoice} getData={getData} />}
