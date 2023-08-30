@@ -1,14 +1,42 @@
 import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import "./ValidateButton.css";
-const ValidateButton = ({ validated, toggleDeleteInvoice }) => {
-  return validated ? (
-    <></>
-  ) : (
+import { AiOutlineDownload } from "react-icons/ai";
+// import PDFFile from "../../components/PDFFile/PDFFile";
+import PDFFile from "../PDFFile/PDFFile";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+const ValidateButton = ({
+  validated,
+  toggleDeleteInvoice,
+  invoiceHeader,
+  pdfStocks,
+}) => {
+  // return validated ? (
+  //   <></>
+  // ) :
+
+  return (
     <div className="delete__invoce__wrapper">
-      <button className="invoice__table__button" onClick={toggleDeleteInvoice}>
-        <RiDeleteBin6Line className="search_menu_button menu__opened" />
-      </button>
+      {!validated && (
+        <button
+          className="invoice__table__button"
+          onClick={toggleDeleteInvoice}
+        >
+          <RiDeleteBin6Line className="search_menu_button menu__opened" />
+        </button>
+      )}
+      <PDFDownloadLink
+        document={<PDFFile invoiceHeader={invoiceHeader} data={pdfStocks} />}
+        fileName="factura"
+      >
+        {({ loading }) =>
+          loading ? (
+            "loading>>"
+          ) : (
+            <AiOutlineDownload className={"search_menu_button menu__opened"} />
+          )
+        }
+      </PDFDownloadLink>
     </div>
   );
 };
