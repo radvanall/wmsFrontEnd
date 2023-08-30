@@ -41,6 +41,7 @@ const SingleOrder = () => {
   } = useDelete();
   const [invoice, setInvoice] = useState(null);
   const [orders, setOrders] = useState([]);
+  const [pdfOrders, setPdfOrders] = useState([]);
   useEffect(() => {
     getData(orderId);
   }, [orderId]);
@@ -59,7 +60,15 @@ const SingleOrder = () => {
         ["Preț total"]: order.totalPrice,
         Unitate: order.unity,
       }));
+      const newPdfArray = orderDTOS.map((order) => ({
+        Produs: order.productName,
+        ["Preț unitar /lei"]: order.price,
+        Unitate: order.unity,
+        [`Cantitate/ buc.`]: order.quantity,
+        ["Preț total /lei"]: order.totalPrice,
+      }));
       setOrders(newArray);
+      setPdfOrders(newPdfArray);
     }
   }, [data]);
   console.log(orderId);
@@ -98,7 +107,7 @@ const SingleOrder = () => {
     <div className="page__wrapper">
       {data && (
         <>
-          {invoice && (
+          {invoice && pdfOrders && (
             <div className="single__order__menu">
               <StatusContainer
                 validated={invoice.shipped}
@@ -107,6 +116,14 @@ const SingleOrder = () => {
               <ValidateButton
                 validated={invoice.shipped}
                 toggleDeleteInvoice={toggleDeleteInvoice}
+                invoiceHeader={{
+                  id: invoice.id,
+                  date: invoice.date,
+                  provider: "Firma srl",
+                  totalBuyingPrice: invoice.totalPrice,
+                  customer: invoice.clientName,
+                }}
+                pdfStocks={pdfOrders}
               />
             </div>
           )}
