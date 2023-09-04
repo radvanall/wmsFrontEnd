@@ -16,7 +16,6 @@ import "./SingleOrder.css";
 
 const SingleOrder = () => {
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
-  //   const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
   const { status: isOpenDeleteInvoice, toggleStatus: toggleDeleteInvoice } =
     useToggle(false);
@@ -26,13 +25,7 @@ const SingleOrder = () => {
   const { data, loading, error, getData } = useGetData(
     "http://localhost:8080/api/invoice/read/"
   );
-  const {
-    message,
-    loading: load,
-    error: errorMessage,
-    resetMessage,
-    postData,
-  } = usePostData();
+  const { message, resetMessage, postData } = usePostData();
   const {
     message: deleteMessage,
     error: deleteError,
@@ -72,11 +65,6 @@ const SingleOrder = () => {
     }
   }, [data]);
   console.log(orderId);
-  //   const openEdit = (id) => {
-  //     console.log("edit-", id);
-  //     setSelectedOrderId(id);
-  //     toggleEdit();
-  //   };
   const openDelete = (id) => {
     setSelectedOrderId(id);
     toggleDelete();
@@ -143,7 +131,6 @@ const SingleOrder = () => {
                 title="Cumpărături:"
                 isOpenCreate={isOpenCreate}
                 toggleCreate={toggleCreate}
-                //   openEdit={openEdit}
                 openDelete={openDelete}
               />
             )}

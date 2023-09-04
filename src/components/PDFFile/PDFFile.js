@@ -1,7 +1,6 @@
 import React from "react";
 import getFormatedDate from "../../functions/getFormatedDate";
 import roboFont from "../../fonts/Roboto-Thin.ttf";
-// import logo from "../../../public/img.redux.svg";
 import {
   Page,
   Text,
@@ -44,8 +43,6 @@ const PDFFile = ({ invoiceHeader, data }) => {
     tableCell: {
       margin: "auto",
       width: `${cellWidth}%`,
-      // margin: 5,
-      // padding: 5,
       fontFamily: "RoboThin",
       borderLeftWidth: 0,
       borderTopWidth: 0,
@@ -104,7 +101,6 @@ const PDFFile = ({ invoiceHeader, data }) => {
       maxWidth: "200px",
       borderStyle: "solid",
       textAlign: "right",
-      //   lineHeight: "24px",
       marginTop: "15px",
       paddingTop: "5px",
     },
@@ -164,12 +160,6 @@ const PDFFile = ({ invoiceHeader, data }) => {
             <Text>Semnătura cumpărătorului:</Text>
           </View>
         </View>
-        {/* <Text
-          render={({ pageNumber, totalPages }) =>
-            `${pageNumber} /${totalPages}`
-          }
-          fixed
-        /> */}
       </Page>
     </Document>
   );
