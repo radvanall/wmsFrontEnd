@@ -182,20 +182,31 @@ const getTopBalance = (data, period) => {
   };
 };
 const getTableData = (data) => {
-  return data.map((item) => ({
-    id: item.id,
-    image: item.avatar,
-    Produs: item.name,
-    ["Vânzări totale"]: item.balance.reduce(
-      (sum, element) => sum + element.totalSales,
+  return data.map((item) => {
+    const balance = item.balance.reduce(
+      (sum, element) => sum + element.balance,
       0
-    ),
-    ["Achiziții totale"]: item.balance.reduce(
-      (sum, element) => sum + element.totalAcquisitions,
-      0
-    ),
-    Balanța: item.balance.reduce((sum, element) => sum + element.balance, 0),
-  }));
+    );
+    return {
+      id: item.id,
+      image: item.avatar,
+      Produs: item.name,
+      ["Vânzări totale"]: item.balance.reduce(
+        (sum, element) => sum + element.totalSales,
+        0
+      ),
+      ["Achiziții totale"]: item.balance.reduce(
+        (sum, element) => sum + element.totalAcquisitions,
+        0
+      ),
+      Balanța:
+        parseInt(balance) > 0 ? (
+          <span style={{ color: "green" }}>{balance}</span>
+        ) : (
+          <span style={{ color: "red" }}>{balance}</span>
+        ),
+    };
+  });
 };
 const doughnutSetter = (data) => {
   return {
