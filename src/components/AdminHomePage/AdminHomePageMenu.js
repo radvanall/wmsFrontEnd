@@ -7,20 +7,13 @@ import Modal from "../Modal/Modal";
 import CloseModal from "../CloseModal/CloseModal";
 import Calendar from "../Calendar/Calendar";
 import EditAdmin from "../EditAdmin/EditAdmin";
-// import EditOperator from "../EditOperator/EditOperator";
-import DeleteItem from "../DeleteItem/DeleteItem";
 
 const AdminHomePageMenu = ({ admin, workedDays, fetchData }) => {
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
   const { status: isOpenCalendar, toggleStatus: toggleCalendar } =
     useToggle(false);
-  //   const { data, loading, error, getData } = useGetData(
-  //     `http://localhost:8080/api/position/readoperator/`
-  //   );
   const handleModify = () => {
     toggleModify();
-    // getData(id);
-    // console.log(data);
   };
   return (
     <div className="single_menu__buttons">
@@ -62,15 +55,6 @@ const AdminHomePageMenu = ({ admin, workedDays, fetchData }) => {
           fetchData={fetchData}
         />
       )}
-
-      {/* <DeleteItem
-          active={isOpenDelete}
-          setActive={toggleDelete}
-          endpoint="operator"
-          id={operator.id}
-          title="Sunteți siguri că doriți să ștergeți operatorul ales?"
-          navigateTo="/operators"
-        /> */}
     </div>
   );
 };

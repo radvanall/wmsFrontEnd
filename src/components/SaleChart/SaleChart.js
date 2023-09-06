@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import CustomChart from "../../CustomChart/CustomChart";
-
 import "./SaleChart.css";
 import salesAquisition from "../../productsaleschart.js";
 const SaleChart = () => {
@@ -46,23 +45,6 @@ const SaleChart = () => {
   };
   const [chartData, setChartData] = useState({ ...price });
 
-  //   const [chartData, setChartData] = useState({
-  //     labels: salesAquisition.map((item) => item.date),
-  //     datasets: [
-  //       {
-  //         label: "sales",
-  //         data: salesAquisition.map((item) => item.salesPrice),
-  //         backgroundColor: "#4361ee",
-  //         type: "line",
-  //       },
-  //       {
-  //         label: "aquisitions",
-  //         data: salesAquisition.map((item) => item.aquisitionPrice),
-  //         backgroundColor: "#fca311",
-  //         type: "line",
-  //       },
-  //     ],
-  //   });
   const hoverLine = {
     id: "line",
     beforeDatasetDraw(chart) {
@@ -119,14 +101,12 @@ const SaleChart = () => {
     },
     responsive: true,
     maintainAspectRatio: false,
-    //plugins: [hoverLine],
   };
   const handleChange = () => {
     setChartState((prevState) => !prevState);
     chartState === false
       ? setChartData({ ...price })
       : setChartData({ ...piece });
-    // setChartData(piece);
   };
   return (
     <div className="chart_2">
