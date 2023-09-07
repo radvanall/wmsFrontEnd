@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import CustomChart from "../../CustomChart/CustomChart";
 import useGetData from "../../hooks/useGetData";
-import getMonthAndYear from "../../functions/getMonthAndYear";
 import "./ChartTable.css";
 import ResponsiveTable from "../ResponsiveTable/ResponsiveTable";
 import hoverLine from "../../CustomChart/hoverLine";
@@ -34,7 +33,6 @@ const nrOfPositionsOptions = [
 ];
 const ChartTable = ({
   endpoint,
-  //   balanceSetter,
   title,
   navTo,
   chartDataSetter,
@@ -44,20 +42,10 @@ const ChartTable = ({
   const [period, setPeriod] = useState(6);
   const [nrOfPositions, setNrOfPositions] = useState(5);
   const navigate = useNavigate();
-  //   const [criteria, setCriteria] = useState(2);
   const [tableData, setTableData] = useState(null);
   const [chartData, setChartData] = useState(null);
-  //   const [balance, setBalance] = useState({
-  //     totalAcquisitions: 0,
-  //     totalSales: 0,
-  //   });
-  const { data, loading, error, getData } = useGetData(
-    endpoint
-    // "http://localhost:8080/api/provider/getBalance/"
-    // "http://localhost:8080/api/"
-  );
+  const { data, loading, error, getData } = useGetData(endpoint);
   const getChartData = async () => {
-    // await getData(`?id=${id}&period=${period}`);
     await getData(`?period=${period}&nrOfPositions=${nrOfPositions}`);
   };
   useEffect(() => {
@@ -66,7 +54,6 @@ const ChartTable = ({
   useEffect(() => {
     if (data) {
       console.log("chartData=", data);
-      //   balanceSetter && setBalance(balanceSetter(data));
       setChartData(chartDataSetter(data, period));
       setTableData(tableDataSetter(data));
     }

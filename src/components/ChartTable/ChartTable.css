@@ -1,15 +1,11 @@
 .chart__table__wrapper {
   display: flex;
   width: 100%;
-  /* flex-wrap: wrap; */
 }
 .chart__table__wrapper .chart__container {
-  /* flex: 1 1 60%; */
-  /* display: flex; */
   width: 60%;
 }
 .chart__table__wrapper .table__container {
-  /* flex: 1 1 40%; */
   width: 40%;
 }
 .chart__table__menu__buttons {
