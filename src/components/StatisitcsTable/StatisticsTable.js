@@ -27,10 +27,6 @@ const StatisticsTable = ({ id, url, title, getFields, navTo, width }) => {
     setPeriod(e.currentTarget.value);
   };
   return (
-    // <div
-    //   className="adm__invoice__wrapper"
-    //   style={{ width: width ? width : "45%" }}
-    // >
     <Card>
       <div
         className="menu__checkboxes"
@@ -69,7 +65,6 @@ const StatisticsTable = ({ id, url, title, getFields, navTo, width }) => {
         />
       )}
     </Card>
-    // </div>
   );
 };
 

@@ -21,13 +21,8 @@ const StatisticChart = ({
     totalAcquisitions: 0,
     totalSales: 0,
   });
-  const { data, loading, error, getData } = useGetData(
-    endpoint
-    // "http://localhost:8080/api/provider/getBalance/"
-    // "http://localhost:8080/api/"
-  );
+  const { data, loading, error, getData } = useGetData(endpoint);
   const getChartData = async () => {
-    // await getData(`?id=${id}&period=${period}`);
     await getData(`?criteria=${criteria}&period=${period}&nrOfPositions=4`);
   };
   useEffect(() => {
@@ -117,12 +112,10 @@ const StatisticChart = ({
   const isStatusSelected = (value) => parseInt(period) === parseInt(value);
   const handlePeriodCheck = (e) => {
     setPeriod(e.currentTarget.value);
-    // getChartData();
   };
   const isCriteriaSelected = (value) => parseInt(criteria) === parseInt(value);
   const handleCriteriaCheck = (e) => {
     setCriteria(e.currentTarget.value);
-    // getChartData();
   };
   return (
     <Card>
