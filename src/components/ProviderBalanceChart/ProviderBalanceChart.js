@@ -14,11 +14,9 @@ const ProviderBalanceChart = ({ endpoint }) => {
     totalSales: 0,
   });
   const { data, loading, error, getData } = useGetData(
-    // "http://localhost:8080/api/provider/getBalance/"
     "http://localhost:8080/api/"
   );
   const getChartData = async () => {
-    // await getData(`?id=${id}&period=${period}`);
     await getData(`${endpoint}&period=${period}`);
   };
   useEffect(() => {

@@ -2,7 +2,6 @@ import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import "./ValidateButton.css";
 import { AiOutlineDownload } from "react-icons/ai";
-// import PDFFile from "../../components/PDFFile/PDFFile";
 import PDFFile from "../PDFFile/PDFFile";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 const ValidateButton = ({
@@ -11,10 +10,6 @@ const ValidateButton = ({
   invoiceHeader,
   pdfStocks,
 }) => {
-  // return validated ? (
-  //   <></>
-  // ) :
-
   return (
     <div className="delete__invoce__wrapper">
       {!validated && (
