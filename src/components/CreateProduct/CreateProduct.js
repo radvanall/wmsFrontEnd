@@ -40,9 +40,6 @@ const CreateProduct = ({ active, setActive }) => {
   );
   const handleSubmit = (event) => {
     Submit(event);
-    // event.preventDefault();
-    // const dataEntities = new FormData(event.target);
-    // console.log(dataEntities);
   };
   const pickFile = (event) => {
     event.preventDefault();
