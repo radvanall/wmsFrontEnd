@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./ItemTable.css";
-import { Link } from "react-router-dom";
 import BasicButton from "../BasicButton/BasicButton";
 import getState from "../../functions/getState";
 const ItemTable = ({
@@ -12,10 +11,6 @@ const ItemTable = ({
   handleDatails,
   children,
 }) => {
-  // let dataHeader = "";
-  // if (data.length > 0) {
-  //   dataHeader = Object.keys(data[0]);
-  // }
   const [dataHeader, setDataHeader] = useState([]);
   const [cellWidth, setCellWidth] = useState(0);
 
@@ -33,10 +28,8 @@ const ItemTable = ({
 
   return (
     <div className="item__table__wrapper">
-      {/* <h2>{header}</h2> */}
       {children}
       {data.length > 0 ? (
-        // <div className="item__table">
         <>
           <table className="item__table">
             {header && <caption>{header}</caption>}
@@ -76,18 +69,6 @@ const ItemTable = ({
                       ) : (
                         <div className="cell">{getState(row[key])}</div>
                       )}
-                      {/* <div
-                      className={
-                        key !== "state"
-                          ? "cell"
-                          : row[key] === "in sale"
-                          ? "in__sale"
-                          : "in__waiting"
-                      }
-                    >
-                      {" "}
-                      {row[key]}
-                    </div> */}
                     </td>
                   ))}
                   {handleDatails && (
@@ -104,10 +85,6 @@ const ItemTable = ({
               ))}
             </tbody>
           </table>
-
-          {/* <Link to={`/${itemLink}`} className="link__to__item">
-      Vezi toate
-    </Link> */}
         </>
       ) : (
         <h2>Nu exista rezultate</h2>
