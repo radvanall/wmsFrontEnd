@@ -19,32 +19,13 @@ const DoughnutChart = ({ chartDataSetter, endpoint, title }) => {
       setTotalSum(data.reduce((sum, item) => sum + item.sum, 0));
     }
   }, [data]);
-  //   const chartData = {
-  //     labels: ["Red", "Blue", "Yellow"],
-  //     data: [300, 50, 100],
-  //   };
-  //   const data = {
-  //     labels: chartData.labels,
-  //     datasets: [
-  //       {
-  //         type: "doughnut",
-  //         data: chartData.data,
-  //         backgroundColor: [
-  //           "rgb(255, 99, 132)",
-  //           "rgb(54, 162, 235)",
-  //           "rgb(255, 205, 86)",
-  //         ],
-  //         hoverOffset: 4,
-  //       },
-  //     ],
-  //   };
   const options = {
     cutout: "90%",
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false, // Set to false to hide the legend
+        display: false,
       },
       tooltip: {
         usePointStyle: true,
@@ -64,7 +45,6 @@ const DoughnutChart = ({ chartDataSetter, endpoint, title }) => {
       ctx.textBaseline = "middle";
       ctx.font = "bold 14px sans-serif";
       const text = `Suma totală: ${totalSum} de lei.`;
-      //const textWidth = ctx.measureText(text).width;
       const x = chart.getDatasetMeta(0).data[0].x;
       const y = chart.getDatasetMeta(0).data[0].y;
       ctx.fillText(text, x, y);
