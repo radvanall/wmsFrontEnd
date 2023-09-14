@@ -45,9 +45,11 @@ const DoughnutChart = ({ chartDataSetter, endpoint, title }) => {
       ctx.textBaseline = "middle";
       ctx.font = "bold 14px sans-serif";
       const text = `Suma totală: ${totalSum} de lei.`;
-      const x = chart.getDatasetMeta(0).data[0].x;
-      const y = chart.getDatasetMeta(0).data[0].y;
-      ctx.fillText(text, x, y);
+      if (chart.getDatasetMeta(0).data[0] && chart.getDatasetMeta(0).data[0]) {
+        const x = chart.getDatasetMeta(0).data[0].x;
+        const y = chart.getDatasetMeta(0).data[0].y;
+        ctx.fillText(text, x, y);
+      }
     },
   };
   return (
