@@ -7,7 +7,6 @@ import usePostData from "../../hooks/usePostData";
 import moment from "moment";
 import getFormatedDate from "../../functions/getFormatedDate";
 import Calendar from "../../components/Calendar/Calendar";
-import Chart from "../../components/Chart/Chart";
 import OperatorInvoice from "../../components/OperatorInvoice/OperatorInvoice";
 import SingleOperatorMenu from "../../components/SingleOperatorMenu/SingleOperatorMenu";
 import Operator from "../operator/Operator";
@@ -116,7 +115,6 @@ const SingleOperator = () => {
           handleHours={handleHours}
         />
       )}
-      {/* <Chart /> */}
       <div className="chart">
         <CustomerPurchasesChart
           id={operatorId}
