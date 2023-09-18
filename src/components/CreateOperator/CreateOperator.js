@@ -42,7 +42,6 @@ const CreateOperator = ({ active, setActive, fetchData, url, user }) => {
     console.log("false");
     setNameError(false);
     await postData(dataEntities, url);
-    // await postData(dataEntities, "http://localhost:8080/api/operator/create");
     fetchData();
     setTimeout(() => {
       resetMessage();
@@ -52,7 +51,6 @@ const CreateOperator = ({ active, setActive, fetchData, url, user }) => {
   const handleCloseForm = () => {
     setActive();
     formRef.current.reset();
-    // setImgName("");
     setFormFields({
       nickname: "",
       name: "",

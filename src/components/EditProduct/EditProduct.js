@@ -21,7 +21,6 @@ const EditProduct = ({ active, setActive, product }) => {
     provider: "",
     product_description: "",
     unity: "",
-    //selectedImage: null,
     imgName: "",
   });
 
@@ -42,10 +41,6 @@ const EditProduct = ({ active, setActive, product }) => {
   const handleSubmit = (event) => {
     Submit(event, product.id);
     console.log("product=", product.id);
-    // event.preventDefault();
-    // const dataEntities = new FormData(event.target);
-    // const data = Object.fromEntries(dataEntities.entries());
-    // console.log(data);
   };
   const pickFile = (event) => {
     event.preventDefault();
@@ -66,8 +61,6 @@ const EditProduct = ({ active, setActive, product }) => {
     console.log(formFields);
   };
   useEffect(() => {
-    //var file = new File([imgS], "nameiMG");
-
     setFormFields({
       product_name: product.name,
       categorie: product.categorie,
@@ -75,7 +68,6 @@ const EditProduct = ({ active, setActive, product }) => {
       provider: product.producator,
       product_description: product.descriere,
       unity: product.unitate,
-      //selectedImage: product.img,
       imgName: product.imgName,
     });
     setImage(product.img);
