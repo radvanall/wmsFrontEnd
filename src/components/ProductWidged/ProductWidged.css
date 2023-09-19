@@ -9,18 +9,14 @@
   box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
   border-radius: 10px;
   align-items: center;
-
   position: relative;
-  /* padding-right: 20px; */
   padding-right: calc(5px + (20 - 5) * ((100vw - 320px) / (1903 - 320)));
 }
 .widged__img__container {
-  /* width: 30%; */
   width: 210px;
 }
 .widged__img__container img {
   width: 100%;
-  /* width: 210px; */
   object-fit: cover;
 }
 .product__fields {
@@ -47,9 +43,4 @@
   .widged__img__container {
     width: 210px;
   }
-
-  /* .field__container {
-    display: flex;
-    justify-content: space-between;
-  } */
 }
