@@ -4,7 +4,6 @@ import CreateProvider from "../CreateProvider/CreateProvider";
 import MenuWrapper from "../MenuWrapper/MenuWrapper";
 
 const ProvidersMenu = ({ data, setProviders, fetchData }) => {
-  // const { status: isOpenSearch, toggleStatus: toggleSearch } = useToggle(false);
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const [searchValue, setSearchValue] = useState("");
   const handleChange = (event) => {
@@ -20,7 +19,6 @@ const ProvidersMenu = ({ data, setProviders, fetchData }) => {
         email: value.email,
         ["Nr. of positions"]: value.positions.length,
       }));
-    // changeProducts([...newData]);
     setSearchValue(newWord);
     setProviders(newData);
     console.log("newData=", newData);
@@ -52,37 +50,6 @@ const ProvidersMenu = ({ data, setProviders, fetchData }) => {
         fetchData={fetchData}
       />
     </MenuWrapper>
-    // <div>
-    //   <div className="menu__buttons">
-    //     <BiPlusMedical
-    //       className={
-    //         isOpenCreate
-    //           ? "search_menu_button menu__opened"
-    //           : "search_menu_button menu__closed"
-    //       }
-    //       onClick={toggleCreate}
-    //     />
-    //     <BiSearchAlt
-    //       className={
-    //         isOpenSearch
-    //           ? "search_menu_button menu__opened"
-    //           : "search_menu_button menu__closed"
-    //       }
-    //       onClick={toggleSearch}
-    //     />
-    //   </div>
-    //   <CreateProvider
-    //     active={isOpenCreate}
-    //     setActive={toggleCreate}
-    //     fetchData={fetchData}
-    //   />
-    //   <SearchBarView
-    //     isOpenSearch={isOpenSearch}
-    //     searchValue={searchValue}
-    //     handleChange={handleChange}
-    //     handleClick={handleClick}
-    //   />
-    // </div>
   );
 };
 
