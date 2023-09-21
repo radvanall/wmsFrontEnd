@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./BasicInput.css";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 const BasicInput = ({
   type,
   placeholder,
@@ -11,7 +12,9 @@ const BasicInput = ({
   fullBorder,
   padding,
   borderRadius,
+  eyeIcon,
 }) => {
+  const [pass, setPass] = useState(true);
   return (
     <div
       className="basic__input__wrapper"
@@ -33,7 +36,7 @@ const BasicInput = ({
             ? { borderRadius: borderRadius }
             : { borderRadius: "5px" }
         }
-        type={type}
+        type={pass ? type : "text"}
         placeholder={placeholder}
         value={type === "number" ? (value != 0 ? value : "") : value}
         onChange={handleChange}
@@ -41,6 +44,22 @@ const BasicInput = ({
         name={inputName}
         onKeyDown={handleKeyDown}
       />
+      {eyeIcon &&
+        (pass ? (
+          <AiFillEyeInvisible
+            className="password__eye"
+            onClick={() => {
+              setPass((prev) => !prev);
+            }}
+          />
+        ) : (
+          <AiFillEye
+            className="password__eye"
+            onClick={() => {
+              setPass((prev) => !prev);
+            }}
+          />
+        ))}
     </div>
   );
 };

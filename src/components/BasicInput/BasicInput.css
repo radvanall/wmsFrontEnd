@@ -1,6 +1,10 @@
-.basic__input__wrapper .basic__input {
+.basic__input__wrapper {
   width: 100%;
-
+  position: relative;
+}
+.basic__input {
+  width: 100%;
+  position: relative;
   padding-left: 5px;
 }
 .full__border {
@@ -18,6 +22,16 @@
   line-height: 26px;
   font-weight: 600;
   /* padding-bottom: 5px; */
+}
+.password__eye {
+  position: absolute;
+  right: 15px;
+  font-size: 24px;
+  color: var(--blue-color);
+  cursor: pointer;
+}
+.password__eye:hover {
+  color: #005a969c;
 }
 
 .basic__input[type="number"]::-webkit-inner-spin-button,
