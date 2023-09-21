@@ -85,7 +85,7 @@ const AdministratorModal = ({
             id="password"
             type="password"
           />
-          <BasicInput
+          {/* <BasicInput
             inputName="repeatPassword"
             label="Repetați parola"
             value={formFields.repeatPassword}
@@ -98,7 +98,7 @@ const AdministratorModal = ({
             <label style={{ color: "red" }}>
               Parolele trebuie să coincidă!
             </label>
-          )}
+          )} */}
 
           <label className="img_label">
             Alegeți imaginea:
