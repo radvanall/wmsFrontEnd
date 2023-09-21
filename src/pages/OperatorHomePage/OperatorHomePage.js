@@ -12,10 +12,14 @@ import { useNavigate } from "react-router-dom";
 import Operator from "../operator/Operator";
 import { useToggle } from "../../hooks/useToggle";
 import { BiPlusMedical } from "react-icons/bi";
+import { AiOutlineKey } from "react-icons/ai";
+import ChangePasswordModal from "../../components/ChangePasswordModal/ChangePasswordModal";
 import CustomerPurchasesChart from "../../components/CustomersPurchasesChart/CustomerPurchasesChart";
 const OperatorHomePage = () => {
   const navigate = useNavigate();
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
+  const { status: isOpenChangePassword, toggleStatus: toggleChangePassword } =
+    useToggle(false);
   const operatorId = useSelector((state) => state.userSlice.userData?.id);
   const [invoices, setInvoices] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -31,6 +35,9 @@ const OperatorHomePage = () => {
   const { data, loading, error, getData } = useGetData(
     "http://localhost:8080/api/operator/read/"
   );
+  const fetchData = () => {
+    getData(operatorId);
+  };
   const getField = (invoice) => ({
     id: invoice.id,
     Client: invoice.customer,
@@ -108,6 +115,14 @@ const OperatorHomePage = () => {
             }}
           />
         )}
+        <AiOutlineKey
+          className={
+            isOpenChangePassword
+              ? "search_menu_button menu__opened"
+              : "search_menu_button menu__closed"
+          }
+          onClick={toggleChangePassword}
+        />
       </div>
       {operator && data && <Operator operator={operator} />}
       {data && <Calendar operator={operator} workedDays={workedDays} />}
@@ -122,6 +137,13 @@ const OperatorHomePage = () => {
       <OperatorInvoice invoices={orders} title="Comenzi" />
 
       <OperatorInvoice invoices={invoices} title="Facturi" />
+      <ChangePasswordModal
+        active={isOpenChangePassword}
+        handleCloseForm={toggleChangePassword}
+        id={operatorId}
+        endpoint="http://localhost:8080/api/operator/changePassword/"
+        fetchData={fetchData}
+      />
     </div>
   );
 };
