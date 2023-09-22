@@ -24,3 +24,30 @@
   width: 95%;
   justify-content: end;
 }
+.create__popup {
+  position: relative;
+}
+.create__popup ul {
+  position: absolute;
+  padding: 5px 0;
+  left: -30px;
+  background-color: white;
+  border: 1px solid var(--blue-color);
+  border-radius: 5px;
+  width: 160px;
+}
+.popup__closed {
+  display: none;
+}
+.popup__opened {
+  display: block;
+}
+.create__popup ul li {
+  line-height: 18px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+.create__popup ul li:hover {
+  color: white;
+  background-color: var(--blue-color);
+}
