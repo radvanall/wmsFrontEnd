@@ -74,7 +74,8 @@ const CustomerPurchasesChart = ({ id, url, label }) => {
     getChartData();
   };
   return (
-    <Card>
+    // <Card>
+    <>
       {data && chartData && (
         <>
           <div className="month__radio__buttons">
@@ -111,7 +112,8 @@ const CustomerPurchasesChart = ({ id, url, label }) => {
           />
         </>
       )}
-    </Card>
+    </>
+    // </Card>
   );
 };
 

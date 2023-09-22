@@ -12,6 +12,10 @@
   /* padding-right: 20px; */
   display: flex;
   flex-direction: column;
+  border: 2px solid #005b96;
+  -webkit-box-shadow: 0px 0px 9px 1px rgba(103, 136, 156, 1);
+  -moz-box-shadow: 0px 0px 9px 1px rgba(103, 136, 156, 1);
+  box-shadow: 0px 0px 9px 1px rgba(103, 136, 156, 1);
 }
 .calendar {
   display: grid;

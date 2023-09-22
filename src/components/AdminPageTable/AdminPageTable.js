@@ -22,7 +22,7 @@ const AdminPageTable = ({ getId, url, title, getFields, navTo, width }) => {
   return (
     <div
       className="operator__invoice__wrapper"
-      style={{ width: width ? width : "45%" }}
+      style={{ width: width ? width : "45%", border: "2px solid #005b96" }}
     >
       {products.length && (
         <ResponsiveTable
