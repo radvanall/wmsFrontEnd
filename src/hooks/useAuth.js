@@ -39,6 +39,7 @@ const useAuth = () => {
   };
   return {
     login,
+    error,
   };
 };
 export default useAuth;
