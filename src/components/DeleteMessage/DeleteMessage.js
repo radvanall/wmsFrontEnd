@@ -3,7 +3,6 @@ import Modal from "../Modal/Modal";
 import { CgCloseR } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle, setMessage } from "../../toolkitRedux/deleteMessageSlice";
-// import { fetchProducts } from "../../../toolkitRedux/productsSlice";
 import "../DeleteItem/DeleteItem.css";
 const DeleteMessage = () => {
   const dispatch = useDispatch();
