@@ -115,7 +115,7 @@ const SingleOperator = () => {
           handleHours={handleHours}
         />
       )}
-      <div className="chart">
+      <div className="chart_o">
         <CustomerPurchasesChart
           id={operatorId}
           url="http://localhost:8080/api/operator/getSales"
