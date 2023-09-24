@@ -9,7 +9,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userSlice.userData);
   const jwt = useSelector((state) => state.userSlice.jwt);
-  const { login } = useAuth();
+  const { login, error } = useAuth();
   const [errors, setErrors] = useState({
     username: false,
     password: false,
@@ -20,11 +20,13 @@ const Login = () => {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (fields.username === "") {
+    if (fields.username.trim().length < 5) {
+      console.log(fields.username.trim().length);
       setErrors({ ...errors, username: true });
       return;
     }
-    if (fields.password === "") {
+    if (fields.password.trim().length < 5) {
+      console.log(fields.username.trim().length);
       setErrors({ ...errors, password: true });
       return;
     }
@@ -34,7 +36,7 @@ const Login = () => {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    if (value !== "") setErrors({ ...errors, [name]: false });
+    if (value.trim().length > 4) setErrors({ ...errors, [name]: false });
     console.log(name, value);
     setFields({
       ...fields,
@@ -51,10 +53,10 @@ const Login = () => {
   };
   return (
     <div className="login">
-      <button onClick={revelState}>revelState</button>
-      <button onClick={logout}>Logout</button>
+      {/* <button onClick={revelState}>revelState</button>
+      <button onClick={logout}>Logout</button> */}
       <form className="login__form" onSubmit={handleSubmit}>
-        <h2>Logare</h2>
+        <h2>Autentificare</h2>
         <BasicInput
           label="Introduceți nikname-ul"
           fullBorder={true}
@@ -63,7 +65,9 @@ const Login = () => {
           handleChange={handleChange}
         />
         {errors.username && (
-          <p style={{ color: "red" }}>Nickname-ul e obligatoriu</p>
+          <p style={{ color: "red" }}>
+            Nickname-ul trebuie să aibă o lungime de cel puțin 5 caractere
+          </p>
         )}
         <BasicInput
           label="Introduceți parola"
@@ -71,14 +75,18 @@ const Login = () => {
           value={fields.password}
           inputName="password"
           type="password"
+          eyeIcon={true}
           handleChange={handleChange}
         />
         {errors.password && (
-          <p style={{ color: "red" }}>Parola e obligatorie</p>
+          <p style={{ color: "red" }}>
+            Parola trebuie să aibă o lungime de cel puțin 5 caractere
+          </p>
         )}
         <div className="submit__button">
           <BasicButton type="submit" text="Logare" />
         </div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
   );
