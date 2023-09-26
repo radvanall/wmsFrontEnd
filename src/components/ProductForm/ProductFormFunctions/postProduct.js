@@ -3,13 +3,16 @@ const postProduct = (
   dataEntities,
   setServerResponse,
   dispatch,
-  fetchProducts
+  fetchProducts,
+  jwt
 ) => {
   axios
-    .post("http://localhost:8080/api/position/uploadPosition", dataEntities)
+    .post("http://localhost:8080/api/position/uploadPosition", dataEntities, {
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
     .then((response) => {
       console.log(response);
-      dispatch(fetchProducts());
+      dispatch(fetchProducts(jwt));
       setServerResponse(response.data);
     })
     .catch((error) => setServerResponse(error.message));
