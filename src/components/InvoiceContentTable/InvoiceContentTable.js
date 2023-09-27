@@ -11,10 +11,11 @@ const InvoiceContentTable = ({
   toggleCreate,
   openEdit,
   openDelete,
+  isAllowed,
 }) => {
   return (
     <Card>
-      {validated ? null : (
+      {validated || !isAllowed ? null : (
         <div className="stock__button__wrapper">
           <BiPlusMedical
             className={
@@ -30,8 +31,8 @@ const InvoiceContentTable = ({
       <ResponsiveTable
         data={data}
         title={title}
-        handleEdit={validated ? null : openEdit}
-        handleDelete={validated ? null : openDelete}
+        handleEdit={validated ? null : isAllowed ? openEdit : null}
+        handleDelete={validated ? null : isAllowed ? openDelete : null}
       />
     </Card>
   );

@@ -75,10 +75,8 @@ const AdminHomePage = () => {
       />
       {admin && data && <Operator operator={admin} />}
       <AdminPageTable
-        getId={20}
-        url={
-          "http://localhost:8080/api/position/getRemainingStocks?maxQuantity="
-        }
+        getId={null}
+        url={"http://localhost:8080/api/position/getRemainingStocks"}
         getFields={getStocks}
         title="Stocuri limitate:"
         navTo="products"

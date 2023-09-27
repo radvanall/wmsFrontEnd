@@ -5,7 +5,7 @@ import { TiEdit } from "react-icons/ti";
 import getFormatedDate from "../../functions/getFormatedDate";
 import CardModal from "../CardModal/CardModal";
 import { useToggle } from "../../hooks/useToggle";
-const InvoiceCard = ({ invoice, refetch }) => {
+const InvoiceCard = ({ invoice, refetch, isAllowed }) => {
   console.log("invoice:", invoice);
   const { status: isOpenAddressModal, toggleStatus: toggleAddressModal } =
     useToggle(false);
@@ -36,7 +36,7 @@ const InvoiceCard = ({ invoice, refetch }) => {
               <div>
                 {invoice.address === "inStore" ? "Pe loc" : invoice.address}
                 {/* Chisinau sarmisegetusa 23 ap 3 */}
-                {!invoice.shipped && (
+                {!invoice.shipped && isAllowed && (
                   <button
                     className="address__button"
                     onClick={() => {

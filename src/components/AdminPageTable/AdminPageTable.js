@@ -24,12 +24,14 @@ const AdminPageTable = ({ getId, url, title, getFields, navTo, width }) => {
       className="operator__invoice__wrapper"
       style={{ width: width ? width : "45%", border: "2px solid #005b96" }}
     >
-      {products.length && (
+      {products.length ? (
         <ResponsiveTable
           data={products}
           title={title}
           handleDetails={handleDetails}
         />
+      ) : (
+        <p>Nu există rezultate.</p>
       )}
     </div>
   );

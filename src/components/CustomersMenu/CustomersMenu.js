@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useToggle } from "../../hooks/useToggle";
 import MenuWrapper from "../MenuWrapper/MenuWrapper";
 import CreateCustomer from "../CreateCustomer/CreateCustomer";
+import { useSelector } from "react-redux";
 const CustomersMenu = ({ data, setCustomers, fetchData }) => {
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const [searchValue, setSearchValue] = useState("");
   const handleChange = (event) => {
@@ -41,6 +44,7 @@ const CustomersMenu = ({ data, setCustomers, fetchData }) => {
     <MenuWrapper
       searchValue={searchValue}
       isOpenCreate={isOpenCreate}
+      isAllowed={isAllowed}
       toggleCreate={toggleCreate}
       handleChange={handleChange}
       handleClick={handleClick}

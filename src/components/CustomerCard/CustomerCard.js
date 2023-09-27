@@ -6,7 +6,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import EditCustomer from "../EditCustomer/EditCustomer";
 import DeleteItem from "../DeleteItem/DeleteItem";
+import { useSelector } from "react-redux";
 const CustomerCard = ({ customer, fetchData }) => {
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
   return (
@@ -58,24 +61,26 @@ const CustomerCard = ({ customer, fetchData }) => {
               </span>
             )}
           </p>
-          <div className="customer__actions">
-            <TiEdit
-              className={
-                isOpenModify
-                  ? "search_menu_button menu__opened"
-                  : "search_menu_button menu__closed"
-              }
-              onClick={toggleModify}
-            />
-            <RiDeleteBin6Line
-              className={
-                isOpenDelete
-                  ? "search_menu_button menu__opened"
-                  : "search_menu_button menu__closed"
-              }
-              onClick={toggleDelete}
-            />
-          </div>
+          {isAllowed && (
+            <div className="customer__actions">
+              <TiEdit
+                className={
+                  isOpenModify
+                    ? "search_menu_button menu__opened"
+                    : "search_menu_button menu__closed"
+                }
+                onClick={toggleModify}
+              />
+              <RiDeleteBin6Line
+                className={
+                  isOpenDelete
+                    ? "search_menu_button menu__opened"
+                    : "search_menu_button menu__closed"
+                }
+                onClick={toggleDelete}
+              />
+            </div>
+          )}
         </div>
       </div>
       <EditCustomer

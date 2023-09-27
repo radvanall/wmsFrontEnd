@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Modal from "../Modal/Modal";
 import "./CreateProduct.css";
 import useFetch from "../../hooks/useFetch";
@@ -23,11 +23,17 @@ const CreateProduct = ({ active, setActive }) => {
     unity: "",
     selectedImage: null,
     imgName: "",
+    minQuantity: 0,
   });
   const formRef = useRef(null);
-  const { data, error: fail } = useFetch(
-    "http://localhost:8080/api/productobjectcriteria/get"
-  );
+  const {
+    data,
+    error: fail,
+    fetchData,
+  } = useFetch("http://localhost:8080/api/productobjectcriteria/get");
+  useEffect(() => {
+    fetchData();
+  }, [active]);
   const { error, setError, checkError } = useCheckProductFormError();
   const filePicker = useRef(null);
   const onSelectedFile = (event) => {

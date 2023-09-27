@@ -15,9 +15,9 @@ Font.register({
   src: roboFont,
 });
 const PDFFile = ({ invoiceHeader, data }) => {
-  const tableHeader = Object.keys(data[0]);
+  const tableHeader = typeof data[0] === "object" ? Object.keys(data[0]) : null;
   console.log(invoiceHeader);
-  const cellWidth = 100 / tableHeader.length;
+  const cellWidth = 100 / (tableHeader ? tableHeader.length : 1);
   const styles = StyleSheet.create({
     page: {
       flexDirection: "column",
@@ -131,11 +131,12 @@ const PDFFile = ({ invoiceHeader, data }) => {
         </View>
         <View style={styles.table}>
           <View style={styles.tableRow}>
-            {tableHeader.map((item, index) => (
-              <View style={styles.tableCell} key={index}>
-                <Text>{item}</Text>
-              </View>
-            ))}
+            {tableHeader &&
+              tableHeader.map((item, index) => (
+                <View style={styles.tableCell} key={index}>
+                  <Text>{item}</Text>
+                </View>
+              ))}
           </View>
           {data.map((item, index) => (
             <View style={styles.tableRow} key={index}>

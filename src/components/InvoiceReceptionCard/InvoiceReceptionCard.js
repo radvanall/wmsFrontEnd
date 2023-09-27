@@ -7,7 +7,7 @@ import Modal from "../Modal/Modal";
 import StatusContainer from "../StatusContaier/StatusContainer";
 import "./InvoiceReceptionCard.css";
 
-const InvoiceReceptionCard = ({ invoice, getData }) => {
+const InvoiceReceptionCard = ({ invoice, getData, isAllowed }) => {
   console.log("invoice:", invoice);
   const { message, loading, error, resetMessage, postData } = usePostData();
   const handleValidate = async () => {
@@ -30,7 +30,11 @@ const InvoiceReceptionCard = ({ invoice, getData }) => {
     : "none";
   return (
     <Card>
-      <StatusContainer validated={invoice.validated} setActive={setActive} />
+      <StatusContainer
+        validated={invoice.validated}
+        setActive={setActive}
+        isAllowed={isAllowed}
+      />
 
       <div className="invoice__reception__wrapper">
         <div className="invoice__reception__block">

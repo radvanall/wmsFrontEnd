@@ -4,6 +4,7 @@ import { useToggle } from "../../hooks/useToggle";
 import { BiSearchAlt, BiPlusMedical } from "react-icons/bi";
 const MenuWrapper = ({
   searchValue,
+  isAllowed,
   handleChange,
   handleClick,
   isOpenCreate,
@@ -15,7 +16,7 @@ const MenuWrapper = ({
   return (
     <div>
       <div className="menu__buttons">
-        {toggleCreate && (
+        {toggleCreate && isAllowed && (
           <BiPlusMedical
             className={
               isOpenCreate

@@ -3,7 +3,9 @@ import "./OrderMenu.css";
 import { useNavigate } from "react-router-dom";
 import { BiPlusMedical } from "react-icons/bi";
 import RadioButton from "../RadioButton/RadioButton";
+import { useSelector } from "react-redux";
 const OrderMenu = ({ filterInvoicesByStatus }) => {
+  const role = useSelector((state) => state.userSlice.userData?.authority);
   const navigate = useNavigate();
   const [selectedStatus, setSelectedStatus] = useState("all");
   const handleStatusClick = (e) => {
@@ -14,12 +16,14 @@ const OrderMenu = ({ filterInvoicesByStatus }) => {
   const isStatusSelected = (value) => selectedStatus === value;
   return (
     <div className="order__menu__wrapper">
-      <div className="order__menu__buttons">
-        <BiPlusMedical
-          className={"search_menu_button menu__opened"}
-          onClick={() => navigate("/orders/newOrder")}
-        />
-      </div>
+      {role === "ROLE_OPERATOR" && (
+        <div className="order__menu__buttons">
+          <BiPlusMedical
+            className={"search_menu_button menu__opened"}
+            onClick={() => navigate("/orders/newOrder")}
+          />
+        </div>
+      )}
       <div className="status__checkbuttons">
         <RadioButton
           id="radio1"

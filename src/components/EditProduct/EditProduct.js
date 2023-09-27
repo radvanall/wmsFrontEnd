@@ -21,6 +21,7 @@ const EditProduct = ({ active, setActive, product }) => {
     provider: "",
     product_description: "",
     unity: "",
+    minQuantity: 0,
     imgName: "",
   });
 
@@ -68,6 +69,7 @@ const EditProduct = ({ active, setActive, product }) => {
       provider: product.producator,
       product_description: product.descriere,
       unity: product.unitate,
+      minQuantity: product.minQuantity,
       imgName: product.imgName,
     });
     setImage(product.img);
