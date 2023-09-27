@@ -1,0 +1,57 @@
+.category__list__item {
+  height: 30px;
+  min-width: 200px;
+  padding-right: 10px;
+}
+.category__list__container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.category__list__container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.category__list__container::-webkit-scrollbar {
+  width: 5px;
+}
+.category__list__container::-webkit-scrollbar-track {
+  background-color: #fe6240;
+  border-radius: 5px;
+}
+.category__list__container::-webkit-scrollbar-thumb {
+  background-color: #7a2512;
+  border-radius: 5px;
+}
+.category__list__button {
+  color: var(--blue-color);
+  border-radius: 3px;
+}
+.category__list__button:hover {
+  color: white;
+  background-color: var(--blue-color);
+}
+.category__list__item .item__div {
+  display: flex;
+  justify-content: space-between;
+}
+.category__list__buttons {
+  display: flex;
+  gap: 5px;
+}
+.category__input {
+  max-width: 240px;
+}
+.add__cancel {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 8px;
+  padding-bottom: 10px;
+  gap: 5px;
+}
+.category__message__box {
+  max-width: 200px;
+}
+.category__wrapper {
+  display: flex;
+  gap: 30px;
+}
