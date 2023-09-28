@@ -73,30 +73,34 @@ const AdminHomePage = () => {
         workedDays={workedDays}
         fetchData={() => getData(id)}
       />
-      {admin && data && <Operator operator={admin} />}
-      <AdminPageTable
-        getId={null}
-        url={"http://localhost:8080/api/position/getRemainingStocks"}
-        getFields={getStocks}
-        title="Stocuri limitate:"
-        navTo="products"
-      />
-      <AdminPageTable
-        getId={null}
-        url={
-          "http://localhost:8080/api/invoiceReception/readUnvalidatedInvoiceReceptionTable"
-        }
-        getFields={getInvoiceReceptions}
-        title="Facturi de intrare nevalidate:"
-        navTo="invoices"
-      />
-      <AdminPageTable
-        getId={null}
-        url={"http://localhost:8080/api/invoice/getPendingOrders"}
-        getFields={getInvoices}
-        title="Facturi în livrare:"
-        navTo="orders"
-      />
+      <div className="Single">
+        {admin && data && <Operator operator={admin} />}
+
+        <AdminPageTable
+          getId={null}
+          url={"http://localhost:8080/api/position/getRemainingStocks"}
+          getFields={getStocks}
+          title="Stocuri limitate:"
+          navTo="products"
+        />
+
+        <AdminPageTable
+          getId={null}
+          url={
+            "http://localhost:8080/api/invoiceReception/readUnvalidatedInvoiceReceptionTable"
+          }
+          getFields={getInvoiceReceptions}
+          title="Facturi de intrare nevalidate:"
+          navTo="invoices"
+        />
+        <AdminPageTable
+          getId={null}
+          url={"http://localhost:8080/api/invoice/getPendingOrders"}
+          getFields={getInvoices}
+          title="Facturi în livrare:"
+          navTo="orders"
+        />
+      </div>
     </>
 
     // </div>
