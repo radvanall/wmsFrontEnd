@@ -6,6 +6,7 @@ import BasicButton from "../BasicButton/BasicButton";
 import CustomSelect from "../CustomSelect/CustomSelect";
 import useGetData from "../../hooks/useGetData";
 import usePostData from "../../hooks/usePostData";
+import imgLink from "../../googleAPI";
 const AddStock = ({
   active,
   invoiceId,
@@ -114,7 +115,7 @@ const AddStock = ({
     <Modal active={active}>
       <CloseModal handleCloseModal={closeModal} />
       <div className="edit__stock__header">
-        <img src={image} />
+        <img src={imgLink + image} />
         <p>
           <span> Numele furnizorului: </span>
           {provider}
