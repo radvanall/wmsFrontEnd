@@ -72,7 +72,9 @@ function App() {
           <Route path="orders">
             <Route index element={<Orders />} />
             <Route path=":orderId" element={<SingleOrder />} />
-            <Route path="newOrder" element={<NewOrder />} />
+            <Route element={<RequireAuth allowedRoles={["ROLE_OPERATOR"]} />}>
+              <Route path="newOrder" element={<NewOrder />} />
+            </Route>
           </Route>
           <Route path="stocks">
             <Route index element={<Stocks />} />
