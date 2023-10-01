@@ -53,7 +53,6 @@ const ChartTable = ({
   }, [period, endpoint, nrOfPositions]);
   useEffect(() => {
     if (data) {
-      console.log("chartData=", data);
       setChartData(chartDataSetter(data, period));
       setTableData(tableDataSetter(data));
     }
@@ -180,6 +179,7 @@ const ChartTable = ({
             </div>
           </div>
           <div className="chart__table__wrapper">
+            {console.error("chartDataTable=", data)}
             <div className="chart__container">
               <CustomChart
                 chartData={chartData}
