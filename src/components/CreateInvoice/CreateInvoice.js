@@ -5,7 +5,9 @@ import { useToggle } from "../../hooks/useToggle";
 import CreateInvoiceForm from "../CreateInvoiceForm/CreateInvoiceForm";
 import "./CreateInvoice.css";
 import usePostData from "../../hooks/usePostData";
+import { useSelector } from "react-redux";
 const CreateInvoice = ({ active, setActive, fetchData }) => {
+  const userId = useSelector((state) => state.userSlice.userData?.id);
   const { data, error: fail } = useFetch(
     "http://localhost:8080/api/provider/readProvidersNamesAndId"
   );
@@ -201,7 +203,7 @@ const CreateInvoice = ({ active, setActive, fetchData }) => {
     const formData = new FormData();
     formData.append("data", JSON.stringify(finalInvoice));
     formData.append("providerId", provider);
-    formData.append("adminId", 1);
+    formData.append("adminId", userId);
     await postData(
       formData,
       "http://localhost:8080/api/invoiceReception/create"
