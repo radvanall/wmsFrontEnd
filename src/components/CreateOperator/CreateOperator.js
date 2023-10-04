@@ -43,9 +43,9 @@ const CreateOperator = ({ active, setActive, fetchData, url, user }) => {
     setNameError(false);
     await postData(dataEntities, url);
     fetchData();
-    setTimeout(() => {
-      resetMessage();
-    }, 2000);
+    // setTimeout(() => {
+    //   resetMessage();
+    // }, 2000);
   };
 
   const handleCloseForm = () => {
