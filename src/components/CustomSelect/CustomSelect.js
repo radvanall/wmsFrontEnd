@@ -1,7 +1,7 @@
 import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import "./CustomSelect.css";
-
+import imgLink from "../../googleAPI";
 const CustomSelect = ({
   positions,
   handleSelect,
@@ -17,7 +17,7 @@ const CustomSelect = ({
   return (
     <div>
       <div className="custom_select_selected">
-        {image && <img src={image} />}
+        {image && <img src={imgLink + image} />}
         <input
           type="text"
           className="select_input"
@@ -50,7 +50,9 @@ const CustomSelect = ({
               className="list_element"
               onClick={handleSelect}
             >
-              {image && <img className="list_image" src={item.image} />}
+              {image && (
+                <img className="list_image" src={imgLink + item.image} />
+              )}
               {item.name}
             </li>
           ))}
