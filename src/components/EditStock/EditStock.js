@@ -5,7 +5,7 @@ import BasicInput from "../BasicInput/BasicInput";
 import BasicButton from "../BasicButton/BasicButton";
 import usePostData from "../../hooks/usePostData";
 import "./EditStock.css";
-
+import imgLink from "../../googleAPI";
 const EditStock = ({ active, handleCloseModal, stock, refetch }) => {
   console.log("stockEdit=", stock);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -64,7 +64,7 @@ const EditStock = ({ active, handleCloseModal, stock, refetch }) => {
     <Modal active={active}>
       <CloseModal handleCloseModal={closeModal} />
       <div className="edit__stock__header">
-        <img src={stock.image} alt="" />
+        <img src={imgLink + stock.image} alt="" />
         <p>
           <span> Numele produsului: </span>
           {stock.Produs}
