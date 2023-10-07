@@ -1,6 +1,8 @@
 import { useDispatch } from "react-redux";
 import { fetchProducts } from "../../../toolkitRedux/productsSlice";
+import { useSelector } from "react-redux/es/exports";
 const useProductFormSubmit = (checkError, setServerResponse, fetchProduct) => {
+  const jwt = useSelector((state) => state.userSlice.jwt);
   const dispatch = useDispatch();
   const Submit = (event) => {
     event.preventDefault();
@@ -18,7 +20,13 @@ const useProductFormSubmit = (checkError, setServerResponse, fetchProduct) => {
       data.product_description !== "" &&
       data.product_description !== null
     ) {
-      fetchProduct(dataEntities, setServerResponse, dispatch, fetchProducts);
+      fetchProduct(
+        dataEntities,
+        setServerResponse,
+        dispatch,
+        fetchProducts,
+        jwt
+      );
     }
   };
   return { Submit };
