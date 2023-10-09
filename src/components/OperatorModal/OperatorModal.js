@@ -57,6 +57,7 @@ const OperatorModal = ({
             value={formFields.email}
             handleChange={handleFormChange}
             fullBorder={true}
+            type="email"
             id="email"
           />
           <BasicInput

@@ -7,6 +7,7 @@ import { useToggle } from "../../hooks/useToggle";
 import EditCustomer from "../EditCustomer/EditCustomer";
 import DeleteItem from "../DeleteItem/DeleteItem";
 import { useSelector } from "react-redux";
+import imgLink from "../../googleAPI";
 const CustomerCard = ({ customer, fetchData }) => {
   const role = useSelector((state) => state.userSlice.userData?.authority);
   const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
@@ -17,7 +18,11 @@ const CustomerCard = ({ customer, fetchData }) => {
       <div className="single__order__card">
         <div className="client__block">
           <h3>Client</h3>
-          <img src={customer.avatar} alt="" className="client__avatar" />
+          <img
+            src={imgLink + customer.avatar}
+            alt=""
+            className="client__avatar"
+          />
           <p>{customer.nickname}</p>
         </div>
         <div className="data__block">
