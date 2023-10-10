@@ -8,6 +8,7 @@ import BasicButton from "../../components/BasicButton/BasicButton";
 import usePostData from "../../hooks/usePostData";
 import ModalMessage from "../../components/ModalMessage/ModalMessage";
 import { useToggle } from "../../hooks/useToggle";
+
 import {
   setSelectedPosition,
   resetSelectedPosition,
@@ -19,6 +20,7 @@ import {
   resetAllStates,
 } from "../../toolkitRedux/newOrderSlice";
 const NewOrder = () => {
+  const userId = useSelector((state) => state.userSlice.userData?.id);
   const { data, loading, error, fetchData } = useFetch(
     "http://localhost:8080/api/position/getPositionsForSale"
   );
@@ -36,7 +38,7 @@ const NewOrder = () => {
     postData,
   } = usePostData();
   const [positions, setPositions] = useState();
-  // const [clientError, setClientError] = useState(false);
+
   const [errors, setErrors] = useState({
     clientError: false,
     addressError: false,
@@ -107,8 +109,7 @@ const NewOrder = () => {
       parseInt(position.quantity) +
       parseInt(updatedStocks[newIndex].initialQuantity) -
       parseInt(updatedStocks[newIndex].remainingQuantity);
-    // updatedStocks[newIndex].remainingQuantity =
-    //   updatedStocks[newIndex.initialQuantity];
+
     console.log("restoredQuantity:", restoredQuantity);
     const finalStocks = updatedStocks.map((stock, index) => {
       if (index === newIndex)
@@ -144,8 +145,7 @@ const NewOrder = () => {
       (stock) => parseInt(stock.id) === parseInt(stockId)
     );
     let diff = 0;
-    // parseInt(position.stocks[stockIndex].initialQuantity) -
-    //   parseInt(position.stocks[stockIndex.remainingQuantity]);
+
     const finalStocks = position.stocks.map((stock, index) => {
       if (index >= stockIndex) {
         diff =
@@ -160,7 +160,7 @@ const NewOrder = () => {
     });
     const restoredPosition = {
       ...position,
-      // quantity: parseInt(position.quantity) + restoredQuantity,
+
       currentStockIndex: stockIndex,
       quantity: position.quantity + diff,
       stocks: finalStocks,
@@ -179,7 +179,7 @@ const NewOrder = () => {
   };
   const handleRowDelete = (id) => {
     console.log("id=", id);
-    //  const newArray=fullData.filter(item=>parseInt(item.id)===parseInt(id));
+
     const positionId = fullData.find(
       (row) => parseInt(row.id) === parseInt(id)
     )?.positionId;
@@ -255,15 +255,6 @@ const NewOrder = () => {
           lastStock.last = true;
         }
 
-        //   .map((item) => {
-        //     if (parseInt(item.id) === lastStockId)
-        //       return {
-        //         ...item,
-        //         last: true,
-        //       };
-        //     else return item;
-        //   });
-        // console.log("lastStockId:", lastStockId);
         return newData;
       });
       console.log(false);
@@ -286,10 +277,7 @@ const NewOrder = () => {
       };
       stock.remainingQuantity = stock.initialQuantity;
       const stocks = position.stocks;
-      // const newIndex =
-      //   parseInt(position.currentStockIndex) >= parseInt(position.stocks.length)
-      //     ? position.currentStockIndex - 1
-      //     : position.currentStockIndex;
+
       const newIndex =
         position.currentStockIndex >= position.stocks.length
           ? position.currentStockIndex - 1
@@ -301,9 +289,7 @@ const NewOrder = () => {
             stocks[position.currentStockIndex].initialQuantity
           ? position.currentStockIndex - 1
           : false;
-      // position.quantity =
-      //   position.quantity + stock.initialQuantity - stock.remainingQuantity;
-      // console.log(row.positionId);
+
       const finalPosition = {
         ...position,
         currentStockIndex: newIndex,
@@ -327,9 +313,6 @@ const NewOrder = () => {
     }
   };
 
-  // const getStocksByPosition=(positionId)=>{
-  //   return data.
-  // }
   const getNextStock = (stocks) => {
     const inSale = stocks.filter((stock) => stock.state === "inSale");
     const forSale = stocks.filter((stock) => stock.state === "forSale");
@@ -352,24 +335,6 @@ const NewOrder = () => {
     console.log("data", data);
     if (data) {
       const newPositions = data.map((position) => {
-        // const sortedStocks = [...position.stocks];
-        // sortedStocks.sort(sortStocks);
-        // console.log("sortedStocks=", sortedStocks);
-        // const inSale = position.stocks.filter(
-        //   (stock) => stock.state === "inSale"
-        // );
-        // const forSale = position.stocks.filter(
-        //   (stock) => stock.state === "forSale"
-        // );
-        // const chosenStock = inSale.length
-        //   ? getEarliestDate(inSale)
-        //   : getEarliestDate(forSale);
-        // console.log("chosenStock=", chosenStock);
-
-        // const availableStocks = position.stocks.filter(
-        //   (stock) => parseInt(stock.id) !== parseInt(chosenStock.id)
-        // );
-
         return {
           id: position.id,
           name: position.productName,
@@ -418,7 +383,6 @@ const NewOrder = () => {
       return;
     }
     if (parseInt(selectedCustomer.id) === 0) {
-      // setClientError(true);
       setErrors((prev) => ({
         ...prev,
         clientError: true,
@@ -434,14 +398,8 @@ const NewOrder = () => {
       return;
     }
 
-    // setErrors((prev) => ({
-    //   ...prev,
-    //   addressError: false,
-    //   clientError: false,
-    //   invoiceError: false,
-    // }));
     const invoice = {
-      operatorId: 5,
+      operatorId: userId,
       clientId: selectedCustomer.id,
       date: dateState,
       shipped: shipped,
