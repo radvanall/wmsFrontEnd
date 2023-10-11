@@ -77,7 +77,10 @@ const CustomerPurchasesChart = ({ id, url, label }) => {
     // <Card>
     <>
       {data && chartData && (
-        <>
+        <div
+          className="CustomerPurchasesChart"
+          style={{ border: "solid 2px #005b96" }}
+        >
           <div className="month__radio__buttons">
             <RadioButton
               id="1month"
@@ -108,9 +111,9 @@ const CustomerPurchasesChart = ({ id, url, label }) => {
             chartData={chartData}
             plugins={hoverLine}
             options={chartOptions}
-            height="460px"
+            height="420px"
           />
-        </>
+        </div>
       )}
     </>
     // </Card>
