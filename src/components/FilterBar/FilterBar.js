@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./FilterBar.css";
 import InputNumber from "../InputNumber/InputNumber";
 import useFilterFields from "./useFilterFields";
@@ -17,9 +17,12 @@ const FilterBar = ({ isOpenFilter }) => {
     maxQuantity: "0",
   };
   //debugger;
-  const { data: filterBox } = useFetch(
+  const { data: filterBox, fetchData } = useFetch(
     "http://localhost:8080/api/productcriteria/get"
   );
+  useEffect(() => {
+    fetchData();
+  }, [isOpenFilter]);
   const { filterCriterias, filterData, resetData, handleFilterSettings } =
     useFilterFields(initialCriterias);
 
@@ -40,23 +43,6 @@ const FilterBar = ({ isOpenFilter }) => {
               handleFilterSettings={handleFilterSettings}
             />
           ))}
-        {inputNumber.map((item) => (
-          <InputNumber
-            key={item.keyName}
-            label={item.label}
-            keyName={item.keyName}
-            inputValue={filterCriterias[item.keyName]}
-            minValue={
-              item.keyName === "minPrice" || item.keyName === "minQuantity"
-                ? "0"
-                : item.keyName === "maxPrice"
-                ? filterCriterias.minPrice
-                : filterCriterias.minQuantity
-            }
-            filterCriterias={filterCriterias}
-            handleFilterSettings={handleFilterSettings}
-          />
-        ))}
       </div>
       <div className="filter__bottons_container">
         <button onClick={filterData}>Search</button>
