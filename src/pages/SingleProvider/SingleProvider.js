@@ -8,8 +8,11 @@ import ProviderBalanceChart from "../../components/ProviderBalanceChart/Provider
 import "./SingleProvider.css";
 import { useNavigate } from "react-router-dom";
 import getFormatedDate from "../../functions/getFormatedDate";
+import { useSelector } from "react-redux";
 const SingleProvider = () => {
   const navigate = useNavigate();
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const { providerId } = useParams();
   const [products, setProducts] = useState([]);
   const [invoices, setInvoices] = useState([]);
@@ -93,7 +96,6 @@ const SingleProvider = () => {
   };
   return (
     <div className="single__provider__wrapper">
-      SingleProvider
       {data && (
         <>
           {provider && (
@@ -113,7 +115,7 @@ const SingleProvider = () => {
                 <ResponsiveTable
                   data={invoices}
                   title="Facturi"
-                  handleDetails={handleInvoiceDetails}
+                  handleDetails={isAllowed ? handleInvoiceDetails : null}
                 />
               )}
             </Card>
