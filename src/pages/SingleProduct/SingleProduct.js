@@ -9,8 +9,9 @@ import ProductWidged from "../../components/ProductWidged/ProductWidged";
 import StockTable from "../../components/StockTable/StockTable";
 import PositionOrders from "../../components/PositionOrders/PositionOrders";
 import SingleProductMenu from "../../components/SingleProductMenu/SingleProductMenu";
-
 const SingleProduct = () => {
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const dispatch = useDispatch();
   const { productId } = useParams();
   const jwt = useSelector((state) => state.userSlice.jwt);
@@ -34,7 +35,7 @@ const SingleProduct = () => {
       {data.loading && <div>Loading...</div>}
       {product && (
         <div className="Single">
-          <SingleProductMenu id={productId} />
+          {isAllowed && <SingleProductMenu id={productId} />}
           <ProductWidged product={product} />
           <StockTable productId={productId} />
           <div className="product__chart">

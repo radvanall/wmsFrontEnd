@@ -13,3 +13,8 @@
   align-items: center;
   /* height: 420px; */
 }
+@media (max-width: 750px) {
+  .product__chart {
+    width: 95%;
+  }
+}
