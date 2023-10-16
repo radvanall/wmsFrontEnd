@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import usePostData from "../../hooks/usePostData";
 import AdministratorModal from "../AdministratorModal/AdministratorModal";
-
+import imgLink from "../../googleAPI";
 const EditAdmin = ({ administrator, active, setActive, fetchData }) => {
   const [image, setImage] = useState("\\img\\placeholder.jpg");
   const [error, setError] = useState({
@@ -34,7 +34,7 @@ const EditAdmin = ({ administrator, active, setActive, fetchData }) => {
         selectedImage: null,
         imgName: administrator.avatar.split("/").pop(),
       });
-      setImage(administrator.avatar);
+      setImage(imgLink + administrator.avatar);
     }
   }, [active]);
   const {
