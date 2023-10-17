@@ -11,7 +11,11 @@ import BasicInput from "../BasicInput/BasicInput";
 import { useToggle } from "../../hooks/useToggle";
 import usePostData from "../../hooks/usePostData";
 import AlertMessage from "../AlertMessage/AlertMessage";
+import { useSelector } from "react-redux";
+import imgLink from "../../googleAPI";
 const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
   const { status: isOpenAlert, toggleStatus: toggleAlert } = useToggle(false);
   const navigate = useNavigate();
@@ -61,13 +65,21 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
       <div className="stock__data__header">
         <div className="state__holder">{getState(stock.state)}</div>
         <div className="stock__data__field">
-          <img src={stock.positionImg} alt="" className="stock__data__img" />
+          <img
+            src={imgLink + stock.positionImg}
+            alt=""
+            className="stock__data__img"
+          />
           <p>
             <span>{stock.position}</span>
           </p>
         </div>
         <div className="stock__data__field">
-          <img src={stock.providerImg} alt="" className="stock__data__img" />
+          <img
+            src={imgLink + stock.providerImg}
+            alt=""
+            className="stock__data__img"
+          />
           <p>
             <span>{stock.provider}</span>
           </p>
@@ -112,7 +124,8 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
             {stock.sellingPrice} lei
             {stock.state !== "inSale" &&
               stock.state !== "forSale" &&
-              stock.state !== "soldOut" && (
+              stock.state !== "soldOut" &&
+              isAllowed && (
                 <button
                   className="invoice__table__button"
                   onClick={handleToggleEdit}
@@ -155,17 +168,19 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
           <span>{stock.totalSellingPrice} lei</span>
         </p>
       </div>
-      <div className="stock__data__button__wrapper">
-        <BasicButton
-          text="Vezi factura"
-          handleClick={() => {
-            navigate(`/invoices/${stock.invoiceId}`);
-          }}
-        />
-        {stock.state == "validated" && (
-          <BasicButton text="Permiteți vânzarea" handleClick={toggleAlert} />
-        )}
-      </div>
+      {isAllowed && (
+        <div className="stock__data__button__wrapper">
+          <BasicButton
+            text="Vezi factura"
+            handleClick={() => {
+              navigate(`/invoices/${stock.invoiceId}`);
+            }}
+          />
+          {stock.state == "validated" && (
+            <BasicButton text="Permiteți vânzarea" handleClick={toggleAlert} />
+          )}
+        </div>
+      )}
       <AlertMessage
         message="Sunteți siguri că doriți să permiteți vânzarea acestui produs? Dacă confirmați nu veți mai putea modifica datele stocului."
         active={isOpenAlert}
