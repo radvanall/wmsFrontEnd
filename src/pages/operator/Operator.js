@@ -1,10 +1,11 @@
 import React from "react";
 import "./Operator.css";
+import imgLink from "../../googleAPI";
 const Operator = ({ operator }) => {
   return (
     <div className="operator__data">
       <div className="operator__img__container">
-        <img src={operator.avatar} alt="" />
+        <img src={imgLink + operator.avatar} alt="" />
       </div>
       <div className="operator__fields">
         <div className="field__container">
