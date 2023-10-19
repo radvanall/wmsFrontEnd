@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 import { Divide as Hamburger } from "hamburger-react";
 import { toggle as changeState } from "../../toolkitRedux/menuSlice";
 import { resetJwt, resetUserData } from "../../toolkitRedux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import imgLink from "../../googleAPI";
 const Navbar = () => {
   const dispatch = useDispatch();
+  const avatar = useSelector((state) => state.userSlice.userData?.avatar);
   const [isOpen, setOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const setWindowDimension = () => {
@@ -33,20 +36,24 @@ const Navbar = () => {
   const logout = () => {
     dispatch(resetJwt());
     dispatch(resetUserData());
+    dispatch(changeState(false));
   };
   return (
     <div className="Navbar">
       <div className="hamburger">
         <Hamburger toggled={isOpen} toggle={() => setHamburger()}></Hamburger>
       </div>
-      <div className="logo">Dashboard</div>
+      <div className="logo__img">
+        <MdDashboard />
+      </div>
       <div className="login__container">
-        <div className="avatar">
-          <FaRegUser className="avatar_img"></FaRegUser>
-        </div>
         <Link to="/login" className="logo" onClick={logout}>
-          Logout
+          Ieșire
         </Link>
+        <div className="avatar">
+          <img src={imgLink + avatar} alt="" />
+          {/* <FaRegUser className="avatar_img"></FaRegUser> */}
+        </div>
       </div>
     </div>
   );
