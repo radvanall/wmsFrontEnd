@@ -7,3 +7,8 @@
   display: flex;
   justify-content: flex-end;
 }
+@media (max-width: 600px) {
+  .single__order__page {
+    flex-direction: column;
+  }
+}

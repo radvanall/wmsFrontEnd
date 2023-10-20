@@ -12,9 +12,12 @@ import OrderForm from "../../components/OrderForm/OrderForm";
 import DeleteItem from "../../components/DeleteItem/DeleteItem";
 import ValidateButton from "../../components/ValidateButton/ValidateButton";
 import StatusContainer from "../../components/StatusContaier/StatusContainer";
+import { useSelector } from "react-redux";
 import "./SingleOrder.css";
 
 const SingleOrder = () => {
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_OPERATOR";
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
   const { status: isOpenDeleteInvoice, toggleStatus: toggleDeleteInvoice } =
@@ -100,10 +103,13 @@ const SingleOrder = () => {
               <StatusContainer
                 validated={invoice.shipped}
                 setActive={setActive}
+                isAllowed={isAllowed}
               />
+
               <ValidateButton
                 validated={invoice.shipped}
                 toggleDeleteInvoice={toggleDeleteInvoice}
+                isAllowed={isAllowed}
                 invoiceHeader={{
                   id: invoice.id,
                   date: invoice.date,
@@ -121,6 +127,7 @@ const SingleOrder = () => {
                 <InvoiceCard
                   invoice={invoice}
                   refetch={() => getData(orderId)}
+                  isAllowed={isAllowed}
                 />
               </>
             )}
@@ -129,6 +136,7 @@ const SingleOrder = () => {
                 validated={invoice.shipped}
                 data={orders}
                 title="Cumpărături:"
+                isAllowed={isAllowed}
                 isOpenCreate={isOpenCreate}
                 toggleCreate={toggleCreate}
                 openDelete={openDelete}
