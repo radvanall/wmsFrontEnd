@@ -9,8 +9,12 @@ import CreateProduct from "../CreateProduct/CreateProduct";
 import { useToggle } from "../../hooks/useToggle";
 import DeleteMessage from "../DeleteMessage/DeleteMessage";
 import CreateCategory from "../CreateCategory/CreateCategory";
+import CategoryModal from "../CategoryModal/CategoryModal";
+import { useSelector } from "react-redux";
 
 const ProductsMenu = () => {
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const { status: isOpenSearch, toggleStatus: toggleSearch } = useToggle(false);
   const { status: isOpenFilter, toggleStatus: toggleFilter } = useToggle(false);
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
@@ -22,19 +26,23 @@ const ProductsMenu = () => {
     status: isOpenSubcategoryCreate,
     toggleStatus: toggleSubcategoryCreate,
   } = useToggle(false);
+  const { status: isOpenCategoryModal, toggleStatus: toggleCategoryModal } =
+    useToggle(false);
 
   return (
     <div>
       <div className="menu__buttons">
         <div className="create__popup">
-          <BiPlusMedical
-            className={
-              isOpenCreate
-                ? "search_menu_button menu__opened"
-                : "search_menu_button menu__closed"
-            }
-            onClick={toggleCreate}
-          />
+          {isAllowed && (
+            <BiPlusMedical
+              className={
+                isOpenCreate
+                  ? "search_menu_button menu__opened"
+                  : "search_menu_button menu__closed"
+              }
+              onClick={toggleCreate}
+            />
+          )}
           <ul className={isOpenCreate ? "popup__opened" : "popup__closed"}>
             <li
               onClick={() => {
@@ -44,7 +52,7 @@ const ProductsMenu = () => {
             >
               Crează produs
             </li>
-            <li
+            {/* <li
               onClick={() => {
                 toggleCategoryCreate();
                 toggleCreate();
@@ -59,6 +67,14 @@ const ProductsMenu = () => {
               }}
             >
               Crează subcategorie
+            </li> */}
+            <li
+              onClick={() => {
+                toggleCategoryModal();
+                toggleCreate();
+              }}
+            >
+              Categorii/Subcategorii
             </li>
           </ul>
         </div>
@@ -85,7 +101,7 @@ const ProductsMenu = () => {
         active={isOpenProductCreate}
         setActive={toggleProductCreate}
       />
-      <CreateCategory
+      {/* <CreateCategory
         label="Introduceți categoria nouă"
         active={isOpenCategoryCreate}
         close={toggleCategoryCreate}
@@ -96,6 +112,10 @@ const ProductsMenu = () => {
         active={isOpenSubcategoryCreate}
         close={toggleSubcategoryCreate}
         endpoint="http://localhost:8080/api/subcategory/create"
+      /> */}
+      <CategoryModal
+        active={isOpenCategoryModal}
+        closeModal={toggleCategoryModal}
       />
       <DeleteMessage />
     </div>

@@ -34,7 +34,7 @@
   background-color: white;
   border: 1px solid var(--blue-color);
   border-radius: 5px;
-  width: 160px;
+  width: 175px;
 }
 .popup__closed {
   display: none;
