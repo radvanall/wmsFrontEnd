@@ -15,11 +15,14 @@ import AddStock from "../../components/AddStock/AddStock";
 import BasicButton from "../../components/BasicButton/BasicButton";
 import DeleteItem from "../../components/DeleteItem/DeleteItem";
 import InvoiceContentTable from "../../components/InvoiceContentTable/InvoiceContentTable";
+import { useSelector } from "react-redux";
 import ValidateButton from "../../components/ValidateButton/ValidateButton";
 // import PDFFile from "../../components/PDFFile/PDFFile";
 // import { PDFDownloadLink } from "@react-pdf/renderer";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const { status: isOpenEdit, toggleStatus: toggleEdit } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
@@ -100,6 +103,7 @@ const SingleInvoice = () => {
       {invoice && pdfStocks && (
         <ValidateButton
           validated={invoice.validated}
+          isAllowed={isAllowed}
           toggleDeleteInvoice={toggleDeleteInvoice}
           invoiceHeader={{
             id: invoice.id,
@@ -139,11 +143,18 @@ const SingleInvoice = () => {
         </PDFDownloadLink>
       )} */}
 
-      {invoice && <InvoiceReceptionCard invoice={invoice} getData={getData} />}
+      {invoice && (
+        <InvoiceReceptionCard
+          invoice={invoice}
+          getData={getData}
+          isAllowed={isAllowed}
+        />
+      )}
       <br />
       {stocks && (
         <InvoiceContentTable
           validated={invoice.validated}
+          isAllowed={isAllowed}
           data={stocks}
           title="Stocuri:"
           isOpenCreate={isOpenCreate}
