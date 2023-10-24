@@ -10,6 +10,7 @@ import formChange from "../ProductForm/ProductFormFunctions/formChange";
 import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import useProductFormEdit from "../ProductForm/ProductFormHooks/useProductFormEdit";
 import putProduct from "../ProductForm/ProductFormFunctions/putProduct";
+import imgLink from "../../googleAPI";
 
 const EditProduct = ({ active, setActive, product }) => {
   const [image, setImage] = useState("\\img\\placeholder.jpg");
@@ -72,7 +73,7 @@ const EditProduct = ({ active, setActive, product }) => {
       minQuantity: product.minQuantity,
       imgName: product.imgName,
     });
-    setImage(product.img);
+    setImage(imgLink + product.img);
   }, [product]);
   return (
     <div>
