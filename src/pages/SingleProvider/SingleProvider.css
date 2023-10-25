@@ -22,3 +22,21 @@
 .single__provider__wrapper .products {
   grid-area: products;
 }
+@media (max-width: 750px) {
+  .single__provider__wrapper {
+    grid-template-areas:
+      "card  lineChart lineChart lineChart"
+      "invoices invoices invoices invoices"
+      "products products products products";
+  }
+}
+@media (max-width: 700px) {
+  .single__provider__wrapper {
+    grid-template-columns: 99%;
+    grid-template-areas:
+      "card"
+      "lineChart"
+      "invoices"
+      "products";
+  }
+}

@@ -22,3 +22,15 @@
 .single__customer__wrapper .products {
   grid-area: products;
 }
+@media (max-width: 750px) {
+  .single__customer__wrapper {
+    grid-template-columns: 99%;
+    /* grid-template-columns: repeat(1, 1fr); */
+    grid-template-areas:
+      "card"
+      "lineChart"
+      "invoices"
+      "products";
+    overflow: hidden;
+  }
+}

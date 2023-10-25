@@ -99,12 +99,26 @@
   margin-left: 5px;
   background-color: inherit;
 }
-@media (max-width: 550px) {
+@media (max-width: 650px) {
   table {
     font-size: 12px;
     overflow-x: auto;
   }
   .table__wrapper {
     overflow-x: auto;
+  }
+
+  .table__wrapper::-webkit-scrollbar {
+    width: 0;
+    height: 5px;
+  }
+
+  .table__wrapper::-webkit-scrollbar-track {
+    background-color: #fe6240;
+    border-radius: 5px;
+  }
+  .table__wrapper::-webkit-scrollbar-thumb {
+    background-color: #7a2512;
+    border-radius: 5px;
   }
 }
