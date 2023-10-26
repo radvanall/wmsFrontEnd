@@ -9,16 +9,19 @@ const ValidateButton = ({
   toggleDeleteInvoice,
   invoiceHeader,
   pdfStocks,
+  isAllowed,
 }) => {
   return (
     <div className="delete__invoce__wrapper">
-      {!validated && (
-        <button
-          className="invoice__table__button"
-          onClick={toggleDeleteInvoice}
-        >
-          <RiDeleteBin6Line className="search_menu_button menu__opened" />
-        </button>
+      {!validated && isAllowed && (
+        <>
+          <button
+            className="invoice__table__button"
+            onClick={toggleDeleteInvoice}
+          >
+            <RiDeleteBin6Line className="search_menu_button menu__opened" />
+          </button>
+        </>
       )}
       <PDFDownloadLink
         document={<PDFFile invoiceHeader={invoiceHeader} data={pdfStocks} />}
