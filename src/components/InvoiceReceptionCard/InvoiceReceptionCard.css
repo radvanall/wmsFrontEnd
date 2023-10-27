@@ -27,3 +27,9 @@
 .invoice__reception__block p span:first-child {
   font-weight: 700;
 }
+
+@media (max-width: 750px) {
+  .invoice__reception__wrapper {
+    font-size: calc(12px + (20 - 12) * ((100vw - 320px) / (1889 - 320)));
+  }
+}

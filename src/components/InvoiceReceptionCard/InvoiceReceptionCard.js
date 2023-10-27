@@ -6,6 +6,7 @@ import Card from "../Card/Card";
 import Modal from "../Modal/Modal";
 import StatusContainer from "../StatusContaier/StatusContainer";
 import "./InvoiceReceptionCard.css";
+import imgLink from "../../googleAPI";
 
 const InvoiceReceptionCard = ({ invoice, getData, isAllowed }) => {
   console.log("invoice:", invoice);
@@ -38,7 +39,7 @@ const InvoiceReceptionCard = ({ invoice, getData, isAllowed }) => {
 
       <div className="invoice__reception__wrapper">
         <div className="invoice__reception__block">
-          <img src={invoice.image} alt="" />
+          <img src={imgLink + invoice.image} alt="" />
           <p className="provider">{invoice.provider}</p>
         </div>
         <div className="invoice__reception__block">
