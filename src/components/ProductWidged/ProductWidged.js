@@ -1,11 +1,11 @@
 import React from "react";
 import "./ProductWidged.css";
-
+import imgLink from "../../googleAPI";
 const ProductWidged = ({ product }) => {
   return (
     <div className="widged__container">
       <div className="widged__img__container">
-        <img src={product.img} alt="" />
+        <img src={imgLink + product.img} alt="" />
       </div>
       <div className="product__fields">
         <div className="field__container">
@@ -30,7 +30,11 @@ const ProductWidged = ({ product }) => {
         </div>
         <div className="field__container">
           <h2>Cantitate în stoc:</h2>
-          <h2>{product.cantitate}</h2>
+          <h2>{product.cantitate ? product.cantitate : 0}</h2>
+        </div>
+        <div className="field__container">
+          <h2>Cantitate minimă admisibilă:</h2>
+          <h2>{product.minQuantity ? product.minQuantity : 0}</h2>
         </div>
         <div className="field__container">
           <h2>Unitate:</h2>

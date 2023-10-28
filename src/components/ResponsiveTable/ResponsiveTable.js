@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import BasicButton from "../BasicButton/BasicButton";
+import imgLink from "../../googleAPI";
 import "./ResponsiveTable.css";
 const ResponsiveTable = ({
   data,
@@ -72,7 +73,11 @@ const ResponsiveTable = ({
                     cell === "id" ? { width: "5%" } : { width: `${cellWidth}%` }
                   }
                 >
-                  {cell === "image" ? <img src={row[cell]} /> : row[cell]}
+                  {cell === "image" ? (
+                    <img src={imgLink + row[cell]} />
+                  ) : (
+                    row[cell]
+                  )}
                 </td>
               ))}
             {(handleEdit || handleDelete || handleDetails) && (
