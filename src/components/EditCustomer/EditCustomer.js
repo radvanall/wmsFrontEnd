@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import usePostData from "../../hooks/usePostData";
 import CustomerModal from "../CustomerModal/CustomerModal";
+import imgLink from "../../googleAPI";
 const EditCustomer = ({ customer, active, setActive, fetchData }) => {
   const [image, setImage] = useState("\\img\\placeholder.jpg");
   const [nameError, setNameError] = useState(false);
@@ -23,7 +24,7 @@ const EditCustomer = ({ customer, active, setActive, fetchData }) => {
         selectedImage: null,
         imgName: customer.avatar.split("/").pop(),
       });
-      setImage(customer.avatar);
+      setImage(imgLink + customer.avatar);
     }
   }, [active]);
   const { message, loading, error, resetMessage, postData } = usePostData();

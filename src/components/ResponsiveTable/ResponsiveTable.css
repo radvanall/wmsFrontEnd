@@ -8,6 +8,7 @@
   display: block;
   overflow: auto;
   white-space: normal;
+  font-size: calc(12px + (20 - 12) * ((100vw - 320px) / (1889 - 320)));
 }
 .responsive__table thead {
   display: block;
@@ -91,10 +92,15 @@ th {
 .responsive__table tr td {
   /* word-break: break-all; */
   padding-left: 4px;
+  padding-right: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   white-space: normal;
+}
+.responsive__table tr .Operatorul,
+.responsive__table tr .Data {
+  word-break: break-word;
 }
 .responsive__table th {
   white-space: normal;

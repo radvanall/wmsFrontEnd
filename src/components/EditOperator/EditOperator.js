@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import usePostData from "../../hooks/usePostData";
 import OperatorModal from "../OperatorModal/OperatorModal";
+import imgLink from "../../googleAPI";
 
 const EditOperator = ({
   operator,
@@ -35,7 +36,7 @@ const EditOperator = ({
         selectedImage: null,
         imgName: operator.avatar.split("/").pop(),
       });
-      setImage(operator.avatar);
+      setImage(imgLink + operator.avatar);
     }
   }, [active]);
   const { message, loading, error, resetMessage, postData } = usePostData();

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import ProviderModal from "../ProviderModal/ProviderModal";
 import usePostData from "../../hooks/usePostData";
+import imgLink from "../../googleAPI";
 const EditProvider = ({ provider, active, setActive, fetchData }) => {
   const [image, setImage] = useState("\\img\\placeholder.jpg");
   const [nameError, setNameError] = useState(false);
@@ -24,7 +25,7 @@ const EditProvider = ({ provider, active, setActive, fetchData }) => {
         selectedImage: null,
         imgName: provider.image.split("/").pop(),
       });
-      setImage(provider.image);
+      setImage(imgLink + provider.image);
     }
   }, [active]);
   const { message, loading, error, resetMessage, postData } = usePostData();

@@ -5,6 +5,7 @@ import { TiEdit } from "react-icons/ti";
 import getFormatedDate from "../../functions/getFormatedDate";
 import CardModal from "../CardModal/CardModal";
 import { useToggle } from "../../hooks/useToggle";
+import imgLink from "../../googleAPI";
 const InvoiceCard = ({ invoice, refetch, isAllowed }) => {
   console.log("invoice:", invoice);
   const { status: isOpenAddressModal, toggleStatus: toggleAddressModal } =
@@ -15,7 +16,7 @@ const InvoiceCard = ({ invoice, refetch, isAllowed }) => {
         <div className="order__card">
           <div className="client__block">
             <h3>Client</h3>
-            <img src={invoice.image} alt="" />
+            <img src={imgLink + invoice.image} alt="" />
             <p>{invoice.clientName}</p>
           </div>
           <div className="invoice__block">
