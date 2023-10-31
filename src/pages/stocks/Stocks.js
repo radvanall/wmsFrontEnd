@@ -141,7 +141,7 @@ const Stocks = () => {
       {loading && <LoadingComponent />}
       {data && (
         <>
-          <button
+          {/* <button
             onClick={() => {
               console.log(checkboxStates);
               console.log("filter criterias stocks:", filterCriterias);
@@ -151,7 +151,7 @@ const Stocks = () => {
             }}
           >
             click
-          </button>
+          </button> */}
           <div className="stock__menu">
             <FiFilter
               className={
