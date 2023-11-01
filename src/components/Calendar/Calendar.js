@@ -175,6 +175,7 @@ const Calendar = ({
         <CloseModal
           handleCloseModal={() => {
             setModalActive(false);
+            setHours(0);
           }}
         />
         <div className="modal__name__container">
