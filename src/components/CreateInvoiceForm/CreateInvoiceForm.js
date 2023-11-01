@@ -5,6 +5,7 @@ import InvoiceForm from "../InvoiceForm/InvoiceForm";
 import InvoiceTable from "../InvoiceTable/InvoiceTable";
 import AlertMessage from "../AlertMessage/AlertMessage";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
+import CloseModal from "../CloseModal/CloseModal";
 
 const CreateInvoiceForm = ({
   active,
@@ -50,7 +51,8 @@ const CreateInvoiceForm = ({
   return (
     <div>
       <Modal active={active}>
-        <CgCloseR onClick={handleCloseForm} />
+        {/* <CgCloseR onClick={handleCloseForm} /> */}
+        <CloseModal handleCloseModal={handleCloseForm} />
         {data ? (
           <div className="create__invoice">
             <div className="invoice__form__table__wrapper">
@@ -138,7 +140,7 @@ const CreateInvoiceForm = ({
               </button>
             </AlertMessage>
             <button onClick={saveData} className="invoice__button save__button">
-              salveaza
+              Salveaza
             </button>
           </div>
         ) : (
