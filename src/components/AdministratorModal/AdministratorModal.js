@@ -115,6 +115,12 @@ const AdministratorModal = ({
             Submit
           </button>
           {message && <label style={{ color: "red" }}>{message}</label>}
+          {error.name && (
+            <label style={{ color: "red" }}>Introduce-ți nickname-ul</label>
+          )}
+          {error.password && (
+            <label style={{ color: "red" }}>Introduce-ți parola</label>
+          )}
         </form>
 
         <img src={image} alt="img" className="product_add_img" />
