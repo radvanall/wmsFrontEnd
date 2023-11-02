@@ -7,6 +7,7 @@ import Modal from "../Modal/Modal";
 import StatusContainer from "../StatusContaier/StatusContainer";
 import "./InvoiceReceptionCard.css";
 import imgLink from "../../googleAPI";
+import BasicButton from "../BasicButton/BasicButton";
 
 const InvoiceReceptionCard = ({ invoice, getData, isAllowed }) => {
   console.log("invoice:", invoice);
@@ -80,12 +81,16 @@ const InvoiceReceptionCard = ({ invoice, getData, isAllowed }) => {
         </div>
       </div>
       <Modal active={active}>
-        <p>Sunteți siguri că doriți să validați factura?</p>
-        <p>
-          După validare nu va fi posibil de editat sau șters această factură.
-        </p>
-        <button onClick={handleValidate}>Validează</button>
-        <button onClick={() => setActive(false)}>Anulează</button>
+        <div className="validation__modal">
+          <p>Sunteți siguri că doriți să validați factura?</p>
+          <p>
+            După validare nu va fi posibil de editat sau șters această factură.
+          </p>
+          <div className="validation__modal__buttons">
+            <BasicButton handleClick={handleValidate} text="Validează" />
+            <BasicButton handleClick={() => setActive(false)} text="Anulează" />
+          </div>
+        </div>
       </Modal>
     </Card>
   );
