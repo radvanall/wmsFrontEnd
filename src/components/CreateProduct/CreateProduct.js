@@ -3,6 +3,7 @@ import Modal from "../Modal/Modal";
 import "./CreateProduct.css";
 import useFetch from "../../hooks/useFetch";
 import { CgCloseR } from "react-icons/cg";
+import CloseModal from "../CloseModal/CloseModal";
 import ProductForm from "../ProductForm/ProductForm";
 import useCheckProductFormError from "../ProductForm/ProductFormHooks/useCheckProductFormError";
 import closeForm from "../ProductForm/ProductFormFunctions/closeForm";
@@ -69,7 +70,8 @@ const CreateProduct = ({ active, setActive }) => {
   return (
     <div>
       <Modal active={active}>
-        <CgCloseR onClick={handleCloseForm} />
+        {/* <CgCloseR onClick={handleCloseForm} /> */}
+        <CloseModal handleCloseModal={handleCloseForm} />
         {fail === null ? (
           <ProductForm
             handleSubmit={handleSubmit}
