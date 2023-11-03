@@ -629,15 +629,6 @@ const SellingForm = ({
 
   return (
     <form onSubmit={handleSubmit} className="selling__form">
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          console.log("fullData=", fullData);
-          console.log("positons:", positions);
-        }}
-      >
-        test
-      </button>
       <BasicInput
         label="Data"
         type="date"

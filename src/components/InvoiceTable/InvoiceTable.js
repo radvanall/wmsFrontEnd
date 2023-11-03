@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./InvoiceTable.css";
 import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import imgLink from "../../googleAPI";
 const InvoiceTable = ({
   data,
   header,
@@ -63,7 +64,7 @@ const InvoiceTable = ({
                         {key === "productImg" ? (
                           <img
                             className="invoice__table__img"
-                            src={row[key]}
+                            src={imgLink + row[key]}
                             alt=""
                           />
                         ) : (
