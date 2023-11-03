@@ -4,7 +4,6 @@ import ResponsiveTable from "../ResponsiveTable/ResponsiveTable";
 import Card from "../Card/Card";
 import useGetData from "../../hooks/useGetData";
 import { useNavigate } from "react-router-dom";
-
 const PositionOrders = ({ id }) => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
@@ -30,17 +29,19 @@ const PositionOrders = ({ id }) => {
   const handleDetails = (id) => {
     navigate(`/orders/${id}`);
   };
+
   return (
     <Card>
-      {data && orders.length && (
+      {data && orders.length ? (
         <ResponsiveTable
           data={orders}
           title="Vânzări"
           handleDetails={handleDetails}
         />
+      ) : (
+        <h2 className="missing__result">Nu există rezultate</h2>
       )}
     </Card>
   );
 };
-
 export default PositionOrders;
