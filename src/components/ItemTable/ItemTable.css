@@ -48,6 +48,16 @@
   flex-wrap: wrap;
   padding: 5px 0 5px 0;
 }
+.item__table__details {
+  padding: 3px;
+  border-radius: 5px;
+  border: solid 1px var(--blue-color);
+}
+.item__table__details:hover {
+  border: none;
+  background-color: var(--blue-color);
+  color: white;
+}
 .item__table tbody {
   font-size: calc(8px + (16 - 8) * ((100vw - 320px) / (1889 - 320)));
   display: block;
@@ -66,7 +76,11 @@
 .item__table__wrapper:hover .item__table__body::-webkit-scrollbar {
   width: 5px;
 }
-
+.missing__result {
+  text-align: center;
+  font-weight: 600;
+  padding: 10px;
+}
 .item__table__body::-webkit-scrollbar-track {
   background-color: #fe6240;
   border-radius: 5px;

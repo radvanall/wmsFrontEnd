@@ -85,13 +85,13 @@ const ItemTable = ({
               ))}
             </tbody>
           </table>
+          <div className="all__item__table">
+            <BasicButton text="Vezi toate" handleClick={handleFooterClick} />
+          </div>
         </>
       ) : (
-        <h2>Nu exista rezultate</h2>
+        <h2 className="missing__result">Nu exista rezultate</h2>
       )}
-      <div className="all__item__table">
-        <BasicButton text="Vezi toate" handleClick={handleFooterClick} />
-      </div>
     </div>
   );
 };
