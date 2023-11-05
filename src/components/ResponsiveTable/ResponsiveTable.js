@@ -135,7 +135,7 @@ const ResponsiveTable = ({
       </tbody>
     </table>
   ) : (
-    <p>Tabelul e gol</p>
+    <p className="missing__result">Tabelul e gol</p>
   );
 };
 
