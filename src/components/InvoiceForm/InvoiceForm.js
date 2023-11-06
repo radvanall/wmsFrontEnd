@@ -144,7 +144,7 @@ const InvoiceForm = ({
                 </h2>
               ) : (
                 <button onClick={addPosition} className="invoice__button">
-                  add
+                  Adaugă
                 </button>
               )}
             </div>

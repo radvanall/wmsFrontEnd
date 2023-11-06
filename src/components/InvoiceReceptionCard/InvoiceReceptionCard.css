@@ -27,7 +27,18 @@
 .invoice__reception__block p span:first-child {
   font-weight: 700;
 }
-
+.validation__modal {
+  max-width: 300px;
+}
+.validation__modal p {
+  text-align: justify;
+  line-height: 20px;
+}
+.validation__modal__buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
 @media (max-width: 750px) {
   .invoice__reception__wrapper {
     font-size: calc(12px + (20 - 12) * ((100vw - 320px) / (1889 - 320)));
