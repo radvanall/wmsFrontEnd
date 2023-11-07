@@ -17,6 +17,7 @@ const ImagePicker = ({ imgName, onSelectedFile, handleImgNameChange }) => {
         name="imgName"
         id="add_product_name"
         className="img_name_input"
+        style={{ paddingLeft: "5px" }}
         value={imgName}
         onChange={handleImgNameChange}
       />
