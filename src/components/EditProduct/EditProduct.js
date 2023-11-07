@@ -10,6 +10,7 @@ import formChange from "../ProductForm/ProductFormFunctions/formChange";
 import selectFile from "../ProductForm/ProductFormFunctions/selectFile";
 import useProductFormEdit from "../ProductForm/ProductFormHooks/useProductFormEdit";
 import putProduct from "../ProductForm/ProductFormFunctions/putProduct";
+import CloseModal from "../CloseModal/CloseModal";
 import imgLink from "../../googleAPI";
 
 const EditProduct = ({ active, setActive, product }) => {
@@ -78,8 +79,7 @@ const EditProduct = ({ active, setActive, product }) => {
   return (
     <div>
       <Modal active={active}>
-        <CgCloseR onClick={handleCloseForm} />
-        <h2>{product.name}</h2>
+        <CloseModal handleCloseModal={handleCloseForm} />
         {fail === null ? (
           <ProductForm
             handleSubmit={handleSubmit}
