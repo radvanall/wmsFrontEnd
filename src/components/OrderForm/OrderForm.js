@@ -94,17 +94,12 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     const position = displayedPositions.find(
       (position) => parseInt(position.id) === parseInt(e.currentTarget.id)
     );
-    //setImage(position.image);
-    // setSelectedPosition(position);
+
     setSelectedPosition(position);
     setOpened(false);
     setDisplayedPositions(positions);
     console.log("SELECTED:", position);
     setProductQuantity(0);
-    // setErrors((prev) => ({
-    //   ...prev,
-    //   clientError: false,
-    // }));
   };
   const handleChange = (e) => {
     setSelectedPosition({
@@ -125,10 +120,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     setProductQuantity(0);
   };
   const changeQuantity = (e) => {
-    // setErrors((prev) => ({
-    //   ...prev,
-    //   quantityError: false,
-    // }));
     console.log("cantitatea:", e.target.value);
     if (parseInt(e.target.value) <= parseInt(selectedPosition.quantity))
       setProductQuantity(e.target.value);
@@ -225,49 +216,10 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
       return false;
     }
 
-    // const newIndex =
-    //   parseInt(currentStockQuantity) === parseInt(productQuantity)
-    //     ? selectedPosition.currentStockIndex + 1
-    //     : selectedPosition.currentStockIndex;
-    // const updatedPosition = { ...selectedPosition };
-
-    // if (
-    //   parseInt(updatedPosition.currentStockIndex) <
-    //   updatedPosition.stocks.length
-    // ) {
-    //   const updatedStock = {
-    //     ...updatedPosition.stocks[updatedPosition.currentStockIndex],
-    //   };
-    //   updatedStock.remainingQuantity =
-    //     parseInt(currentStockQuantity) - parseInt(productQuantity);
-    //   updatedPosition.quantity =
-    //     parseInt(updatedPosition.quantity) - parseInt(productQuantity);
-    //   const finalPosition = {
-    //     ...updatedPosition,
-    //     currentStockIndex: newIndex,
-    //     stocks: updatedPosition.stocks.map((stock) => {
-    //       if (parseInt(stock.id) === updatedStock.id) return updatedStock;
-    //       else return stock;
-    //     }),
-    //   };
-
-    //   const newPositions = positions.map((position) => {
-    //     if (parseInt(position.id) === parseInt(selectedPosition.id))
-    //       return finalPosition;
-    //     else return position;
-    //   });
-
-    //   console.log("newPositions:", newPositions);
-    //   setDisplayedPositions(newPositions);
-    //   setPositions(newPositions);
-
-    //   setSelectedPosition(finalPosition);
-    // }
     return true;
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
     if (selectedPosition.name === "") {
       console.log("name");
       setErrors((prev) => ({
@@ -294,8 +246,7 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
       productError: false,
       totalQuantityError: false,
     }));
-    // const sellingPrice =
-    //   selectedPosition.stocks[selectedPosition.currentStockIndex].sellingPrice;
+
     const stockId =
       selectedPosition.stocks[selectedPosition.currentStockIndex].id;
     const newOrders = [{ stockId, quantity: productQuantity, invoiceId }];
@@ -307,76 +258,16 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
       resetMessage();
     }, 3000);
 
-    // const newRow = {
-    //   id: id,
-    //   image: selectedPosition.image,
-    //   Produs: selectedPosition.name,
-    //   Cantitate: productQuantity,
-    //   ["Preț/buc."]: sellingPrice,
-    //   ["Preț total/lei"]:
-    //     parseFloat(productQuantity) * parseFloat(sellingPrice),
-    //   stockId: stockId,
-    //   positionId: selectedPosition.id,
-    //   last: true,
-    // };
-    // handleTableInsert(newRow);
     setErrors((prev) => ({
       ...prev,
       invoiceError: false,
     }));
-    // setId(id + 1);
   };
   const handleConfirmMultyStock = async () => {
-    // const updatedStocks = selectedPosition.stocks.map((stock) => {
-    //   const modifiedStock = stockArray.find(
-    //     (item) => parseInt(item.id) === parseInt(stock.id)
-    //   );
-    //   return modifiedStock ? modifiedStock : stock;
-    // });
-    // const index = updatedStocks.findIndex(
-    //   (stock) => stock.remainingQuantity > 0
-    // );
-    // const newIndex = index === -1 ? selectedPosition.stocks.length : index;
-    // const newPositions = positions.map((position) => {
-    //   if (parseInt(position.id) === parseInt(selectedPosition.id)) {
-    //     return {
-    //       ...position,
-    //       quantity: parseInt(position.quantity) - parseInt(productQuantity),
-    //       currentStockIndex: newIndex,
-    //       stocks: updatedStocks,
-    //     };
-    //   } else return position;
-    // });
-    // setPositions(newPositions);
-
-    // setSelectedPosition({
-    //   ...selectedPosition,
-    //   quantity: parseInt(selectedPosition.quantity) - parseInt(productQuantity),
-    //   currentStockIndex: newIndex,
-    //   stocks: updatedStocks,
-    // });
-
-    // setDisplayedPositions(newPositions);
-    // let newId = 0;
     const newOrders = usedStocks.map((stock) => ({
       stockId: stock.id,
       quantity: stock.usedQuantity,
       invoiceId,
-      //   const newRow = {
-      //     id: newId,
-      //     image: selectedPosition.image,
-      //     Produs: selectedPosition.name,
-      //     Cantitate: stock.usedQuantity,
-      //     ["Preț/buc."]: stock.price,
-      //     ["Preț total/lei"]:
-      //       parseFloat(stock.usedQuantity) * parseFloat(stock.price),
-      //     stockId: stock.id,
-      //     positionId: selectedPosition.id,
-      //     last: true,
-      //   };
-      //   if (!handleTableInsert(newRow)) newId++;
-
-      // return newRow;
     }));
 
     console.log("newOrders", newOrders);
@@ -386,21 +277,10 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     setTimeout(() => {
       resetMessage();
     }, 3000);
-    // setErrors((prev) => ({
-    //   ...prev,
-    //   invoiceError: false,
-    // }));
-    // setId(newId);
+
     setStockArray([]);
     setUsedStocks([]);
     toggleMessage();
-    // setSelectedTableRowId(-1);
-    // dispatch(resetPositionBeforeEdit());
-    // dispatch(setFormMode("add"));
-    // setIsModifying(true);
-    // setTimeout(() => {
-    //   setIsModifying(false);
-    // }, 2000);
   };
   const handleCancelModalMessage = () => {
     toggleMessage();
@@ -412,20 +292,10 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
   };
   return (
     <Modal active={active}>
-      <button
-        onClick={() => {
-          console.log("selectedPosition:", selectedPosition);
-          console.log("positions:", positions);
-          console.log("selectedPosition:", selectedPosition);
-        }}
-      >
-        test
-      </button>
       <CloseModal handleCloseModal={handleCloseModal} />
       <label className="input__label">Selectați produsul:</label>
       <CustomSelect
         positions={displayedPositions}
-        // disableSelect={formMode === "add" ? false : true}
         setOpened={toggleSelect}
         opened={opened}
         image={selectedPosition.image}
