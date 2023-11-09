@@ -1,5 +1,5 @@
 .stats {
-  width: 100%;
+  /* width: 100%; */
   padding: 10px;
   display: grid;
   gap: 10px;
@@ -13,6 +13,7 @@
 }
 .totalBalance {
   grid-area: totalBalance;
+  min-width: 0;
 }
 .todayChart {
   grid-area: todayChart;
@@ -20,13 +21,33 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 5px;
+  min-width: 0;
 }
 .productBalance {
   grid-area: productBalance;
+  min-width: 0;
 }
 .providerBalance {
   grid-area: providerBalance;
+  min-width: 0;
 }
 .customerP {
   grid-area: customerP;
+  min-width: 0;
+}
+@media (max-width: 790px) {
+  .stats {
+    grid-template-columns: 99%;
+    /* grid-template-columns: repeat(1, 1fr); */
+    grid-template-areas:
+      "totalBalance"
+      "todayChart"
+      "productBalance"
+      "providerBalance"
+      "customerP";
+    overflow: hidden;
+  }
+  .totalBalance {
+    font-size: 12px;
+  }
 }

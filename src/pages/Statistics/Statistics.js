@@ -176,6 +176,8 @@ const getTopBalance = (data, period) => {
       });
     }
   }
+  console.error("chartData", chartData);
+  console.error("chartDataSet", chartDataSet);
   return {
     labels: weekStartDates.map((item) => getMonthAndYear(item, "RO-ro")),
     datasets: [...chartDataSet],
