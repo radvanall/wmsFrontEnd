@@ -6,8 +6,12 @@ import EditProvider from "../EditProvider/EditProvider";
 import DeleteItem from "../DeleteItem/DeleteItem";
 import Card from "../Card/Card";
 import "./ProviderCard.css";
+import { useSelector } from "react-redux";
+import imgLink from "../../googleAPI";
 
 const ProviderCard = ({ provider, getData }) => {
+  const role = useSelector((state) => state.userSlice.userData?.authority);
+  const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
   useEffect(() => {
@@ -19,7 +23,11 @@ const ProviderCard = ({ provider, getData }) => {
   return (
     <Card>
       <div className="provider__card__wrapper">
-        <img src={provider.image} alt="#" className="provider__image" />
+        <img
+          src={imgLink + provider.image}
+          alt="#"
+          className="provider__image"
+        />
         <div className="provider_rows">
           <p>
             <span>Name:</span>
@@ -42,25 +50,26 @@ const ProviderCard = ({ provider, getData }) => {
             <span>{provider.positions.length ?? "0"}</span>
           </p>
         </div>
-
-        <div className="provider__actions">
-          <TiEdit
-            className={
-              isOpenModify
-                ? "search_menu_button menu__opened"
-                : "search_menu_button menu__closed"
-            }
-            onClick={toggleModify}
-          />
-          <RiDeleteBin6Line
-            className={
-              isOpenDelete
-                ? "search_menu_button menu__opened"
-                : "search_menu_button menu__closed"
-            }
-            onClick={toggleDelete}
-          />
-        </div>
+        {isAllowed && (
+          <div className="provider__actions">
+            <TiEdit
+              className={
+                isOpenModify
+                  ? "search_menu_button menu__opened"
+                  : "search_menu_button menu__closed"
+              }
+              onClick={toggleModify}
+            />
+            <RiDeleteBin6Line
+              className={
+                isOpenDelete
+                  ? "search_menu_button menu__opened"
+                  : "search_menu_button menu__closed"
+              }
+              onClick={toggleDelete}
+            />
+          </div>
+        )}
       </div>
       <EditProvider
         provider={provider}
