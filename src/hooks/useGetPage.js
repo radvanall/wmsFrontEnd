@@ -1,9 +1,15 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux/es/exports";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { toggle as changeState } from "../toolkitRedux/menuSlice";
+import { resetJwt, resetUserData } from "../toolkitRedux/userSlice";
+import { open } from "../toolkitRedux/sessionExpiredSlice";
+import { useNavigate } from "react-router-dom";
 
 const useGetPage = (url, filters) => {
   const jwt = useSelector((state) => state.userSlice.jwt);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,6 +35,14 @@ const useGetPage = (url, filters) => {
       setData(response.data);
       // console.log("data:", response.data);
     } catch (err) {
+      console.log(err);
+      if (err.response.status == 403) {
+        dispatch(resetJwt());
+        dispatch(resetUserData());
+        dispatch(changeState(false));
+        navigate("/login");
+        dispatch(open());
+      }
       setError(err.message);
     } finally {
       setLoading(false);

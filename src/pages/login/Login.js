@@ -5,6 +5,7 @@ import BasicButton from "../../components/BasicButton/BasicButton";
 import useAuth from "../../hooks/useAuth";
 import { resetJwt, resetUserData } from "../../toolkitRedux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import SessionExpiredMessage from "../../components/SessionExpiredMessage/SessionExpiredMessage";
 const Login = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userSlice.userData);
@@ -88,6 +89,7 @@ const Login = () => {
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
+      <SessionExpiredMessage />
     </div>
   );
 };
