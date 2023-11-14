@@ -3,12 +3,16 @@ import axios from "axios";
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (jwt) => {
-    const response = await axios.get(
-      "http://localhost:8080/api/position/readtablepositions",
-      { headers: { Authorization: `Bearer ${jwt}` } }
-    );
-    console.log("response=", response.data);
-    return response.data;
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/position/readtablepositions",
+        { headers: { Authorization: `Bearer ${jwt}` } }
+      );
+      console.log("response=", response.data);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
   }
 );
 

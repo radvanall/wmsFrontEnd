@@ -5,6 +5,7 @@ import deleteSlice from "./deleteMessageSlice";
 import stockFilterSlice from "./stockFilterSlice";
 import newOrderSlice from "./newOrderSlice";
 import userSlice from "./userSlice";
+import sessionExpiredSlice from "./sessionExpiredSlice";
 const rootReducer = combineReducers({
   menuState: menuSlice,
   productsSlice: productsSlice,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   stockFilterSlice: stockFilterSlice,
   newOrderSlice: newOrderSlice,
   userSlice: userSlice,
+  sessionExpiredSlice: sessionExpiredSlice,
 });
 export const store = configureStore({
   reducer: rootReducer,
