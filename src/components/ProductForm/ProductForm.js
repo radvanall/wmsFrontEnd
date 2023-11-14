@@ -26,12 +26,13 @@ const ProductForm = ({
             Introduceți numele produsului:
           </label>
           <label className="input_product_label">
-            Denumirea produsului:
+            Numele produsului:
             <input
               type="text"
               name="product_name"
               id="add_product_name"
               className="add_product_input"
+              style={{ marginLeft: "18px" }}
               value={formFields.product_name}
               onChange={handleFormChange}
             />
@@ -88,6 +89,17 @@ const ProductForm = ({
             </select>
           </label>
           <label className="select_product_label">
+            Cantitatea minimă admisibilă:
+            <input
+              type="text"
+              name="minQuantity"
+              id="add_minQuantity"
+              className="add_minQuantity"
+              value={formFields.minQuantity}
+              onChange={handleFormChange}
+            />
+          </label>
+          <label className="select_product_label">
             Unitate:
             <select
               name="unity"
@@ -134,6 +146,7 @@ const ProductForm = ({
               name="imgName"
               id="add_product_name"
               className="img_name_input"
+              style={{ paddingLeft: "5px" }}
               // value={imgName}
               // onChange={(event) => {
               //   setImgName(event.target.value);}}
