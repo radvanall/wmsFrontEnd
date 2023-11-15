@@ -1,0 +1,6 @@
+@media (max-width: 650px) {
+  .widged__container_w {
+    width: 95%;
+    margin-left: 0px;
+  }
+}
