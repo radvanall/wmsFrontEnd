@@ -22,40 +22,19 @@ const BalanceTable = () => {
   const handleFilter = () => {
     const filtered = productBalance.filter((item) => {
       const itemDate = parse(item.date, "dd-MM-yyyy", new Date());
-      console.log("itemDate=", itemDate);
-      console.log("itemDate.getTime=", itemDate.getTime());
-      console.log(
-        "irange[0].startDate.getTime()=",
-        range[0].startDate.getTime()
-      );
-      console.log("irange[0].startDate=", range[0].startDate);
-
       if (
         itemDate.getTime() >= range[0].startDate.getTime() &&
         itemDate.getTime() <= range[0].endDate.getTime()
       ) {
-        console.log("true");
         return item;
       }
-      //   return "false";
     });
     setData([...filtered]);
-    console.log("filtered=", filtered);
   };
   const resetRange = () => {
-    console.log("click");
     setRangeSelected(false);
     setData([...productBalance]);
   };
-  //   console.log("range=", format(range[0].endDate, "dd-MM-yyyy"));
-  //   const r = range[0].endDate;
-  //   console.log("r=", r);
-  //   console.log("typof r=", typeof r);
-  //   const dat = new Date("14/11/2020", "dd/MM/yyyy");
-  //   const dat = "14/11/2020";
-  //   const dat2 = parse(dat, "dd/MM/yyyy", new Date());
-  //   console.log("dat2=", dat2);
-
   return (
     <ItemTable
       data={data}

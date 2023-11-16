@@ -6,6 +6,7 @@ import "../../widged__wrapper.css";
 import StockDataModal from "../StockDataModal/StockDataModal";
 import { useToggle } from "../../hooks/useToggle";
 import getState from "../../functions/getState";
+import imgLink from "../../googleAPI";
 const ProductCard = ({ item, refetchPage }) => {
   const { status: isOpenStockData, toggleStatus: toggleStockData } =
     useToggle(false);
@@ -16,7 +17,7 @@ const ProductCard = ({ item, refetchPage }) => {
   return (
     <div className="card__wrapper product__card__wrapper">
       <div className="product__card__img__container">
-        <img src={item.positionImg} alt="#" />
+        <img src={imgLink + item.positionImg} alt="#" />
       </div>
       <div className="card__fields">
         <div className="card__field__container">

@@ -4,8 +4,10 @@ import React from "react";
 import Pagination from "../Pagination/Pagination";
 import { FaSortNumericDown, FaSortNumericUp } from "react-icons/fa";
 import useTableSettings from "./useTableSettings";
+import imgLink from "../../googleAPI";
 
 export default function Table({ data, page, coloredCell }) {
+  console.log(data);
   const {
     tableHeader,
     sortColumnsState,
@@ -52,7 +54,7 @@ export default function Table({ data, page, coloredCell }) {
                       } container`}
                     >
                       {key === "img" ? (
-                        <img src={item[key]} alt="" />
+                        <img src={imgLink + item[key]} alt="" />
                       ) : key === coloredCell ? (
                         item[key].text
                       ) : (

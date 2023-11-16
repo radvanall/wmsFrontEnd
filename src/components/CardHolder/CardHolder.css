@@ -2,7 +2,6 @@
   background-color: hsl(7, 30%, 97%);
   width: 100%;
   display: flex;
-  /* justify-content: space-between; */
   flex-wrap: wrap;
   position: relative;
   border-top: 1px solid hsl(230, 50%, 70%);

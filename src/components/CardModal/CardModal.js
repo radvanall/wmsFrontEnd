@@ -81,17 +81,14 @@ const CardModal = ({
       <label className="input__label">Introduceți adresa:</label>
       <CustomSelect
         positions={addresses}
-        // disableSelect={formMode === "add" ? false : true}
         setOpened={() => setAddressOpened((prev) => !prev)}
         opened={addressOpened}
-        // image={selectedCustomer.image}
         selected={selectedAddress.name}
         handleSelect={handleAddressSelect}
         handleChange={handleAddressChange}
         zIndex={4}
       />
       {errors && <p style={{ color: "red" }}>Introduceți adresa</p>}
-      {/* {postError && <p style={{ color: "red" }}>{postError}</p>} */}
       {message && <p style={{ color: "red" }}>{message}</p>}
       <BasicButton text="Modifică" handleClick={sendAddress} />
     </Modal>

@@ -51,7 +51,6 @@ const CreateInvoiceForm = ({
   return (
     <div>
       <Modal active={active}>
-        {/* <CgCloseR onClick={handleCloseForm} /> */}
         <CloseModal handleCloseModal={handleCloseForm} />
         {data ? (
           <div className="create__invoice">

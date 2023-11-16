@@ -29,14 +29,12 @@ const CreateCustomer = ({ active, setActive, fetchData }) => {
     const data = Object.fromEntries(dataEntities.entries());
     console.log(data);
     if (data.nickname === "" || data.nickname === null) {
-      console.log("true");
       setNameError(true);
       return;
     }
     if (data.phone === "" || data.phone === null) {
       dataEntities.set("phone", 0);
     }
-    console.log("false");
     setNameError(false);
     await postData(dataEntities, "http://localhost:8080/api/customer/create");
     fetchData();
@@ -48,7 +46,6 @@ const CreateCustomer = ({ active, setActive, fetchData }) => {
   const handleCloseForm = () => {
     setActive();
     formRef.current.reset();
-    // setImgName("");
     setFormFields({
       nickname: "",
       email: "",
@@ -69,12 +66,9 @@ const CreateCustomer = ({ active, setActive, fetchData }) => {
       title="Creați un nou client:"
       image={image}
       onSelectedFile={onSelectedFile}
-      // pickFile={pickFile}
       formFields={formFields}
       nameError={nameError}
       message={message}
-      // filePicker={filePicker}
-
       handleFormChange={handleFormChange}
       handleSubmit={handleSubmit}
       formRef={formRef}

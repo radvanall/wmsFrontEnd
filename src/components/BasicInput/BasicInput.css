@@ -9,7 +9,6 @@
 }
 .full__border {
   border: 1px solid var(--blue-color);
-  /* border-radius: 5px; */
 }
 .bottom__border {
   border-bottom: 1px solid var(--blue-color);
@@ -21,7 +20,6 @@
   display: inline-block;
   line-height: 26px;
   font-weight: 600;
-  /* padding-bottom: 5px; */
 }
 .password__eye {
   position: absolute;

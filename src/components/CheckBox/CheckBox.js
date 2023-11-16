@@ -1,4 +1,3 @@
-import { borderRadius, padding } from "@mui/system";
 import React from "react";
 import "./CheckBox.css";
 const CheckBox = ({

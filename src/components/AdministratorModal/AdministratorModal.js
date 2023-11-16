@@ -85,21 +85,6 @@ const AdministratorModal = ({
             id="password"
             type="password"
           />
-          {/* <BasicInput
-            inputName="repeatPassword"
-            label="Repetați parola"
-            value={formFields.repeatPassword}
-            handleChange={handleFormChange}
-            fullBorder={true}
-            id="repeatPassword"
-            type="password"
-          />
-          {error.password && (
-            <label style={{ color: "red" }}>
-              Parolele trebuie să coincidă!
-            </label>
-          )} */}
-
           <label className="img_label">
             Alegeți imaginea:
             <ImagePicker
@@ -122,7 +107,6 @@ const AdministratorModal = ({
             <label style={{ color: "red" }}>Introduce-ți parola</label>
           )}
         </form>
-
         <img src={image} alt="img" className="product_add_img" />
       </div>
     </Modal>

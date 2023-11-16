@@ -11,7 +11,6 @@ const AdminPageTable = ({ getId, url, title, getFields, navTo, width }) => {
   }, []);
   useEffect(() => {
     if (data) {
-      console.log("admintable:", data);
       const newProducts = data.map((item) => getFields(item));
       setProducts(newProducts);
     }

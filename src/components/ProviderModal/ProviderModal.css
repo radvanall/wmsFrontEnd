@@ -4,6 +4,15 @@
   font-weight: 600;
   padding-bottom: 10px;
 }
+.input__container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+.input__container input {
+  padding-left: 5px;
+}
 .provider__form__wrapper {
   display: flex;
   gap: 5px;
@@ -11,4 +20,13 @@
 .provider__form {
   display: flex;
   flex-direction: column;
+}
+.provider__form input {
+  border: 1px solid var(--blue-color);
+  border-radius: 5px;
+}
+@media (max-width: 750px) {
+  .provider__form__wrapper {
+    flex-direction: column;
+  }
 }

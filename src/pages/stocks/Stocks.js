@@ -97,7 +97,7 @@ const Stocks = () => {
         console.error("navigate5:", navigate);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.response.status);
     }
   };
 

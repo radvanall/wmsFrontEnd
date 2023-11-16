@@ -1,7 +1,7 @@
 import React from "react";
 import "./Calendar.css";
 import moment from "moment";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Modal from "../Modal/Modal";
 import CloseModal from "../CloseModal/CloseModal";
@@ -14,7 +14,6 @@ const Calendar = ({
   width,
   marginLeft,
   minWidth,
-  minHeight,
 }) => {
   moment.updateLocale("en", {
     months: [
@@ -110,7 +109,6 @@ const Calendar = ({
         width: width ? width : "45%",
         marginLeft: marginLeft ? marginLeft : "20px",
         minWidth: minWidth ? minWidth : "",
-        // minHeight: minHeight ? minHeight : "",
       }}
     >
       <h2 className="calendar__title">Zile lucrate:</h2>

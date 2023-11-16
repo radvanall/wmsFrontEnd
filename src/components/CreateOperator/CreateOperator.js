@@ -39,13 +39,9 @@ const CreateOperator = ({ active, setActive, fetchData, url, user }) => {
     if (data.phone === "" || data.phone === null) {
       dataEntities.set("phone", 0);
     }
-    console.log("false");
     setNameError(false);
     await postData(dataEntities, url);
     fetchData();
-    // setTimeout(() => {
-    //   resetMessage();
-    // }, 2000);
   };
 
   const handleCloseForm = () => {

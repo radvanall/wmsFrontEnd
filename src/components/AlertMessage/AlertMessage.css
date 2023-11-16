@@ -6,7 +6,6 @@
   top: 0;
   left: 0;
   display: flex;
-  /* padding-top: calc(10px + (300 - 10) * ((100vw - 320px) / (1889 - 320))); */
   align-items: center;
   justify-content: center;
   opacity: 0;
@@ -23,8 +22,6 @@
   padding: 20px;
   border-radius: 12px;
   background-color: white;
-  /* min-height: 200px;
-    min-width: 200px; */
   height: fit-content;
   transform: scale(0.5);
   transition: 0.4s all;
