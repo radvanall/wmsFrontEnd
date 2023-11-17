@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Modal from "../Modal/Modal";
 import "./CreateProduct.css";
 import useFetch from "../../hooks/useFetch";
-import { CgCloseR } from "react-icons/cg";
 import CloseModal from "../CloseModal/CloseModal";
 import ProductForm from "../ProductForm/ProductForm";
 import useCheckProductFormError from "../ProductForm/ProductFormHooks/useCheckProductFormError";
@@ -64,13 +63,11 @@ const CreateProduct = ({ active, setActive }) => {
   };
   const handleFormChange = (event) => {
     formChange(event, setFormFields);
-    console.log(formFields);
   };
 
   return (
     <div>
       <Modal active={active}>
-        {/* <CgCloseR onClick={handleCloseForm} /> */}
         <CloseModal handleCloseModal={handleCloseForm} />
         {fail === null ? (
           <ProductForm

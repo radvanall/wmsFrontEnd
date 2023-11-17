@@ -10,7 +10,6 @@ const InputNumber = ({
   minValue,
 }) => {
   const handleBlur = (e) => {
-    console.log("minTarget=", e.target.min);
     if (
       keyName === "maxQuantity" &&
       filterCriterias[keyName] < filterCriterias.minQuantity &&

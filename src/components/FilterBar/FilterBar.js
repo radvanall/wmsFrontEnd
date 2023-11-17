@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import "./FilterBar.css";
-import InputNumber from "../InputNumber/InputNumber";
 import useFilterFields from "./useFilterFields";
-import { inputNumber } from "../../filterArrays";
 import FilterBox from "../FilterBox/FilterBox";
 import useFetch from "../../hooks/useFetch";
 const FilterBar = ({ isOpenFilter }) => {
@@ -16,7 +14,6 @@ const FilterBar = ({ isOpenFilter }) => {
     minQuantity: "0",
     maxQuantity: "0",
   };
-  //debugger;
   const { data: filterBox, fetchData } = useFetch(
     "http://localhost:8080/api/productcriteria/get"
   );

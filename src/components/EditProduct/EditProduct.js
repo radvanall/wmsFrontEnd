@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Modal from "../Modal/Modal";
 import "../CreateProduct/CreateProduct.css";
 import useFetch from "../../hooks/useFetch";
-import { CgCloseR, CgOpenCollective } from "react-icons/cg";
 import ProductForm from "../ProductForm/ProductForm";
 import useCheckProductFormEditError from "../ProductForm/ProductFormHooks/useCheckProductFormEditError";
 import closeForm from "../ProductForm/ProductFormFunctions/closeForm";
@@ -43,7 +42,6 @@ const EditProduct = ({ active, setActive, product }) => {
   );
   const handleSubmit = (event) => {
     Submit(event, product.id);
-    console.log("product=", product.id);
   };
   const pickFile = (event) => {
     event.preventDefault();
@@ -61,7 +59,6 @@ const EditProduct = ({ active, setActive, product }) => {
   };
   const handleFormChange = (event) => {
     formChange(event, setFormFields);
-    console.log(formFields);
   };
   useEffect(() => {
     setFormFields({

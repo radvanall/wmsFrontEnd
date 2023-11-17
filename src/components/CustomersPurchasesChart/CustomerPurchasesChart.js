@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useGetData from "../../hooks/useGetData";
 import hoverLine from "../../CustomChart/hoverLine";
-import Card from "../Card/Card";
 import getMonthAndYear from "../../functions/getMonthAndYear";
 import CustomChart from "../../CustomChart/CustomChart";
 import RadioButton from "../RadioButton/RadioButton";
@@ -9,10 +8,7 @@ import "./CustomerPurchasesChart.css";
 const CustomerPurchasesChart = ({ id, url, label }) => {
   const [period, setPeriod] = useState(1);
   const [chartData, setChartData] = useState(null);
-  const { data, loading, error, getData } = useGetData(
-    url
-    // "http://localhost:8080/api/invoice/getWeeklySales"
-  );
+  const { data, loading, error, getData } = useGetData(url);
   const getChartData = async () => {
     await getData(`?id=${id}&period=${period}`);
   };
@@ -74,7 +70,6 @@ const CustomerPurchasesChart = ({ id, url, label }) => {
     getChartData();
   };
   return (
-    // <Card>
     <>
       {data && chartData && (
         <div
@@ -116,7 +111,6 @@ const CustomerPurchasesChart = ({ id, url, label }) => {
         </div>
       )}
     </>
-    // </Card>
   );
 };
 

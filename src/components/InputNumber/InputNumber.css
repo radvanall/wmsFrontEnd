@@ -7,7 +7,6 @@
   border-radius: 5px;
 }
 .input__number_container {
-  /* flex: 0 1 11%; */
   margin: 5px;
 }
 @media (max-width: 1210px) {

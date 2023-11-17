@@ -19,7 +19,6 @@ const EditAdmin = ({ administrator, active, setActive, fetchData }) => {
     selectedImage: null,
     imgName: "",
     password: "",
-    // repeatPassword: "",
   });
   useEffect(() => {
     if (active) {
@@ -80,14 +79,6 @@ const EditAdmin = ({ administrator, active, setActive, fetchData }) => {
       }));
       return;
     }
-    // if (data.password !== data.repeatPassword) {
-    //   console.log("true");
-    //   setError((prev) => ({
-    //     ...prev,
-    //     password: true,
-    //   }));
-    //   return;
-    // }
     console.log("false");
     setError({
       name: false,
@@ -112,7 +103,6 @@ const EditAdmin = ({ administrator, active, setActive, fetchData }) => {
       selectedImage: null,
       imgName: "",
       password: "",
-      // repeatPassword: "",
     });
     setError({
       name: false,

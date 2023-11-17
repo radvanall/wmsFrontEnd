@@ -3,10 +3,8 @@ import { setData, setDisplaiedData } from "../../toolkitRedux/productsSlice";
 import { useState } from "react";
 const useFilterFields = (criterias) => {
   const [filterCriterias, setFilterCriterias] = useState(criterias);
-  console.log(filterCriterias);
   const data = useSelector((state) => state.productsSlice.data);
   const dispatch = useDispatch();
-  console.log("info=", data);
 
   const filterData = () => {
     const filteredData = data.filter(
@@ -30,15 +28,7 @@ const useFilterFields = (criterias) => {
           parseInt(filterCriterias.maxQuantity, 10) ||
           filterCriterias.maxQuantity === "0")
     );
-    console.log("filterCriterias=", filterCriterias);
-    console.log(
-      "filteredData=",
-      filteredData,
-      "min=",
-      filterCriterias.minQuantity,
-      "max=",
-      filterCriterias.maxQuantity
-    );
+
     dispatch(setDisplaiedData(filteredData));
   };
   const resetData = () => {
@@ -46,10 +36,6 @@ const useFilterFields = (criterias) => {
     dispatch(setDisplaiedData(data));
   };
   const handleFilterSettings = (key, value) => {
-    console.log("key12=", key);
-    console.log("value=", value);
-    console.log("filterCriterias[key]=", parseInt(filterCriterias[key], 10));
-
     if (
       key === "minPrice" &&
       parseInt(value, 10) > parseInt(filterCriterias.maxPrice, 10) &&

@@ -33,7 +33,6 @@ const EditStock = ({ active, handleCloseModal, stock, refetch }) => {
     }
   }, [active]);
   const handleFormChange = (e) => {
-    console.log(e.target.name);
     setFormData({
       ...formData,
       [e.target.name]: [e.target.value],
@@ -50,8 +49,6 @@ const EditStock = ({ active, handleCloseModal, stock, refetch }) => {
       return;
     }
     setErrorMessage(null);
-    console.log("data=", data);
-    console.log("dataEntity=", dataEntities);
     await postData(dataEntities, `http://localhost:8080/api/stock/update`);
     refetch();
   };

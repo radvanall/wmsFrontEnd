@@ -67,11 +67,7 @@ const EditOperator = ({
     }
     console.log("false");
     setNameError(false);
-    await postData(
-      dataEntities,
-      url + operator.id
-      // "http://localhost:8080/api/operator/update/" + operator.id
-    );
+    await postData(dataEntities, url + operator.id);
     fetchData();
   };
   const handleCloseForm = () => {
