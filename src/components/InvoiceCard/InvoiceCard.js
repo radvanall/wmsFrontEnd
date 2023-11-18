@@ -36,7 +36,6 @@ const InvoiceCard = ({ invoice, refetch, isAllowed }) => {
               <span>Adresa:</span>
               <div>
                 {invoice.address === "inStore" ? "Pe loc" : invoice.address}
-                {/* Chisinau sarmisegetusa 23 ap 3 */}
                 {!invoice.shipped && isAllowed && (
                   <button
                     className="address__button"

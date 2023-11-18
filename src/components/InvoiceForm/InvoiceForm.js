@@ -40,7 +40,6 @@ const InvoiceForm = ({
               </option>
             ))}
         </select>
-        {/* <button onClick={getPositions}>Select</button> */}
       </div>
       {positions.length > 0 ? (
         <div>
@@ -113,19 +112,6 @@ const InvoiceForm = ({
                 <p>lei</p>
               </div>
             </div>
-            {/* <select
-          name="product"
-          className="select__product"
-          value={formFields.product}
-          onChange={handleFormChange}
-        >
-          {positions &&
-            positions.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            ))}
-        </select> */}
           </div>
           {modifyButtons ? (
             <div>

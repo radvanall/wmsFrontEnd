@@ -10,10 +10,8 @@ import imgLink from "../../googleAPI";
 import BasicButton from "../BasicButton/BasicButton";
 
 const InvoiceReceptionCard = ({ invoice, getData, isAllowed }) => {
-  console.log("invoice:", invoice);
   const { message, loading, error, resetMessage, postData } = usePostData();
   const handleValidate = async () => {
-    console.log("inv___", invoice.id);
     await postData(
       { id: invoice.id },
       `http://localhost:8080/api/invoiceReception/validate`

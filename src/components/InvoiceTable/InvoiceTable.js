@@ -13,19 +13,11 @@ const InvoiceTable = ({
   invoiceId,
 }) => {
   const [dataHeader, setDataHeader] = useState("");
-  //let dataHeader = "";
-  //   if (data.length > 0) {
-  //     setDataHeader(Object.keys(data[0]));
-  //     // dataHeader = Object.keys(data[0]);
-  //     console.log(Object.keys(data[0]));
-  //   }
   useEffect(() => {
     if (Array.isArray(data) && data.length > 0) {
       setDataHeader(
         Object.keys(data[0]).filter((field) => field !== "productId")
       );
-      console.log(Object.keys(data[0]));
-      console.log(data);
     }
   }, [data]);
   return (
@@ -101,11 +93,6 @@ const InvoiceTable = ({
               ))}
             </tbody>
           </table>
-          {/* <div className="all__invoice__table">
-            <Link to={`/${itemLink}`} className="link__to__item">
-              Vezi toate
-            </Link>
-          </div> */}
         </div>
       ) : (
         <h2>Nu exista rezultate</h2>
