@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useToggle } from "../../hooks/useToggle";
 import MenuWrapper from "../MenuWrapper/MenuWrapper";
 import CreateOperator from "../CreateOperator/CreateOperator";
-// import CreateCustomer from "../CreateCustomer/CreateCustomer";
 import { useSelector } from "react-redux";
 const OperatorMenu = ({ data, setOperators, fetchData, url, user }) => {
   const role = useSelector((state) => state.userSlice.userData?.authority);
@@ -33,7 +32,6 @@ const OperatorMenu = ({ data, setOperators, fetchData, url, user }) => {
       }));
     setSearchValue(newWord);
     setOperators(newData);
-    console.log("newData=", newData);
   };
   const handleClick = () => {
     setSearchValue("");

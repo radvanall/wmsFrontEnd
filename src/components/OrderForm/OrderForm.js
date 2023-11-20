@@ -74,7 +74,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
           })),
         };
       });
-      console.log("positons:", newPositions);
       setPositions(newPositions);
       setDisplayedPositions(newPositions);
       if (parseInt(selectedPosition.id) > -1) {
@@ -90,7 +89,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     setOpened((prev) => !prev);
   };
   const handleSelect = (e) => {
-    console.log(e.currentTarget.id);
     const position = displayedPositions.find(
       (position) => parseInt(position.id) === parseInt(e.currentTarget.id)
     );
@@ -98,7 +96,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     setSelectedPosition(position);
     setOpened(false);
     setDisplayedPositions(positions);
-    console.log("SELECTED:", position);
     setProductQuantity(0);
   };
   const handleChange = (e) => {
@@ -120,7 +117,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     setProductQuantity(0);
   };
   const changeQuantity = (e) => {
-    console.log("cantitatea:", e.target.value);
     if (parseInt(e.target.value) <= parseInt(selectedPosition.quantity))
       setProductQuantity(e.target.value);
     if (e.target.value === "") setProductQuantity(0);
@@ -129,7 +125,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     const diff = Math.abs(
       parseInt(stockQuantity) - parseInt(requestedQunatity)
     );
-    console.log(requestedQunatity - diff);
     if (requestedQunatity > stockQuantity) return requestedQunatity - diff;
     else return stockQuantity - diff;
   };
@@ -177,11 +172,9 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
           },
         ]);
       }
-      console.log("abs:", usedQuantity);
       remainingProductQuantity =
         parseInt(remainingProductQuantity) -
         parseInt(currentStock.remainingQuantity);
-      console.log("remainingProductQuantity", remainingProductQuantity);
       while (parseInt(remainingProductQuantity) > 0) {
         stockIndex++;
         if (stockIndex > availableStocks.length - 1) return;
@@ -208,10 +201,7 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
         remainingProductQuantity =
           remainingProductQuantity - nextStock.remainingQuantity;
       }
-      console.log("availableStocks=", availableStocks);
-      console.log("stockArray=", stockArray);
       setStockArray(stockArray);
-      console.log("selected podition:", selectedPosition);
       toggleMessage();
       return false;
     }
@@ -221,7 +211,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
 
   const handleSubmit = async (e) => {
     if (selectedPosition.name === "") {
-      console.log("name");
       setErrors((prev) => ({
         ...prev,
         productError: true,
@@ -229,7 +218,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
       return;
     }
     if (!parseInt(productQuantity)) {
-      console.log("productQuantity");
       setErrors((prev) => ({
         ...prev,
         quantityError: true,
@@ -237,7 +225,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
       return;
     }
     if (!changePositionQuantity()) {
-      console.log("changeQuantity");
       return;
     }
     setErrors((prev) => ({
@@ -250,7 +237,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     const stockId =
       selectedPosition.stocks[selectedPosition.currentStockIndex].id;
     const newOrders = [{ stockId, quantity: productQuantity, invoiceId }];
-    console.log("newOrder", newOrders);
     await postData(newOrders, "http://localhost:8080/api/invoice/addOrders");
     await refetch();
     fetchData();
@@ -269,8 +255,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
       quantity: stock.usedQuantity,
       invoiceId,
     }));
-
-    console.log("newOrders", newOrders);
     await postData(newOrders, "http://localhost:8080/api/invoice/addOrders");
     await refetch();
     fetchData();
@@ -286,9 +270,6 @@ const OrderForm = ({ active, handleCloseModal, invoiceId, refetch }) => {
     toggleMessage();
     setStockArray([]);
     setUsedStocks([]);
-    console.log("newSelectedPositon:", selectedPosition);
-    console.log("newDisplaeyedPosition:", displayedPositions);
-    console.log("newPositons:", positions);
   };
   return (
     <Modal active={active}>

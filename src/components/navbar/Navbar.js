@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import { FaRegUser } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { Divide as Hamburger } from "hamburger-react";
 import { toggle as changeState } from "../../toolkitRedux/menuSlice";
@@ -52,7 +51,6 @@ const Navbar = () => {
         </Link>
         <div className="avatar">
           <img src={imgLink + avatar} alt="" />
-          {/* <FaRegUser className="avatar_img"></FaRegUser> */}
         </div>
       </div>
     </div>

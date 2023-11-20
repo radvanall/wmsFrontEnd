@@ -8,7 +8,6 @@ const Layout = () => {
   const jwt = useSelector((state) => state.userSlice.jwt);
   return (
     <div className="App">
-      {/* <Navigate to="/home" /> */}
       <div className={opened ? "page_opened" : "page_closed"}></div>
       <div className="_container">
         {jwt !== "" && jwt !== null && <Navbar />}
