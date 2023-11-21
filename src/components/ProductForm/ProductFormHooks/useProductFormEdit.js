@@ -15,8 +15,6 @@ const useProductFormEdit = (checkError, setServerResponse, fetchProduct) => {
     if (
       data.product_name !== "" &&
       data.product_name !== null &&
-      //data.image.size !== 0 &&
-      //data.image !== null &&
       data.imgName !== "" &&
       data.imgName !== null &&
       data.product_description !== "" &&
@@ -29,7 +27,6 @@ const useProductFormEdit = (checkError, setServerResponse, fetchProduct) => {
         fetchProducts,
         jwt
       );
-      console.log("edit data=", data);
     }
   };
   return { Submit };

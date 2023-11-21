@@ -4,7 +4,6 @@
   display: flex;
   width: 95%;
   flex-direction: column;
-  /* justify-content: end; */
 }
 .order__menu__buttons {
   margin-bottom: 5px;

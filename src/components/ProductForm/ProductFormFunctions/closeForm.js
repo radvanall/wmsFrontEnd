@@ -8,7 +8,6 @@ const closeForm = (
 ) => {
   setActive();
   formRef.current.reset();
-  // setImgName("");
   setFormFields({
     product_name: "",
     categorie: "",
@@ -16,7 +15,6 @@ const closeForm = (
     provider: "",
     product_description: "",
     unity: "",
-    //selectedImage: null,
     imgName: "",
   });
   setImage("\\img\\placeholder.jpg");

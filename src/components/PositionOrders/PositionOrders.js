@@ -12,7 +12,6 @@ const PositionOrders = ({ id }) => {
   );
   useEffect(() => {
     getData(id);
-    console.log(data);
   }, []);
   useEffect(() => {
     if (data) {

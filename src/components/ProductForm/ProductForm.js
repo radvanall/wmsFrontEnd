@@ -147,9 +147,6 @@ const ProductForm = ({
               id="add_product_name"
               className="img_name_input"
               style={{ paddingLeft: "5px" }}
-              // value={imgName}
-              // onChange={(event) => {
-              //   setImgName(event.target.value);}}
               value={formFields.imgName}
               onChange={handleFormChange}
             />

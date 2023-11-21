@@ -11,7 +11,6 @@ const postProduct = (
       headers: { Authorization: `Bearer ${jwt}` },
     })
     .then((response) => {
-      console.log(response);
       dispatch(fetchProducts(jwt));
       setServerResponse(response.data);
     })

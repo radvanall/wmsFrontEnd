@@ -16,7 +16,6 @@ Font.register({
 });
 const PDFFile = ({ invoiceHeader, data }) => {
   const tableHeader = typeof data[0] === "object" ? Object.keys(data[0]) : null;
-  console.log(invoiceHeader);
   const cellWidth = 100 / (tableHeader ? tableHeader.length : 1);
   const styles = StyleSheet.create({
     page: {

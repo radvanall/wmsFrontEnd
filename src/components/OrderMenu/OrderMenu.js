@@ -10,7 +10,6 @@ const OrderMenu = ({ filterInvoicesByStatus }) => {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const handleStatusClick = (e) => {
     setSelectedStatus(e.currentTarget.value);
-    console.log("e:", e.currentTarget.value);
     filterInvoicesByStatus(e.currentTarget.value);
   };
   const isStatusSelected = (value) => selectedStatus === value;

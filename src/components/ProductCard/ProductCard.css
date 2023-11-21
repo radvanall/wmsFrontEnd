@@ -11,7 +11,6 @@
   box-shadow: 0 0 5px hsl(240, 50%, 50%);
 }
 .product__card__img__container {
-  /* width: 30%; */
   margin: 5px 0 5px 0;
   width: 210px;
   height: 210px;
@@ -20,7 +19,6 @@
 }
 .product__card__img__container img {
   width: 100%;
-  /* width: 210px; */
   object-fit: cover;
 }
 .card__fields {

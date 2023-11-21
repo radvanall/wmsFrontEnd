@@ -1,6 +1,5 @@
 import React from "react";
 import "./ProductCard.css";
-import { Link } from "react-router-dom";
 import getFormatedDate from "../../functions/getFormatedDate";
 import "../../widged__wrapper.css";
 import StockDataModal from "../StockDataModal/StockDataModal";
@@ -11,9 +10,6 @@ const ProductCard = ({ item, refetchPage }) => {
   const { status: isOpenStockData, toggleStatus: toggleStockData } =
     useToggle(false);
 
-  const handleDetails = (id) => {
-    toggleStockData();
-  };
   return (
     <div className="card__wrapper product__card__wrapper">
       <div className="product__card__img__container">
