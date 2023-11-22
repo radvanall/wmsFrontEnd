@@ -16,7 +16,6 @@ const ResponsiveTable = ({
 }) => {
   const [header, setHeader] = useState([]);
   const [cellWidth, setCellWidth] = useState(0);
-
   useEffect(() => {
     if (Array.isArray(data) && data.length > 0) {
       const header = Object.keys(data[0]).filter((key) => key !== "last");
@@ -25,11 +24,9 @@ const ResponsiveTable = ({
         handleEdit || handleDelete || handleDetails
           ? header.length
           : header.length - 1;
-      console.log("array lenght:", header.length);
       setCellWidth(95 / columns);
     }
   }, [data]);
-
   return data?.length ? (
     <table className="responsive__table">
       {title && <caption>{title}</caption>}
@@ -121,12 +118,6 @@ const ResponsiveTable = ({
                       handleDetails(row.id);
                     }}
                   />
-                  // <button
-                  //   className="invoice__table__button"
-                  //   onClick={}
-                  // >
-                  //   Detalii
-                  // </button>
                 )}
               </td>
             )}

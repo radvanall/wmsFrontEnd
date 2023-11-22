@@ -1,7 +1,5 @@
 import React from "react";
-import { CgCloseR } from "react-icons/cg";
 import Modal from "../Modal/Modal";
-import { MdOutlineOpenInBrowser } from "react-icons/md";
 import CloseModal from "../CloseModal/CloseModal";
 import ImagePicker from "../ImagePicker/ImagePicker";
 import "./ProviderModal.css";
@@ -74,25 +72,6 @@ const ProviderModal = ({
               onSelectedFile={onSelectedFile}
               handleImgNameChange={handleFormChange}
             />
-            {/* <button onClick={pickFile} className="img_browse_button">
-              <MdOutlineOpenInBrowser className="img_browse" />
-            </button>
-            <input
-              type="text"
-              name="imgName"
-              id="add_product_name"
-              className="img_name_input"
-              value={formFields.imgName}
-              onChange={handleFormChange}
-            />
-            <input
-              className="hidden"
-              name="image"
-              type="file"
-              ref={filePicker}
-              accept="image/*,.png,.jpg,.jpeg,.web"
-              onChange={onSelectedFile}
-            ></input> */}
           </label>
           <button type="submit" className="submit_product_buton">
             Submit

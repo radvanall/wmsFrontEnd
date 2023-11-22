@@ -44,7 +44,6 @@ const SaleChart = () => {
     ],
   };
   const [chartData, setChartData] = useState({ ...price });
-
   const hoverLine = {
     id: "line",
     beforeDatasetDraw(chart) {

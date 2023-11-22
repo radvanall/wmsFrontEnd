@@ -6,7 +6,6 @@ const useProductFormSubmit = (checkError, setServerResponse, fetchProduct) => {
   const dispatch = useDispatch();
   const Submit = (event) => {
     event.preventDefault();
-
     const dataEntities = new FormData(event.target);
     const data = Object.fromEntries(dataEntities.entries());
     checkError(data);

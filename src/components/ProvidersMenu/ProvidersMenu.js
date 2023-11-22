@@ -23,7 +23,6 @@ const ProvidersMenu = ({ data, setProviders, fetchData }) => {
       }));
     setSearchValue(newWord);
     setProviders(newData);
-    console.log("newData=", newData);
   };
   const handleClick = () => {
     setSearchValue("");

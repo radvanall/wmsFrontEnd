@@ -2,16 +2,13 @@
   font-size: 18px;
   padding: 0 5px 0 5px;
   height: 100%;
-  /* border-radius: 3px; */
   border: 1px solid #3d91ff;
   position: absolute;
   left: 40px;
   width: 230px;
   align-self: center;
 }
-
 .calendarWrap {
-  /* display: inline-block; */
   position: relative;
   padding-bottom: 5px;
   padding-left: 5px;
@@ -77,31 +74,22 @@
 .calendarElement {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.4);
-  /* left: 50%;
-  transform: translateX(-50%); */
   width: 100%;
-
   top: 40px;
   border: 1px solid #ccc;
-
   overflow-x: auto;
   z-index: 2;
 }
-
 .calendarElement::-webkit-scrollbar {
-  /* width: 5px; */
   width: 0;
   height: 0;
 }
 .calendarElement:hover::-webkit-scrollbar {
-  /* width: 5px; */
   height: 5px;
 }
-
 .calendarElement::-webkit-scrollbar-track {
   background-color: #3d91ff;
   border-radius: 5px;
-  /* margin-block: 2px; */
 }
 .calendarElement::-webkit-scrollbar-thumb {
   background-color: #005b96;

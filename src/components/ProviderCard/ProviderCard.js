@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
@@ -14,9 +14,6 @@ const ProviderCard = ({ provider, getData }) => {
   const isAllowed = role === "ROLE_ADMIN" || role === "ROLE_MAIN";
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
-  useEffect(() => {
-    console.log(provider);
-  }, [provider]);
   const fetchData = () => {
     getData(provider.id);
   };

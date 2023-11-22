@@ -6,8 +6,6 @@ import format from "date-fns/format";
 import { BsFillCalendarCheckFill, BsFillCalendarXFill } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 import { FiFilter } from "react-icons/fi";
-import { addDays } from "date-fns";
-
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
@@ -18,13 +16,6 @@ const RangeDatePiker = ({
   handleFilter,
   rangeSelected,
 }) => {
-  // const [range, setRange] = useState([
-  //   {
-  //     startDate: new Date(),
-  //     endDate: addDays(new Date(), 7),
-  //     key: "selection",
-  //   },
-  // ]);
   const [open, setOpen] = useState(false);
   const [inputOpened, setInputOpened] = useState(false);
   const refOne = useRef(null);
@@ -39,19 +30,14 @@ const RangeDatePiker = ({
 
   const hideOnEscape = (e) => {
     if (e.key === "Escape") {
-      // handleSort();
       setOpen(false);
     }
   };
   const hideOnClickOutside = (e) => {
     if (refOne.current && !refOne.current.contains(e.target)) {
-      // handleSort();
       setOpen(false);
-
-      // console.log("range=", format(range[0].endDate, "dd/MM/yyyy"));
     }
   };
-
   return (
     <div className="calendarWrap">
       <div
@@ -94,7 +80,6 @@ const RangeDatePiker = ({
       <div ref={refOne}>
         {open && (
           <div>
-            {/* <button onClick={handleSort}>click</button> */}
             <DateRangePicker
               onChange={(item) => handleDateSetting([item.selection])}
               editableDateInputs={true}

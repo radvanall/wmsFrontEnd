@@ -8,7 +8,6 @@ import FilterBar from "../FilterBar/FilterBar";
 import CreateProduct from "../CreateProduct/CreateProduct";
 import { useToggle } from "../../hooks/useToggle";
 import DeleteMessage from "../DeleteMessage/DeleteMessage";
-import CreateCategory from "../CreateCategory/CreateCategory";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import { useSelector } from "react-redux";
 
@@ -20,12 +19,6 @@ const ProductsMenu = () => {
   const { status: isOpenCreate, toggleStatus: toggleCreate } = useToggle(false);
   const { status: isOpenProductCreate, toggleStatus: toggleProductCreate } =
     useToggle(false);
-  const { status: isOpenCategoryCreate, toggleStatus: toggleCategoryCreate } =
-    useToggle(false);
-  const {
-    status: isOpenSubcategoryCreate,
-    toggleStatus: toggleSubcategoryCreate,
-  } = useToggle(false);
   const { status: isOpenCategoryModal, toggleStatus: toggleCategoryModal } =
     useToggle(false);
 
@@ -52,22 +45,6 @@ const ProductsMenu = () => {
             >
               Crează produs
             </li>
-            {/* <li
-              onClick={() => {
-                toggleCategoryCreate();
-                toggleCreate();
-              }}
-            >
-              Crează categorie
-            </li>
-            <li
-              onClick={() => {
-                toggleSubcategoryCreate();
-                toggleCreate();
-              }}
-            >
-              Crează subcategorie
-            </li> */}
             <li
               onClick={() => {
                 toggleCategoryModal();
@@ -101,18 +78,6 @@ const ProductsMenu = () => {
         active={isOpenProductCreate}
         setActive={toggleProductCreate}
       />
-      {/* <CreateCategory
-        label="Introduceți categoria nouă"
-        active={isOpenCategoryCreate}
-        close={toggleCategoryCreate}
-        endpoint="http://localhost:8080/api/category/create"
-      />
-      <CreateCategory
-        label="Introduceți subcategoria nouă"
-        active={isOpenSubcategoryCreate}
-        close={toggleSubcategoryCreate}
-        endpoint="http://localhost:8080/api/subcategory/create"
-      /> */}
       <CategoryModal
         active={isOpenCategoryModal}
         closeModal={toggleCategoryModal}
