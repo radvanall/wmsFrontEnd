@@ -16,7 +16,6 @@
   padding-top: calc(2px + (5 - 2) * ((100vw - 320px) / (1889 - 320)));
   padding-bottom: calc(2px + (5 - 2) * ((100vw - 320px) / (1889 - 320)));
 }
-
 .basic__table thead {
   height: 60px;
 }
@@ -94,7 +93,6 @@
   padding: calc(2px + (5 - 2) * ((100vw - 320px) / (1889 - 320)));
   border-radius: 20%;
 }
-
 .sort__button {
   margin-left: 5px;
   background-color: inherit;
@@ -107,12 +105,10 @@
   .table__wrapper {
     overflow-x: auto;
   }
-
   .table__wrapper::-webkit-scrollbar {
     width: 0;
     height: 5px;
   }
-
   .table__wrapper::-webkit-scrollbar-track {
     background-color: #fe6240;
     border-radius: 5px;

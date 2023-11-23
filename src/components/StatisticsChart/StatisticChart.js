@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import CustomChart from "../../CustomChart/CustomChart";
 import useGetData from "../../hooks/useGetData";
-import getMonthAndYear from "../../functions/getMonthAndYear";
 import hoverLine from "../../CustomChart/hoverLine";
 import RadioButton from "../RadioButton/RadioButton";
 
@@ -30,7 +29,6 @@ const StatisticChart = ({
   }, [period, endpoint, criteria]);
   useEffect(() => {
     if (data) {
-      console.log("chartData=", data);
       balanceSetter && setBalance(balanceSetter(data));
       setChartData(chartDataSetter(data, period));
     }

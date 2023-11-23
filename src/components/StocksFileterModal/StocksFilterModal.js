@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Modal from "../Modal/Modal";
 import CloseModal from "../CloseModal/CloseModal";
 import CheckBox from "../CheckBox/CheckBox";
@@ -10,14 +10,11 @@ import {
   setRangeValues,
   resetRangeValues,
   setInputValues,
-  resetInputValues,
   setDisplayedValues,
   resetDisplayedValues,
-  resetStatus,
   changeStatus,
   resetCheckboxStates,
   setIsAllChecked,
-  resetIsAllChecked,
   setFilterCriterias,
   resetFilterCriterias,
   handleCheckboxChange,

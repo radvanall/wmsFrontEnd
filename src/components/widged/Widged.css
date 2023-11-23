@@ -25,7 +25,6 @@
   left: 0;
   object-fit: scale-down;
 }
-
 .widged__title {
   font-size: calc(16px + (24 - 16) * ((100vw - 320px) / (1900 - 320)));
   text-align: center;
@@ -42,7 +41,6 @@
   color: black;
   font-weight: 700;
 }
-
 .details a:hover {
   background-color: #005b96;
   border-radius: 5px;

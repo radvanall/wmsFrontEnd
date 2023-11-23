@@ -14,7 +14,6 @@ const StatisticsTable = ({ id, url, title, getFields, navTo, width }) => {
   }, [period]);
   useEffect(() => {
     if (data) {
-      console.log("admintable:", data);
       const newProducts = data.map((item) => getFields(item));
       setProducts(newProducts);
     }

@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "../Modal/Modal";
-import { CgCloseR } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 import CloseModal from "../CloseModal/CloseModal";
 import { close } from "../../toolkitRedux/sessionExpiredSlice";

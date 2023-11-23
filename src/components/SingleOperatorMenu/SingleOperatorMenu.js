@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { TiEdit } from "react-icons/ti";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import EditOperator from "../EditOperator/EditOperator";
 import DeleteItem from "../DeleteItem/DeleteItem";
-// import useGetData from "../../hooks/useGetData";
 
 const SingleOperatorMenu = ({
   operator,
@@ -16,13 +15,8 @@ const SingleOperatorMenu = ({
 }) => {
   const { status: isOpenModify, toggleStatus: toggleModify } = useToggle(false);
   const { status: isOpenDelete, toggleStatus: toggleDelete } = useToggle(false);
-  //   const { data, loading, error, getData } = useGetData(
-  //     `http://localhost:8080/api/position/readoperator/`
-  //   );
   const handleModify = () => {
     toggleModify();
-    // getData(id);
-    // console.log(data);
   };
   return (
     <div className="single_menu__buttons">
@@ -44,7 +38,6 @@ const SingleOperatorMenu = ({
           onClick={toggleDelete}
         />
       )}
-
       {operator && (
         <EditOperator
           active={isOpenModify}
@@ -55,7 +48,6 @@ const SingleOperatorMenu = ({
           url={url}
         />
       )}
-
       <DeleteItem
         active={isOpenDelete}
         setActive={toggleDelete}

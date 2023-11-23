@@ -38,14 +38,6 @@ const TagHolder = ({ data, filterCriterias, filterStocks }) => {
   const states = Object.keys(status).filter(
     (key) => status[key] === true && key !== "allStates"
   );
-  console.log("tagholder product:", products);
-  console.log(" displayedValues.product:", displayedValues.product);
-  console.log(" filterCriterias.products", filterCriterias.products);
-  console.log(
-    displayedValues.product?.filter((item) =>
-      filterCriterias.products.some((id) => parseInt(item.id) === parseInt(id))
-    )
-  );
   const getCriteriasIds = (criteria) => {
     return checkboxStates[criteria]
       .filter((item) => item.checked)
@@ -95,7 +87,6 @@ const TagHolder = ({ data, filterCriterias, filterStocks }) => {
     dispatch(
       changeStatus({ value: e.target.value, checked: e.target.checked })
     );
-
     handleFilter(attribute, e.target.value);
   };
   return (
@@ -107,7 +98,6 @@ const TagHolder = ({ data, filterCriterias, filterStocks }) => {
       providers.length ? (
         <div className="tag__holder">
           <h2 className="tag__holder__name">Taguri:</h2>
-
           {providers.map((provider) => (
             <CheckBox
               id={"provider" + provider.id}

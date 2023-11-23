@@ -23,7 +23,6 @@ const StockDataModal = ({ active, handleCloseModal, stock, refetchPage }) => {
   const { message, loading, error, resetMessage, postData } = usePostData();
 
   const handlePriceChange = (e) => {
-    console.log(e.target.value);
     if (e.target.value >= 0) setSellingPrice(e.target.value);
   };
   const handleKeyDown = (event) => {

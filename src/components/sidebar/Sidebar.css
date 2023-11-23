@@ -1,11 +1,9 @@
 .Sidebar ul li {
   display: flex;
   align-items: center;
-  /* padding-left: 30%; */
   padding: 10px;
   color: black;
   margin: 10px;
-
   justify-content: center;
 }
 .Sidebar ul li:hover {
@@ -31,18 +29,11 @@
   .Sidebar {
     position: absolute;
     background-color: white;
-    /* height: 100%; */
     height: calc(100% - 86px);
     border-right: 0.2px solid lightgray;
     overflow-y: auto;
   }
-  /* .Sidebar ul {
-    position: relative;
-    overflow-y: auto;
-    height: calc(100% - 86px);
-  } */
   .Sidebar::-webkit-scrollbar {
-    /* width: 5px; */
     width: 0;
     height: 0;
   }
@@ -52,14 +43,11 @@
   .Sidebar:hover::-webkit-scrollbar {
     width: 3px;
   }
-
   .Sidebar::-webkit-scrollbar-track {
     background-color: #517994;
     border-radius: 3px;
-    /* margin-block: 2px; */
   }
   .Sidebar::-webkit-scrollbar-thumb {
     background-color: #0b3b5a;
   }
 }
-/*  */

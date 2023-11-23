@@ -54,7 +54,6 @@ const StockTable = ({ productId }) => {
           <ItemTable
             data={tableData}
             header={"stocuri:"}
-            // itemLink={"operatorsinvoice"}
             handleDatails={handleDetails}
             handleFooterClick={navigateToStocks}
           />

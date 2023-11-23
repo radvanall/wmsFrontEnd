@@ -6,7 +6,6 @@ const hoverLine = {
       tooltip,
       chartArea: { top, bottom },
     } = chart;
-    // console.log(tooltip._active);
     if (tooltip._active[0]) {
       ctx.beginPath();
       ctx.strokeStyle = "grey";
