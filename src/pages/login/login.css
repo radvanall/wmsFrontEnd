@@ -21,7 +21,6 @@
   -webkit-box-shadow: 8px 8px 10px 1px rgba(0, 0, 0, 0.47);
   box-shadow: 8px 8px 10px 1px rgba(201, 201, 201, 0.47);
   background-color: rgba(245, 245, 245, 0.767);
-  /* backdrop-filter: blur(15px); */
 }
 .login .login__form h2 {
   text-align: center;

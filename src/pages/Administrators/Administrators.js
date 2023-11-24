@@ -10,7 +10,6 @@ const Administrators = () => {
     "http://localhost:8080/api/administrator/readAll"
   );
   useEffect(() => {
-    console.log(data);
     if (data) {
       const newArray = data.map((admin) => {
         return {
@@ -30,7 +29,6 @@ const Administrators = () => {
       setAdmins(newArray);
     }
   }, [data]);
-  console.log("data=", data);
   return (
     <div>
       {error && <div>{error}</div>}

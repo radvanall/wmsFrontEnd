@@ -22,40 +22,26 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (fields.username.trim().length < 5) {
-      console.log(fields.username.trim().length);
       setErrors({ ...errors, username: true });
       return;
     }
     if (fields.password.trim().length < 5) {
-      console.log(fields.username.trim().length);
       setErrors({ ...errors, password: true });
       return;
     }
-    console.log("submit");
     login(fields);
   };
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     if (value.trim().length > 4) setErrors({ ...errors, [name]: false });
-    console.log(name, value);
     setFields({
       ...fields,
       [name]: value,
     });
   };
-  const revelState = () => {
-    console.log("revel", userData);
-    console.log("revel", jwt);
-  };
-  const logout = () => {
-    dispatch(resetJwt());
-    dispatch(resetUserData());
-  };
   return (
     <div className="login">
-      {/* <button onClick={revelState}>revelState</button>
-      <button onClick={logout}>Logout</button> */}
       <form className="login__form" onSubmit={handleSubmit}>
         <h2>Autentificare</h2>
         <BasicInput

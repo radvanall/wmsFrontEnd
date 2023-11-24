@@ -9,17 +9,12 @@ const Invoice = () => {
   );
   const [invoices, setInvoices] = useState(null);
   useEffect(() => {
-    console.log(data);
     if (data) {
       const options = { day: "numeric", month: "long", year: "numeric" };
       const newArray = data.map((invoice) => {
         const dateOfCreation = new Date(invoice.dateOfCreation)
           .toLocaleDateString("ro-RO", options)
           .toUpperCase();
-        const monthName = "март";
-        const date = new Date(`${monthName} 1, 2022`);
-        const monthIndex = date.getMonth();
-        console.log(monthIndex);
         const dateOfValidation = invoice.dateOfValidation
           ? new Date(invoice.dateOfValidation)
               .toLocaleDateString("ro-RO", options)
@@ -29,14 +24,11 @@ const Invoice = () => {
           id: invoice.id,
           Furnizor: invoice.provider,
           ["Creată de"]: invoice.createdBy,
-          // ["Data creării"]: invoice.dateOfCreation.slice(0, 10),
           ["Data creării"]: dateOfCreation,
           ["Validată de"]: invoice.validatedBy,
-          // ["Data validării"]: invoice.dateOfValidation?.slice(0, 10) ?? "none",
           ["Data validării"]: dateOfValidation,
           ["Prețul total de cumpărare"]: invoice.totalBuyingPrice,
           ["Prețul total de vînzare"]: invoice.totalSellingPrice,
-          // Validat: invoice.validated ? "validat" : "nevalidat",
           Validat: {
             text: invoice.validated ? "validat" : "nevalidat",
             state: invoice.validated ? "activ" : "inactiv",
@@ -49,7 +41,6 @@ const Invoice = () => {
   return (
     <div>
       <InvoiceMenu fetchData={fetchData} />
-
       {invoices &&
         (invoices.length !== 0 ? (
           <Table data={invoices} page="invoices" coloredCell="Validat" />

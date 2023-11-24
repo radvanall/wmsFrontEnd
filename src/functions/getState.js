@@ -3,7 +3,6 @@ const getState = (state) => {
     return (
       <>
         {" "}
-        {/* <h2>Statut:</h2> */}
         <div
           style={{
             backgroundColor: "#ffaebc",
@@ -19,7 +18,6 @@ const getState = (state) => {
     return (
       <>
         {" "}
-        {/* <div>Statut:</div> */}
         <div
           style={{
             backgroundColor: "#b4f8c8",
@@ -35,7 +33,6 @@ const getState = (state) => {
     return (
       <>
         {" "}
-        {/* <div>Statut:</div> */}
         <div
           style={{
             backgroundColor: "#b4f8f5",
@@ -51,7 +48,6 @@ const getState = (state) => {
     return (
       <>
         {" "}
-        {/* <div>Statut:</div> */}
         <div
           style={{
             backgroundColor: "#f8e4b4",
@@ -67,7 +63,6 @@ const getState = (state) => {
     return (
       <>
         {" "}
-        {/* <div>Statut:</div> */}
         <div
           style={{
             backgroundColor: "#deb1c8",

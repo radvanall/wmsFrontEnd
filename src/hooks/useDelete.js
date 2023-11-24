@@ -19,18 +19,13 @@ const useDelete = () => {
         headers: { Authorization: `Bearer ${jwt}` },
       })
       .then((response) => {
-        console.log(response.data);
         setMessage(response.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error.message);
-        console.log(error.response.data);
         setError(error.response.data);
         setLoading(false);
       });
-
-    //   console.log(data);
   };
   return { message, loading, error, resetMessage, deleteData };
 };

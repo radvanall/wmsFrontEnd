@@ -9,6 +9,5 @@ const postData = (data, url) => {
     .catch((error) => {
       console.log(error.message);
     });
-  //   console.log(data);
 };
 export default postData;

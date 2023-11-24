@@ -19,10 +19,8 @@ const useGetData = (url) => {
       const fetch = await axios.get(id === null ? url : url + `${id}`, {
         headers: { Authorization: `Bearer ${jwt}` },
       });
-      console.log("data is: ", fetch);
       setData(fetch.data);
     } catch (err) {
-      console.log(err.response.status);
       if (err.response.status == 403) {
         dispatch(resetJwt());
         dispatch(resetUserData());

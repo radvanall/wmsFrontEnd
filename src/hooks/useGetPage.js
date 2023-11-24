@@ -20,10 +20,7 @@ const useGetPage = (url, filters) => {
     else setSortDirection("DESC");
   };
   const getPage = async (page, filterCriteria) => {
-    // console.log("page filter Criterisa:", filterCriteria);
-    // console.log("type of Criterisa:", typeof filterCriteria);
     setLoading(true);
-
     try {
       const response = await axios.post(
         url + `/?page=${page}&size=${size}&sortDirection=${sortDirection}`,
@@ -33,9 +30,7 @@ const useGetPage = (url, filters) => {
         }
       );
       setData(response.data);
-      // console.log("data:", response.data);
     } catch (err) {
-      console.log(err);
       if (err.response.status == 403) {
         dispatch(resetJwt());
         dispatch(resetUserData());
