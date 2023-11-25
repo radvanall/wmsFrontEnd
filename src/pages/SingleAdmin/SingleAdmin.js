@@ -2,21 +2,16 @@ import React from "react";
 import { useEffect, useState } from "react";
 import useGetData from "../../hooks/useGetData";
 import { useParams } from "react-router-dom";
-// import "./SingleOperator.css";
 import usePostData from "../../hooks/usePostData";
 import moment from "moment";
 import getFormatedDate from "../../functions/getFormatedDate";
 import Calendar from "../../components/Calendar/Calendar";
-import Chart from "../../components/Chart/Chart";
-import OperatorInvoice from "../../components/OperatorInvoice/OperatorInvoice";
 import SingleOperatorMenu from "../../components/SingleOperatorMenu/SingleOperatorMenu";
 import Operator from "../operator/Operator";
 import AdminPageTable from "../../components/AdminPageTable/AdminPageTable";
-import CustomerPurchasesChart from "../../components/CustomersPurchasesChart/CustomerPurchasesChart";
 
 const SingleAdmin = () => {
   const { administratorId } = useParams();
-  const [invoices, setInvoices] = useState([]);
   const [admin, setAdmin] = useState({});
   const [workedDays, setWorkedDays] = useState([]);
   const {
@@ -33,20 +28,14 @@ const SingleAdmin = () => {
     id: invoice.id,
     Furnizor: invoice.provider,
     ["Creată de"]: invoice.createdBy,
-    // ["Data creării"]: invoice.dateOfCreation.slice(0, 10),
     ["Data creării"]: getFormatedDate(invoice.dateOfCreation, "RO-ro"),
-
     ["Data validării"]: getFormatedDate(invoice.dateOfValidation, "RO-ro"),
     ["Prețul total de cumpărare"]: invoice.totalBuyingPrice,
     ["Prețul total de vînzare"]: invoice.totalSellingPrice,
-    // Validat: invoice.validated ? "validat" : "nevalidat",
   });
   useEffect(() => {
     if (data) {
-      console.log("data:", data);
-
       const { workedDays, ...administratorData } = data;
-
       const today = moment();
       let hoursWorkedThisMonth = 0;
       if (workedDays.length > 0) {
@@ -61,7 +50,6 @@ const SingleAdmin = () => {
       }
       setAdmin({ ...administratorData, hoursThisMonth: hoursWorkedThisMonth });
       setWorkedDays(workedDays);
-      console.log("single operator:", today);
     }
   }, [data]);
   useEffect(() => {
@@ -69,8 +57,6 @@ const SingleAdmin = () => {
   }, [administratorId]);
 
   const handleHours = async (hours, selectedDay) => {
-    console.log("hours=", hours);
-    console.log("selectedDay=", selectedDay);
     const queryParams = `?id=${administratorId}&date=${selectedDay.toLocaleDateString(
       "RO-ro"
     )}&workedHours=${hours}`;
@@ -110,16 +96,6 @@ const SingleAdmin = () => {
         navTo="invoices"
         width="95%"
       />
-      {/* <Chart /> */}
-      {/* <div className="chart">
-        <CustomerPurchasesChart
-          id={operatorId}
-          url="http://localhost:8080/api/operator/getSales"
-          label="Vânzări"
-        />
-      </div>
-
-      <OperatorInvoice invoices={invoices} /> */}
     </div>
   );
 };

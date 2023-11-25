@@ -26,9 +26,6 @@ const SingleProduct = () => {
       (item) => item.id === Number(productId)
     )
   );
-
-  console.log(product);
-
   return (
     <div>
       {data.error && <div>{data.error}</div>}

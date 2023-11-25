@@ -11,7 +11,6 @@ const Operators = () => {
     "http://localhost:8080/api/operator/readOperatorsTable"
   );
   useEffect(() => {
-    console.log(data);
     if (data) {
       const newArray = data.map((operator) => {
         return {
@@ -31,7 +30,6 @@ const Operators = () => {
       setOperators(newArray);
     }
   }, [data]);
-  console.log("data=", data);
   return (
     <div>
       {error && <div>{error}</div>}

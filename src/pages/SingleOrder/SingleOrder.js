@@ -43,10 +43,8 @@ const SingleOrder = () => {
   }, [orderId]);
   useEffect(() => {
     if (data) {
-      console.log("data:", data);
       const { orderDTOS, ...invoiceData } = data;
       setInvoice(invoiceData);
-
       const newArray = orderDTOS.map((order) => ({
         id: order.id,
         image: order.productImg,
@@ -67,13 +65,11 @@ const SingleOrder = () => {
       setPdfOrders(newPdfArray);
     }
   }, [data]);
-  console.log(orderId);
   const openDelete = (id) => {
     setSelectedOrderId(id);
     toggleDelete();
   };
   const deleteItem = async () => {
-    console.log("delete-", selectedOrderId);
     await deleteData(
       `http://localhost:8080/api/invoice/deleteOrder/${selectedOrderId}`
     );

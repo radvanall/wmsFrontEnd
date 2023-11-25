@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import InvoiceReceptionCard from "../../components/InvoiceReceptionCard/InvoiceReceptionCard";
-import { AiOutlineDownload } from "react-icons/ai";
 import AlertMessage from "../../components/AlertMessage/AlertMessage";
-import ResponsiveTable from "../../components/ResponsiveTable/ResponsiveTable";
 import EditStock from "../../components/EditStock/EditStock";
 import "./SingleInvoice.css";
-import Card from "../../components/Card/Card";
 import usePostData from "../../hooks/usePostData";
-import { BiPlusMedical } from "react-icons/bi";
 import { useToggle } from "../../hooks/useToggle";
 import AddStock from "../../components/AddStock/AddStock";
 import BasicButton from "../../components/BasicButton/BasicButton";
@@ -17,8 +13,6 @@ import DeleteItem from "../../components/DeleteItem/DeleteItem";
 import InvoiceContentTable from "../../components/InvoiceContentTable/InvoiceContentTable";
 import { useSelector } from "react-redux";
 import ValidateButton from "../../components/ValidateButton/ValidateButton";
-// import PDFFile from "../../components/PDFFile/PDFFile";
-// import { PDFDownloadLink } from "@react-pdf/renderer";
 const SingleInvoice = () => {
   const { invoiceId } = useParams();
   const role = useSelector((state) => state.userSlice.userData?.authority);
@@ -76,7 +70,6 @@ const SingleInvoice = () => {
     }
   }, [data]);
   const deleteStock = async () => {
-    console.log(selectedStock.id);
     await postData(
       { id: selectedStock.id },
       `http://localhost:8080/api/stock/delete`
@@ -92,12 +85,8 @@ const SingleInvoice = () => {
   const openDelete = (id) => {
     const stock = stocks.find((item) => item.id === id);
     setSelectedStock(stock);
-    console.log("stock", stock);
     toggleDelete();
   };
-
-  console.log("invoiceId:", invoiceId);
-
   return (
     <div className="single__invoice">
       {invoice && pdfStocks && (
@@ -115,34 +104,6 @@ const SingleInvoice = () => {
           pdfStocks={pdfStocks}
         />
       )}
-      {/* {invoice && pdfStocks && (
-        <PDFDownloadLink
-          document={
-            <PDFFile
-              invoiceHeader={{
-                id: invoice.id,
-                date: invoice.dateOfCreation,
-                provider: invoice.provider,
-                totalBuyingPrice: invoice.totalBuyingPrice,
-                customer: "Firma srl",
-              }}
-              data={pdfStocks}
-            />
-          }
-          fileName="factura"
-        >
-          {({ loading }) =>
-            loading ? (
-              "loading>>"
-            ) : (
-              <AiOutlineDownload
-                className={"search_menu_button menu__opened"}
-              />
-            )
-          }
-        </PDFDownloadLink>
-      )} */}
-
       {invoice && (
         <InvoiceReceptionCard
           invoice={invoice}

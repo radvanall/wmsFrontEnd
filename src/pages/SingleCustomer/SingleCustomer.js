@@ -14,17 +14,14 @@ const SingleCustomer = () => {
   const { customerId } = useParams();
   const [invoices, setInvoices] = useState([]);
   const [customer, setCustomer] = useState({});
-  console.log(customerId);
   const { data, loading, error, getData } = useGetData(
     "http://localhost:8080/api/customer/read/"
   );
   const fetchData = () => getData(customerId);
   useEffect(() => {
     if (data) {
-      console.log("data:", data);
       const { invoices, ...customerData } = data;
       setCustomer(customerData);
-
       const newArray = invoices.map((invoice) => ({
         id: invoice.id,
         Data: getFormatedDate(invoice.date, "RO-ro"),

@@ -29,9 +29,7 @@ const SingleOperator = () => {
   );
   useEffect(() => {
     if (data) {
-      console.log("data:", data);
       const { invoices, workedDays, ...operatorData } = data;
-
       const today = moment();
       let hoursWorkedThisMonth = 0;
       if (workedDays.length > 0) {
@@ -44,9 +42,7 @@ const SingleOperator = () => {
             hoursWorkedThisMonth += day.workedHours;
         });
       }
-      console.log("workedHours;", hoursWorkedThisMonth);
       setOperator({ ...operatorData, hoursThisMonth: hoursWorkedThisMonth });
-      console.log("single operator:", today);
       setWorkedDays(workedDays);
       const newArray = invoices.map((invoice) => ({
         id: invoice.id,
@@ -83,8 +79,6 @@ const SingleOperator = () => {
   }, [operatorId]);
 
   const handleHours = async (hours, selectedDay) => {
-    console.log("hours=", hours);
-    console.log("selectedDay=", selectedDay);
     const queryParams = `?id=${operatorId}&date=${selectedDay.toLocaleDateString(
       "RO-ro"
     )}&workedHours=${hours}`;
@@ -122,7 +116,6 @@ const SingleOperator = () => {
           label="Vânzări"
         />
       </div>
-
       <OperatorInvoice invoices={invoices} />
     </div>
   );

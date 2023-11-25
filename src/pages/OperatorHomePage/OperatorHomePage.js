@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import useGetData from "../../hooks/useGetData";
 import { useSelector } from "react-redux";
-// import "./SingleOperator.css";
 import usePostData from "../../hooks/usePostData";
 import moment from "moment";
 import getFormatedDate from "../../functions/getFormatedDate";
@@ -67,9 +66,7 @@ const OperatorHomePage = () => {
   });
   useEffect(() => {
     if (data) {
-      console.log("data:", data);
       const { invoices, workedDays, ...operatorData } = data;
-
       const today = moment();
       let hoursWorkedThisMonth = 0;
       if (workedDays.length > 0) {
@@ -82,9 +79,7 @@ const OperatorHomePage = () => {
             hoursWorkedThisMonth += day.workedHours;
         });
       }
-      console.log("workedHours;", hoursWorkedThisMonth);
       setOperator({ ...operatorData, hoursThisMonth: hoursWorkedThisMonth });
-      console.log("single operator:", today);
       setWorkedDays(workedDays);
       const newArray = invoices
         .filter((item) => item.shipped)

@@ -41,7 +41,6 @@ const Orders = () => {
     setInvoices(newArray);
   };
   useEffect(() => {
-    console.log(data);
     if (data) {
       filterInvoicesByStatus("all");
     }

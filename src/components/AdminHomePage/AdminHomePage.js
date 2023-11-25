@@ -8,7 +8,6 @@ import getFormatedDate from "../../functions/getFormatedDate";
 import AdminHomePageMenu from "./AdminHomePageMenu";
 const AdminHomePage = () => {
   const id = useSelector((state) => state.userSlice.userData?.id);
-  console.log(id);
   const { data, loading, error, getData } = useGetData(
     "http://localhost:8080/api/administrator/read/"
   );
@@ -25,7 +24,6 @@ const AdminHomePage = () => {
     ["Data creării"]: getFormatedDate(item.dateOfCreation, "RO-ro"),
     ["Creată de"]: item.createdBy,
     ["Preț total /cupărare"]: item.totalBuyingPrice,
-    // ["Preț total /vânzare"]: item.totalSellingPrice,
   });
   const getInvoices = (item) => ({
     id: item.id,
@@ -39,10 +37,7 @@ const AdminHomePage = () => {
   const [workedDays, setWorkedDays] = useState([]);
   useEffect(() => {
     if (data) {
-      console.log("data:", data);
-
       const { workedDays, ...administratorData } = data;
-
       const today = moment();
       let hoursWorkedThisMonth = 0;
       if (workedDays.length > 0) {
@@ -57,7 +52,6 @@ const AdminHomePage = () => {
       }
       setAdmin({ ...administratorData, hoursThisMonth: hoursWorkedThisMonth });
       setWorkedDays(workedDays);
-      console.log("single operator:", today);
     }
   }, [data]);
 
@@ -66,7 +60,6 @@ const AdminHomePage = () => {
   }, [id]);
 
   return (
-    // <div className="Single">
     <>
       <AdminHomePageMenu
         admin={admin}
@@ -83,7 +76,6 @@ const AdminHomePage = () => {
           title="Stocuri limitate:"
           navTo="products"
         />
-
         <AdminPageTable
           getId={null}
           url={
@@ -102,8 +94,6 @@ const AdminHomePage = () => {
         />
       </div>
     </>
-
-    // </div>
   );
 };
 

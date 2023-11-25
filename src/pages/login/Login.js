@@ -3,13 +3,9 @@ import "./login.css";
 import BasicInput from "../../components/BasicInput/BasicInput";
 import BasicButton from "../../components/BasicButton/BasicButton";
 import useAuth from "../../hooks/useAuth";
-import { resetJwt, resetUserData } from "../../toolkitRedux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import SessionExpiredMessage from "../../components/SessionExpiredMessage/SessionExpiredMessage";
 const Login = () => {
-  const dispatch = useDispatch();
-  const userData = useSelector((state) => state.userSlice.userData);
-  const jwt = useSelector((state) => state.userSlice.jwt);
   const { login, error } = useAuth();
   const [errors, setErrors] = useState({
     username: false,

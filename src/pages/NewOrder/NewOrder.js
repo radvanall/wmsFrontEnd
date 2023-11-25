@@ -11,8 +11,6 @@ import { useToggle } from "../../hooks/useToggle";
 
 import {
   setSelectedPosition,
-  resetSelectedPosition,
-  findPosition,
   setPositionBeforeEdit,
   setProductQuantity,
   setSelectedTableRowId,
@@ -109,8 +107,6 @@ const NewOrder = () => {
       parseInt(position.quantity) +
       parseInt(updatedStocks[newIndex].initialQuantity) -
       parseInt(updatedStocks[newIndex].remainingQuantity);
-
-    console.log("restoredQuantity:", restoredQuantity);
     const finalStocks = updatedStocks.map((stock, index) => {
       if (index === newIndex)
         return {
@@ -175,11 +171,8 @@ const NewOrder = () => {
     if (parseInt(selectedPosition.id) === parseInt(positionId)) {
       dispatch(setSelectedPosition(restoredPosition));
     }
-    console.log("stockIndex", stockIndex);
   };
   const handleRowDelete = (id) => {
-    console.log("id=", id);
-
     const positionId = fullData.find(
       (row) => parseInt(row.id) === parseInt(id)
     )?.positionId;
@@ -200,24 +193,12 @@ const NewOrder = () => {
         : currentStock.remainingQuantity < currentStock.initialQuantity
         ? position?.stocks[position.currentStockIndex - 1]?.id
         : position?.stocks[position.currentStockIndex - 2]?.id;
-    console.log(
-      "current stock comp:",
-      currentStock.remainingQuantity < currentStock.initialQuantity
-        ? currentStockId
-        : currentStockId - 1
-    );
-    console.log("currentStock=", currentStock);
-    console.log("currentStockId=", currentStockId);
-    console.log("currentStock[]id=", currentStock.id);
-    console.log("positionId:", positionId);
-    console.log("currentStockId", currentStockId);
     const foundStock = fullData.find(
       (item) =>
         parseInt(item.id) === parseInt(id) &&
         parseInt(item.stockId) === parseInt(currentStockId)
     );
     if (foundStock) {
-      console.log("foundStock=", foundStock);
       setFullData((prev) => {
         const newData = prev.filter(
           (item) => parseInt(item.id) !== parseInt(id)
@@ -234,7 +215,6 @@ const NewOrder = () => {
         return newData;
       });
       resetPositionById(positionId);
-      console.log(true);
     } else {
       const stockId = fullData.find(
         (row) => parseInt(id) === parseInt(row.id)
@@ -257,13 +237,11 @@ const NewOrder = () => {
 
         return newData;
       });
-      console.log(false);
       resetMultipleStocks(positionId, stockId);
     }
   };
   const handleRowEdit = (id) => {
     const row = fullData.find((item) => parseInt(item.id) === parseInt(id));
-    console.log(row.positionId);
     const position = positions.find(
       (item) => parseInt(item.id) === parseInt(row.positionId)
     );
@@ -309,7 +287,6 @@ const NewOrder = () => {
       dispatch(setFormMode("edit"));
       dispatch(setSelectedTableRowId(id));
       dispatch(setProductQuantity(row.Cantitate));
-      console.log("finalPosition:", finalPosition);
     }
   };
 
@@ -319,8 +296,6 @@ const NewOrder = () => {
     const nextStock = inSale.length
       ? getEarliestDate(inSale)
       : getEarliestDate(forSale);
-
-    console.log("nextStock=", nextStock);
     if (nextStock) return nextStock;
     else return false;
   };
@@ -328,11 +303,9 @@ const NewOrder = () => {
     if (fullData.length) {
       const newData = fullData.map(({ stockId, positionId, ...rest }) => rest);
       setTableData(newData);
-      console.log("Full data:", fullData);
     } else setTableData([]);
   }, [fullData]);
   useEffect(() => {
-    console.log("data", data);
     if (data) {
       const newPositions = data.map((position) => {
         return {
@@ -356,13 +329,11 @@ const NewOrder = () => {
           })),
         };
       });
-      console.log("positons:", newPositions);
       setPositions(newPositions);
     }
   }, [data]);
   useEffect(() => {
     if (customers) {
-      console.log("customers", customers);
       setSelectedCustomer(
         customers.find((customer) => parseInt(customer.id) === 3)
       );
@@ -372,9 +343,6 @@ const NewOrder = () => {
     dispatch(resetAllStates());
   }, []);
   const handleSaveInvoice = async (shipped) => {
-    console.log("selectedCustomer:", selectedCustomer);
-    console.log("selectedAddress:", selectedAddress);
-    console.log("fullData.length", fullData.length, Array.isArray(fullData));
     if (!fullData.length) {
       setErrors((prev) => ({
         ...prev,
@@ -390,7 +358,6 @@ const NewOrder = () => {
       return;
     }
     if (selectedAddress.name.trim() === "") {
-      console.log("error address");
       setErrors((prev) => ({
         ...prev,
         addressError: true,
@@ -412,7 +379,6 @@ const NewOrder = () => {
     };
     await postData(invoice, "http://localhost:8080/api/invoice/create");
     toggleServerMessage();
-    console.log("invoice:", invoice);
   };
   const handleCloseServerModal = () => {
     resetMessage();
