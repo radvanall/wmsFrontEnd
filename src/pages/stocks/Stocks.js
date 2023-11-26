@@ -7,7 +7,6 @@ import SortButton from "../../components/SortButton/SortButton";
 import StocksFilterModal from "../../components/StocksFileterModal/StocksFilterModal";
 import { useToggle } from "../../hooks/useToggle";
 import useGetPage from "../../hooks/useGetPage";
-import useFetch from "../../hooks/useFetch";
 import { FiFilter } from "react-icons/fi";
 import TagHolder from "../../components/TagHolder/TagHolder";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,8 +53,6 @@ const Stocks = () => {
     (state) => state.stockFilterSlice.checkboxStates
   );
   const navigate = useSelector((state) => state.stockFilterSlice.navigate);
-  console.log("filter criterias stocks:", filterCriterias);
-  console.log("checkbox states:", checkboxStates);
 
   const { status: isOpenFilter, toggleStatus: toggleFilter } = useToggle(false);
   const {
@@ -68,16 +65,9 @@ const Stocks = () => {
     setSize,
     toggleSortDirection,
   } = useGetPage("http://localhost:8080/api/stock/readAll", filterCriterias);
-  // const {
-  //   data: filterSettings,
-  //   loading: loadingFilterSettings,
-  //   error: errorFilterSettings,
-  //   fetchData,
-  // } = useFetch("http://localhost:8080/api/stock/filterSettings");
+
   const [filterSettings, setFilterSettings] = useState(null);
   const getSettings = async () => {
-    // await fetchData();
-
     try {
       const fetch = await axios.get(
         "http://localhost:8080/api/stock/filterSettings",
@@ -85,16 +75,10 @@ const Stocks = () => {
       );
       setFilterSettings(fetch.data);
       if (!navigate) {
-        console.log("filter settings:", fetch.data);
-        console.error("navigate0:", navigate);
-
-        console.log("location changes", location);
         dispatch(resetFilterCriterias());
-        console.error("navigate:", navigate);
         dispatch(resetAllCriterias(fetch.data));
       } else {
         dispatch(setNavigate(false));
-        console.error("navigate5:", navigate);
       }
     } catch (err) {
       console.log(err.response.status);
@@ -141,17 +125,6 @@ const Stocks = () => {
       {loading && <LoadingComponent />}
       {data && (
         <>
-          {/* <button
-            onClick={() => {
-              console.log(checkboxStates);
-              console.log("filter criterias stocks:", filterCriterias);
-              console.log("navigate:", navigate);
-              console.log("filter settings:", filterSettings);
-              // dispatch(setNavigate(!navigate));
-            }}
-          >
-            click
-          </button> */}
           <div className="stock__menu">
             <FiFilter
               className={

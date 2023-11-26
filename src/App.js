@@ -1,14 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import New from "./pages/New/New";
 import Products from "./pages/products/Products";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
-import Table from "./components/Table/Table";
 import SingleOperator from "./pages/Single/SingleOperator";
 import Customers from "./pages/customers/Customers";
-import Navbar from "./components/navbar/Navbar";
 import Operators from "./pages/operators/Operators";
 import Stocks from "./pages/stocks/Stocks";
 import Providers from "./pages/providers/Providers";
@@ -17,11 +13,9 @@ import SingleInvoice from "./pages/SingleInvoice/SingleInvoice";
 import SingleOrder from "./pages/SingleOrder/SingleOrder";
 import SingleCustomer from "./pages/SingleCustomer/SingleCustomer";
 import "./App.css";
-import Sidebar from "./components/sidebar/Sidebar";
 import OperatorsInvoice from "./pages/OperatorsInvoice/OperatorsInvoice";
 import { useSelector, useDispatch } from "react-redux";
 import { setJwt, setUserData } from "./toolkitRedux/userSlice";
-//test commgit sent
 import Invoice from "./pages/Invoice/Invoice";
 import Orders from "./pages/orders/Orders";
 import NewOrder from "./pages/NewOrder/NewOrder";
@@ -33,18 +27,14 @@ import SingleAdmin from "./pages/SingleAdmin/SingleAdmin";
 import Statistics from "./pages/Statistics/Statistics";
 function App() {
   const dispatch = useDispatch();
-  // useEffect(() => {
   const jwt = window.localStorage.getItem("jwt");
   if (jwt === null) {
     console.log("Key 'jwt' does not exist in localStorage.");
   } else {
-    console.log("Value of 'jwt' in localStorage:", jwt);
     dispatch(setJwt(window.localStorage.getItem("jwt")));
     dispatch(setUserData(JSON.parse(window.localStorage.getItem("userData"))));
   }
-  // }, []);
   const opened = useSelector((state) => state.menuState.opened);
-  console.log("opened=", opened);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

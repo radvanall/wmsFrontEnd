@@ -1,5 +1,4 @@
 .stats {
-  /* width: 100%; */
   padding: 10px;
   display: grid;
   gap: 10px;
@@ -38,7 +37,6 @@
 @media (max-width: 790px) {
   .stats {
     grid-template-columns: 99%;
-    /* grid-template-columns: repeat(1, 1fr); */
     grid-template-areas:
       "totalBalance"
       "todayChart"

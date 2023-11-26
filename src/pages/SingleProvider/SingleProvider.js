@@ -20,11 +20,8 @@ const SingleProvider = () => {
   const { data, loading, error, getData } = useGetData(
     "http://localhost:8080/api/provider/read/"
   );
-
-  console.log(providerId);
   useEffect(() => {
     getData(providerId);
-    console.log(data);
   }, []);
   useEffect(() => {
     if (data) {

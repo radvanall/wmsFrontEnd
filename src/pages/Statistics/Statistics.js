@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import StatisticChart from "../../components/StatisticsChart/StatisticChart";
 import getMonthAndYear from "../../functions/getMonthAndYear";
-import useGetData from "../../hooks/useGetData";
 import DoughnutChart from "../../components/DoughnutChart/DoughnutChart";
 import areDateEquals from "../../functions/areDatesEquals";
 import ChartTable from "../../components/ChartTable/ChartTable";
 import "./Statistics.css";
 import StatisticsTable from "../../components/StatisitcsTable/StatisticsTable";
-import AdminPageTable from "../../components/AdminPageTable/AdminPageTable";
-import Card from "../../components/Card/Card";
 const getRandomColor = () => {
   const symbols = "0123456789ABCDEF";
   let color = "#";
@@ -21,7 +18,6 @@ function getStartOfWeek(date) {
   const day = date.getDay();
   const diff = date.getDate() - day + (day === 0 ? -7 : 0);
   return new Date(date.setDate(diff));
-  //   return new Date(date.setDate(day));
 }
 
 function generateWeekStartDates(startDate, endDate) {
@@ -30,7 +26,7 @@ function generateWeekStartDates(startDate, endDate) {
 
   while (currentDate <= endDate) {
     weekStartDates.push(currentDate.toISOString());
-    currentDate.setDate(currentDate.getDate() + 7); // Move to the next week
+    currentDate.setDate(currentDate.getDate() + 7);
   }
 
   return weekStartDates;
@@ -106,10 +102,8 @@ const topSoldProducts = (data, period) => {
       chartField[key.toLowerCase()] = value;
     });
     chartField.weekStart = day;
-    console.log("productsArray", chartField);
     return chartField;
   });
-  console.log("products DATA", chartData);
   const chartDataSet = [];
   if (chartData.length > 0) {
     const { weekStart, ...firstProd } = chartData[0];
@@ -125,7 +119,6 @@ const topSoldProducts = (data, period) => {
       });
     }
   }
-  console.error("PRODdATAsETS", chartDataSet);
   return {
     labels: weekStartDates.map((item) => getMonthAndYear(item, "RO-ro")),
     datasets: [...chartDataSet],
@@ -158,7 +151,6 @@ const getTopBalance = (data, period) => {
       chartField[key] = value;
     });
     chartField.weekStart = day;
-    console.log("productsArray", chartField);
     return chartField;
   });
   const chartDataSet = [];
@@ -176,8 +168,6 @@ const getTopBalance = (data, period) => {
       });
     }
   }
-  console.error("chartData", chartData);
-  console.error("chartDataSet", chartDataSet);
   return {
     labels: weekStartDates.map((item) => getMonthAndYear(item, "RO-ro")),
     datasets: [...chartDataSet],
