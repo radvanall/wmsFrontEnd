@@ -8,7 +8,6 @@ export const fetchProducts = createAsyncThunk(
         "http://localhost:8080/api/position/readtablepositions",
         { headers: { Authorization: `Bearer ${jwt}` } }
       );
-      console.log("response=", response.data);
       return response.data;
     } catch (err) {
       console.log(err);

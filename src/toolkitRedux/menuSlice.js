@@ -7,7 +7,6 @@ const menuSlice = createSlice({
   },
   reducers: {
     toggle(state, action) {
-      //   state.opened = !state.opened;
       state.opened = action.payload;
     },
   },

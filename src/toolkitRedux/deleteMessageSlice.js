@@ -9,10 +9,8 @@ const deleteSlice = createSlice({
   reducers: {
     toggle(state) {
       state.opened = !state.opened;
-      //state.opened = action.payload;
     },
     setMessage(state, action) {
-      //   state.opened = !state.opened;
       state.message = action.payload;
     },
   },

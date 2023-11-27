@@ -13,7 +13,6 @@ const userSlice = createSlice({
   },
   reducers: {
     setUserData(state, action) {
-      //   state.opened = !state.opened;
       state.userData = action.payload;
       window.localStorage.setItem("userData", JSON.stringify(action.payload));
     },
@@ -22,7 +21,6 @@ const userSlice = createSlice({
       window.localStorage.setItem("jwt", action.payload);
     },
     resetUserData(state) {
-      //   state.opened = !state.opened;
       state.userData = {
         userName: "",
         id: null,
